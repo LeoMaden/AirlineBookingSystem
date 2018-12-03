@@ -5,6 +5,10 @@ VisualStudioVersion = 15.0.28010.2046
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirlineBookingLibrary", "AirlineBookingLibrary\AirlineBookingLibrary.csproj", "{94659EE1-73D9-4641-B87B-0A5896C229DD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebUI", "WebUI\WebUI.csproj", "{AA6F7EB5-04F1-40AD-AFD7-24019CA840A9}"
+EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "AirlineBookingDatabase", "AirlineBookingDatabase\AirlineBookingDatabase.sqlproj", "{4F3DD8FD-B911-4A14-82E9-E02CB669DDC5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,16 @@ Global
 		{94659EE1-73D9-4641-B87B-0A5896C229DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{94659EE1-73D9-4641-B87B-0A5896C229DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{94659EE1-73D9-4641-B87B-0A5896C229DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA6F7EB5-04F1-40AD-AFD7-24019CA840A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA6F7EB5-04F1-40AD-AFD7-24019CA840A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA6F7EB5-04F1-40AD-AFD7-24019CA840A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA6F7EB5-04F1-40AD-AFD7-24019CA840A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F3DD8FD-B911-4A14-82E9-E02CB669DDC5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F3DD8FD-B911-4A14-82E9-E02CB669DDC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F3DD8FD-B911-4A14-82E9-E02CB669DDC5}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{4F3DD8FD-B911-4A14-82E9-E02CB669DDC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F3DD8FD-B911-4A14-82E9-E02CB669DDC5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F3DD8FD-B911-4A14-82E9-E02CB669DDC5}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
