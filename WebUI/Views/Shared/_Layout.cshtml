@@ -9,15 +9,26 @@
 
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="page-header">
+        <div class="container">
+
+            <a href="@Url.Action("Index", "Home")">
+                <img src="~/Resources/BALogoLarge.png" alt="Logo" width="500"/>
+            </a>
+
+            <div class="pull-right hidden-xs" style="margin-top: 30px;">
+                @Html.Partial("_LoginPartial")
+            </div>
+
+        </div>
+    </div>
+
+    <div class="navbar">
         <div class="container">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
+                <button type="button" class="navbar-toggle pull-left" data-toggle="collapse" data-target=".navbar-collapse">
+                    <img src="~/Resources/MenuHamburger.png" alt="Expand/collapse menu" width="20" hight="20" />
                 </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -25,7 +36,6 @@
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                 </ul>
-                @Html.Partial("_LoginPartial")
             </div>
         </div>
     </div>
