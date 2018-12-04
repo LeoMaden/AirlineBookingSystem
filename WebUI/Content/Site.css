@@ -22,3 +22,9 @@ select,
 textarea {
     max-width: 280px;
 }
+
+
+/* Set spacing between navbar and page header */
+.page-header {
+    margin-bottom: 0;
+}
