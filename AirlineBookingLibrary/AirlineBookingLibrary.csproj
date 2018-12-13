@@ -41,6 +41,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enums\TravelClass.cs" />
+    <Compile Include="Models\Basket.cs" />
+    <Compile Include="Models\BasketItem.cs" />
+    <Compile Include="Models\FlightSchedule.cs" />
+    <Compile Include="Data\IDataAccess.cs" />
+    <Compile Include="Data\SQLDataAccess.cs" />
+    <Compile Include="Models\Airport.cs" />
+    <Compile Include="Models\Booking.cs" />
+    <Compile Include="Models\Flight.cs" />
+    <Compile Include="Models\SearchFilters.cs" />
+    <Compile Include="Models\Staff.cs" />
+    <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
