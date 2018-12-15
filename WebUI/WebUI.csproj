@@ -296,6 +296,12 @@
       <LastGenOutput>LayoutResources.Designer.cs</LastGenOutput>
     </Content>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AirlineBookingLibrary\AirlineBookingLibrary.csproj">
+      <Project>{94659ee1-73d9-4641-b87b-0a5896c229dd}</Project>
+      <Name>AirlineBookingLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

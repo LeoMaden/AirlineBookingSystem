@@ -42,8 +42,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Enums\TravelClass.cs" />
-    <Compile Include="Identity\IdentityUser.cs" />
-    <Compile Include="Identity\UserStore.cs" />
     <Compile Include="Models\Basket.cs" />
     <Compile Include="Models\BasketItem.cs" />
     <Compile Include="Models\FlightSchedule.cs" />
@@ -56,11 +54,6 @@
     <Compile Include="Models\Staff.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Microsoft.AspNet.Identity.Owin">
-      <Version>2.2.2</Version>
-    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
