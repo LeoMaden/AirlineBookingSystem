@@ -7,7 +7,7 @@ using Microsoft.AspNet.Identity;
 
 namespace AirlineBookingLibrary.Identity
 {
-    public class IdentityUser : IUser<int>
+    public class User : IUser<int>
     {
         public int Id { get; private set; }
 
