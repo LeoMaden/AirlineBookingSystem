@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AirlineBookingLibrary.Data
 {
-    public class SQLDataAccess : IDataAccess
+    public class SQLDataAccess //: IDataAccess
     {
     }
 }
