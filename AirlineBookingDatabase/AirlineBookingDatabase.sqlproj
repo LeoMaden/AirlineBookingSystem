@@ -80,16 +80,8 @@
     <Build Include="Stored Procedures\Users\spSetUserPasswordHash.sql" />
     <Build Include="Stored Procedures\Users\spSetUserPhoneNumber.sql" />
     <Build Include="Stored Procedures\Users\spUpdateUser.sql" />
-    <Build Include="Stored Procedures\Users\spSetUserEmail.sql" />
-    <Build Include="Stored Procedures\Users\spSetUserAddress.sql" />
-    <Build Include="Stored Procedures\Users\spInsertUserAddress.sql" />
-    <Build Include="Stored Procedures\Users\spDeleteUserAddress.sql" />
-    <Build Include="Stored Procedures\Users\spGetUserAddress.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="AirlineBookingDatabase.refactorlog" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="LocalDb.publish.xml" />
   </ItemGroup>
 </Project>
