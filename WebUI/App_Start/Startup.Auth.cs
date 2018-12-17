@@ -6,12 +6,18 @@ using System.Web;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin;
 using Microsoft.AspNet.Identity;
-
+using AirlineBookingLibrary.Models;
+using AirlineBookingLibrary.Data;
+using AirlineBookingLibrary.Services;
 
 namespace WebUI
 {
     public partial class Startup
     {
+        // Define factory for creating instances of UserManager.
+        public static Func<UserManager<User, int>> UserManagerFactory { get; private set; }
+
+
         public void ConfigureAuth(IAppBuilder app)
         {
             // Tell ASP.NET identity framework to use cookie authentication.
@@ -22,6 +28,37 @@ namespace WebUI
                 // Set redirect path when there is an unauthorised (401) attempt.
                 LoginPath = new PathString("/account/login")
             });
+
+
+            // Assign a function to user manager factory. 
+            UserManagerFactory = () =>
+            {
+                // Create a user manager that uses the library's store.
+                var userManager = new UserManager<User, int>(new UserStore());
+
+                // Add user validator to validate usernames.
+                userManager.UserValidator = new UserValidator<User, int>(userManager)
+                {
+                    AllowOnlyAlphanumericUserNames = false,
+                    RequireUniqueEmail = true
+                };
+
+                // Add a password validator to verify password complexity.
+                userManager.PasswordValidator = new PasswordValidator
+                {
+                    RequireDigit = false,
+                    RequiredLength = 8,
+                    RequireLowercase = true,
+                    RequireNonLetterOrDigit = false,
+                    RequireUppercase = false
+                };
+
+                // Add email service for sending email confirmations.
+                userManager.EmailService = new EmailService();
+
+                return userManager;
+            };
+            
         }
     }
 }
