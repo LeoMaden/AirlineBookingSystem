@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,17 +10,17 @@ namespace AirlineBookingLibrary.Models
     /// <summary>
     /// Represents a member of staff.
     /// </summary>
-    public class Staff
+    public class Staff : IUser<int>
     {
         /// <summary>
         /// Unique ID for this staff member.
         /// </summary>
-        public int EmployeeID { get; set; }
+        public int Id { get; set; }
 
         /// <summary>
         /// Unique username for this staff member.
         /// </summary>
-        public string Username { get; set; }
+        public string UserName { get; set; }
 
         /// <summary>
         /// Hash of this staff member's password.

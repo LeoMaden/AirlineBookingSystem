@@ -10,12 +10,12 @@ namespace AirlineBookingLibrary.Models
     /// <summary>
     /// Represents a booking made by a user.
     /// </summary>
-    public class Booking
+    public class Booking : IHasPrimaryKey<int>
     {
         /// <summary>
         /// The unique ID of this booking.
         /// </summary>
-        public int BookingID { get; set; }
+        public int Id { get; set; }
 
         /// <summary>
         /// The unique booking reference code for this booking.

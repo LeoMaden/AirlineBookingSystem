@@ -9,7 +9,7 @@ namespace AirlineBookingLibrary.Models
     /// <summary>
     /// Contains the filters for searches made by a user.
     /// </summary>
-    public class SearchFilters
+    public class SearchFilterParameters
     {
         /// <summary>
         /// The requested origin airport.

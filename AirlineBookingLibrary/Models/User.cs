@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,12 +10,12 @@ namespace AirlineBookingLibrary.Models
     /// <summary>
     /// Represents a user of the system.
     /// </summary>
-    public class User
+    public class User : IUser<int>
     {
         /// <summary>
         /// The unique ID for this user.
         /// </summary>
-        public int UserID { get; set; }
+        public int Id { get; set; }
 
         /// <summary>
         /// The user's title (Mr, Mrs, Dr, etc.)
@@ -34,7 +35,7 @@ namespace AirlineBookingLibrary.Models
         /// <summary>
         /// The user's unique username.
         /// </summary>
-        public string Username { get; set; }
+        public string UserName { get; set; }
 
         /// <summary>
         /// The user's date of birth.
@@ -42,24 +43,9 @@ namespace AirlineBookingLibrary.Models
         public DateTime DateOfBirth { get; set; }
 
         /// <summary>
-        /// First line of user's address.
+        /// The user's address.
         /// </summary>
-        public string AddressLine1 { get; set; }
-
-        /// <summary>
-        /// Second line of user's address.
-        /// </summary>
-        public string AddressLine2 { get; set; }
-
-        /// <summary>
-        /// City where the user lives.
-        /// </summary>
-        public string City { get; set; }
-
-        /// <summary>
-        /// Postcode where the user lives.
-        /// </summary>
-        public string Postcode { get; set; }
+        public Address Address { get; set; }
 
         /// <summary>
         /// The user's contact email.
