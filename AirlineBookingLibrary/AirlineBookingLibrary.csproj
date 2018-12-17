@@ -41,7 +41,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Data\UserStore.cs" />
     <Compile Include="Enums\TravelClass.cs" />
     <Compile Include="Helpers\StringExtensions.cs" />
     <Compile Include="Models\Address.cs" />

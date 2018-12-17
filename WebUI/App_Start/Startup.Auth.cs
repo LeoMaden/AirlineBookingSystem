@@ -9,13 +9,14 @@ using Microsoft.AspNet.Identity;
 using AirlineBookingLibrary.Models;
 using AirlineBookingLibrary.Data;
 using AirlineBookingLibrary.Services;
+using WebUI.Models.IdentityModels;
 
 namespace WebUI
 {
     public partial class Startup
     {
         // Define factory for creating instances of UserManager.
-        public static Func<UserManager<User, int>> UserManagerFactory { get; private set; }
+        public static Func<UserManager<ApplicationUser, int>> UserManagerFactory { get; private set; }
 
 
         public void ConfigureAuth(IAppBuilder app)
@@ -34,10 +35,10 @@ namespace WebUI
             UserManagerFactory = () =>
             {
                 // Create a user manager that uses the library's store.
-                var userManager = new UserManager<User, int>(new UserStore());
+                var userManager = new UserManager<ApplicationUser, int>(new UserStore());
 
                 // Add user validator to validate usernames.
-                userManager.UserValidator = new UserValidator<User, int>(userManager)
+                userManager.UserValidator = new UserValidator<ApplicationUser, int>(userManager)
                 {
                     AllowOnlyAlphanumericUserNames = false,
                     RequireUniqueEmail = true
