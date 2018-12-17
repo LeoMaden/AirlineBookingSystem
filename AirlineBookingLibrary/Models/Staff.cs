@@ -10,7 +10,7 @@ namespace AirlineBookingLibrary.Models
     /// <summary>
     /// Represents a member of staff.
     /// </summary>
-    public class Staff : IUser<int>
+    public class Staff : IHasPrimaryKey<int>
     {
         /// <summary>
         /// Unique ID for this staff member.

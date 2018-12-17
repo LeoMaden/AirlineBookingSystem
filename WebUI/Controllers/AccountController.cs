@@ -10,13 +10,14 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using WebUI.Models;
+using WebUI.Models.IdentityModels;
 
 namespace WebUI.Controllers
 {
     [Authorize]
     public class AccountController : Controller
     {
-        private readonly UserManager<User, int> UserManager;
+        private readonly UserManager<ApplicationUser, int> UserManager;
 
 
         public AccountController() : this(Startup.UserManagerFactory.Invoke())
@@ -24,7 +25,7 @@ namespace WebUI.Controllers
 
         }
 
-        public AccountController(UserManager<User, int> userManager)
+        public AccountController(UserManager<ApplicationUser, int> userManager)
         {
             this.UserManager = userManager;
         }
@@ -104,7 +105,7 @@ namespace WebUI.Controllers
             }
 
             // Model is valid.
-            var user = new User
+            var user = new ApplicationUser
             {
                 Title = model.Title,
                 FirstName = model.FirstName,
@@ -136,7 +137,7 @@ namespace WebUI.Controllers
         }
 
 
-        private async Task SignIn(User user)
+        private async Task SignIn(ApplicationUser user)
         {
             var context = Request.GetOwinContext();
             IAuthenticationManager accountManager = context.Authentication;

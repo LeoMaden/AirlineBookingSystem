@@ -10,7 +10,7 @@ namespace AirlineBookingLibrary.Models
     /// <summary>
     /// Represents a user of the system.
     /// </summary>
-    public class User : IUser<int>
+    public class User : IHasPrimaryKey<int>
     {
         /// <summary>
         /// The unique ID for this user.
