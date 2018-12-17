@@ -6,6 +6,8 @@ namespace AirlineBookingLibrary.Data
 {
     public interface IDataAccess
     {
+        //
+        // User data access.
         Task CreateAsync(User user);
         Task DeleteAsync(User user);
         Task<User> FindByEmailAsync(string email);
