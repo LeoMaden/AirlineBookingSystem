@@ -9,12 +9,12 @@ namespace AirlineBookingLibrary.Models
     /// <summary>
     /// Represents a scheduled flight.
     /// </summary>
-    public class Flight
+    public class Flight : IHasPrimaryKey<int>
     {
         /// <summary>
         /// The unique ID for this flight.
         /// </summary>
-        public int FlightID { get; set; }
+        public int Id { get; set; }
 
         /// <summary>
         /// The flight number of this flight.

@@ -15,7 +15,7 @@ namespace AirlineBookingLibrary.Data
         List<Airport> GetAirports();
         List<FlightSchedule> GetFlightSchedule();
         List<Flight> GetAllFlights();
-        List<Flight> GetFlights(SearchFilters filters);
+        List<Flight> GetFlights(SearchFilterParameters filters);
         User GetUser(int userID);
         List<Booking> GetBookings(User user);
     }

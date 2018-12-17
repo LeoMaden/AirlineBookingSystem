@@ -2,9 +2,9 @@
 
 namespace AirlineBookingLibrary.Models
 {
-    public class FlightSchedule
+    public class FlightSchedule : IHasPrimaryKey<int>
     {
-        public int RouteID { get; set; }
+        public int Id { get; set; }
 
         public string RouteCode { get; set; }
 

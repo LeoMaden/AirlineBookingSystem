@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace AirlineBookingLibrary.Models
 {
-    public class Airport
+    public class Airport : IHasPrimaryKey<int>
     {
-        public int AirportID { get; set; }
+        public int Id { get; set; }
 
         public string AirportCode { get; set; }
 

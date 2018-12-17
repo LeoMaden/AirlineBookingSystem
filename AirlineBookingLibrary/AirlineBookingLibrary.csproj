@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Enums\TravelClass.cs" />
     <Compile Include="Helpers\StringExtensions.cs" />
+    <Compile Include="Models\Address.cs" />
     <Compile Include="Models\Basket.cs" />
     <Compile Include="Models\BasketItem.cs" />
     <Compile Include="Models\FlightSchedule.cs" />
@@ -51,7 +52,8 @@
     <Compile Include="Models\Airport.cs" />
     <Compile Include="Models\Booking.cs" />
     <Compile Include="Models\Flight.cs" />
-    <Compile Include="Models\SearchFilters.cs" />
+    <Compile Include="Models\IHasPrimaryKey.cs" />
+    <Compile Include="Models\SearchFilterParameters.cs" />
     <Compile Include="Models\Staff.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
