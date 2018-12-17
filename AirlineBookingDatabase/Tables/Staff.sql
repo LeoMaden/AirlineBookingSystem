@@ -1,0 +1,6 @@
+﻿CREATE TABLE [dbo].[Staff]
+(
+	[Id] INT NOT NULL PRIMARY KEY IDENTITY, 
+    [UserName] NVARCHAR(100) NOT NULL, 
+    [PasswordHash] NVARCHAR(MAX) NOT NULL
+)

@@ -60,4 +60,16 @@
     <Folder Include="Tables" />
     <Folder Include="Stored Procedures" />
   </ItemGroup>
+  <ItemGroup>
+    <Build Include="Tables\Users.sql" />
+    <Build Include="Tables\Addresses.sql" />
+    <Build Include="Tables\Airports.sql" />
+    <Build Include="Tables\Bookings.sql" />
+    <Build Include="Tables\Flights.sql" />
+    <Build Include="Tables\FlightSchedules.sql" />
+    <Build Include="Tables\Staff.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="AirlineBookingDatabase.refactorlog" />
+  </ItemGroup>
 </Project>

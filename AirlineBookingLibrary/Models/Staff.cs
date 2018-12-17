@@ -26,10 +26,5 @@ namespace AirlineBookingLibrary.Models
         /// Hash of this staff member's password.
         /// </summary>
         public string PasswordHash { get; set; }
-
-        /// <summary>
-        /// Salt used to create this staff member's password hash.
-        /// </summary>
-        public string PasswordSalt { get; set; }
     }
 }
