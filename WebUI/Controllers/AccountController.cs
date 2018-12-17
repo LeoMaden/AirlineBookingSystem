@@ -1,10 +1,12 @@
 ﻿using AirlineBookingLibrary.Helpers;
+using AirlineBookingLibrary.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using WebUI.Models;
@@ -14,6 +16,21 @@ namespace WebUI.Controllers
     [Authorize]
     public class AccountController : Controller
     {
+        private readonly UserManager<User, int> UserManager;
+
+
+        public AccountController() : this(Startup.UserManagerFactory.Invoke())
+        {
+
+        }
+
+        public AccountController(UserManager<User, int> userManager)
+        {
+            this.UserManager = userManager;
+        }
+
+
+        //
         // GET /Account/LogIn
         [AllowAnonymous]
         [HttpGet]
@@ -27,11 +44,12 @@ namespace WebUI.Controllers
             return View(model);
         }
 
+        //
         // POST /Account/Login
         [AllowAnonymous]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult LogIn(LogInModel model)
+        public async Task<ActionResult> LogIn(LogInModel model)
         {
             // Validate information entered by user.
             if (ModelState.IsValid == false)
@@ -39,24 +57,12 @@ namespace WebUI.Controllers
                 return View();
             }
 
-            // Sign user in.
-            if (model.UserName == "leo" && model.Password == "password")
+            var user = await UserManager.FindAsync(model.UserName, model.Password);
+
+            if (user != null)
             {
-                // Create a claim for the user.
-                var identity = new ClaimsIdentity(
-                    new[] {
-                        new Claim(ClaimTypes.Name, "Leo"),
-                        new Claim(ClaimTypes.Email, "leo@admin.com"),
-                        new Claim(ClaimTypes.MobilePhone, "07794294011"),
-                    }, 
-                    DefaultAuthenticationTypes.ApplicationCookie);
+                await SignIn(user);
 
-                var context = Request.GetOwinContext();
-                IAuthenticationManager accountManager = context.Authentication;
-
-                accountManager.SignIn(identity);
-
-                // Redirect user to return url or index if null.
                 return Redirect(model.ReturnUrl.NullIfEmpty() ?? Url.Action("Index", "Home"));
             }
             
@@ -75,6 +81,69 @@ namespace WebUI.Controllers
             // Sign user out and redirect to homepage.
             accountManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             return RedirectToAction("Index", "Home");
+        }
+
+        //
+        // GET /Account/Register
+        [AllowAnonymous]
+        [HttpGet]
+        public ActionResult Register()
+        {
+            return View();
+        }
+
+        //
+        // POST /Account/Register
+        [AllowAnonymous]
+        [HttpPost]
+        public async Task<ActionResult> Register(RegisterModel model)
+        {
+            if (ModelState.IsValid == false)
+            {
+                return View();
+            }
+
+            // Model is valid.
+            var user = new User
+            {
+                Title = model.Title,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                UserName = model.Email,
+                DateOfBirth = model.DateOfBirth,
+                Address = model.SelectedAddress,
+                Email = model.Email,
+                PhoneNumber = model.PhoneNumber,
+                DateCreated = DateTime.Now
+            };
+
+            var result = await UserManager.CreateAsync(user, model.Password);
+
+            if (result.Succeeded)
+            {
+                await SignIn(user);
+                return RedirectToAction("Index", "Home");
+            }
+
+            // Log in did not succeed.
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("", error);
+            }
+
+            return View();
+            
+        }
+
+
+        private async Task SignIn(User user)
+        {
+            var context = Request.GetOwinContext();
+            IAuthenticationManager accountManager = context.Authentication;
+
+            var identity = await UserManager.CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie);
+
+            accountManager.SignIn(identity);
         }
     }
 }
