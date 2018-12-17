@@ -67,10 +67,5 @@ namespace AirlineBookingLibrary.Models
         /// </summary>
         public string PasswordHash { get; set; }
 
-        /// <summary>
-        /// Salt used to create this user's password hash.
-        /// </summary>
-        public string PasswordSalt { get; set; }
-
     }
 }
