@@ -59,6 +59,7 @@
     <Folder Include="Properties" />
     <Folder Include="Tables" />
     <Folder Include="Stored Procedures" />
+    <Folder Include="Stored Procedures\Users" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Users.sql" />
@@ -68,6 +69,17 @@
     <Build Include="Tables\Flights.sql" />
     <Build Include="Tables\FlightSchedules.sql" />
     <Build Include="Tables\Staff.sql" />
+    <Build Include="Stored Procedures\Users\spDeleteUser.sql" />
+    <Build Include="Stored Procedures\Users\spGetUserById.sql" />
+    <Build Include="Stored Procedures\Users\spGetUserEmail.sql" />
+    <Build Include="Stored Procedures\Users\spGetUserPasswordHash.sql" />
+    <Build Include="Stored Procedures\Users\spGetUserPhoneNumber.sql" />
+    <Build Include="Stored Procedures\Users\spGetUsersByEmail.sql" />
+    <Build Include="Stored Procedures\Users\spGetUsersByName.sql" />
+    <Build Include="Stored Procedures\Users\spInsertUser.sql" />
+    <Build Include="Stored Procedures\Users\spSetUserPasswordHash.sql" />
+    <Build Include="Stored Procedures\Users\spSetUserPhoneNumber.sql" />
+    <Build Include="Stored Procedures\Users\spUpdateUser.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="AirlineBookingDatabase.refactorlog" />

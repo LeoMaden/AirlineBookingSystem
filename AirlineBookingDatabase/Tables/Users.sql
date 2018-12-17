@@ -9,5 +9,5 @@
     [Email] NVARCHAR(150) NOT NULL, 
     [PhoneNumber] NVARCHAR(11) NOT NULL, 
     [DateCreated] DATE NOT NULL, 
-    [PasswordHash] NVARCHAR(MAX) NOT NULL
+    [PasswordHash] NVARCHAR(MAX) NULL
 )
