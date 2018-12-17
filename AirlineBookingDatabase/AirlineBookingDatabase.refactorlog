@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Operations Version="1.0" xmlns="http://schemas.microsoft.com/sqlserver/dac/Serialization/2012/02">
+  <Operation Name="Rename Refactor" Key="4840c049-d954-451e-ad97-2e7039e896b3" ChangeDateTime="12/17/2018 21:39:46">
+    <Property Name="ElementName" Value="[dbo].[Flights].[FlightNumber]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Flights]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="FlightScheduleId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="3fa7cd3a-2d31-4d32-9545-284466095f93" ChangeDateTime="12/17/2018 21:41:34">
+    <Property Name="ElementName" Value="[dbo].[FlightSchedules].[OriginAirport]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[FlightSchedules]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="OriginAirportId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="a8b6f43e-5839-435d-948e-0ddf5f6c0599" ChangeDateTime="12/17/2018 21:43:04">
+    <Property Name="ElementName" Value="[dbo].[FK_FlightSchedules_Airport]" />
+    <Property Name="ElementType" Value="SqlForeignKeyConstraint" />
+    <Property Name="ParentElementName" Value="[dbo].[FlightSchedules]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="[FK_FlightSchedules_OriginAirport]" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="3ae74b1e-ea80-4eaf-bfb3-5872bd1b1514" ChangeDateTime="12/17/2018 21:43:11">
+    <Property Name="ElementName" Value="[dbo].[FK_FlightSchedules_Airport]" />
+    <Property Name="ElementType" Value="SqlForeignKeyConstraint" />
+    <Property Name="ParentElementName" Value="[dbo].[FlightSchedules]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="[FK_FlightSchedules_DestinationAirport]" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="431ce52f-e1e4-4420-a22b-7574273af9f8" ChangeDateTime="12/17/2018 21:49:20">
+    <Property Name="ElementName" Value="[dbo].[FK_Flights_ToTable]" />
+    <Property Name="ElementType" Value="SqlForeignKeyConstraint" />
+    <Property Name="ParentElementName" Value="[dbo].[Flights]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="[FK_Flights_OriginAirport]" />
+  </Operation>
+</Operations>
