@@ -1,6 +1,7 @@
 ﻿using AirlineBookingLibrary.Helpers;
 using AirlineBookingLibrary.Models;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,8 @@ namespace WebUI.Controllers
     {
         private readonly UserManager<ApplicationUser, int> UserManager;
 
+        private readonly SignInManager<ApplicationUser, int> SignInManager;
+
 
         public AccountController() : this(Startup.UserManagerFactory.Invoke())
         {
@@ -28,6 +31,7 @@ namespace WebUI.Controllers
         public AccountController(UserManager<ApplicationUser, int> userManager)
         {
             this.UserManager = userManager;
+            this.SignInManager = Startup.SignInManagerFactory.Invoke(Request.GetOwinContext());
         }
 
 
@@ -58,22 +62,30 @@ namespace WebUI.Controllers
                 return View();
             }
 
-            var user = await UserManager.FindAsync(model.UserName, model.Password);
+            var result = await SignInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, false);
 
-            if (user != null)
+            switch (result)
             {
-                await SignIn(user);
+                case SignInStatus.Success:
+                    return RedirectToAction(model.ReturnUrl.NullIfEmpty() ?? Url.Action("Index", "Home"));
 
-                return Redirect(model.ReturnUrl.NullIfEmpty() ?? Url.Action("Index", "Home"));
+                //case SignInStatus.LockedOut:
+                //    break;
+                //case SignInStatus.RequiresVerification:
+                //    break;
+
+                case SignInStatus.Failure:
+                    ModelState.AddModelError("", "Username or password was incorrect");
+                    return View();
+
+                default:
+                    return View();
             }
-            
 
-            // Invalid credentials.
-
-            ModelState.AddModelError("", "Username or password was incorrect");
-            return View();
         }
 
+        //
+        // Log off action
         public ActionResult LogOff()
         {
             var context = Request.GetOwinContext();
@@ -105,6 +117,7 @@ namespace WebUI.Controllers
             }
 
             // Model is valid.
+            // Map RegisterModel to ApplicationUser
             var user = new ApplicationUser
             {
                 Title = model.Title,
@@ -122,7 +135,7 @@ namespace WebUI.Controllers
 
             if (result.Succeeded)
             {
-                await SignIn(user);
+                await SignInManager.SignInAsync(user, false, true);
                 return RedirectToAction("Index", "Home");
             }
 
