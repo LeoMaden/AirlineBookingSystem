@@ -20,7 +20,15 @@ namespace WebUI.Controllers
     {
         private readonly UserManager<ApplicationUser, int> UserManager;
 
-        private readonly SignInManager<ApplicationUser, int> SignInManager;
+        //private readonly SignInManager<ApplicationUser, int> SignInManager;
+
+        public SignInManager<ApplicationUser, int> SignInManager
+        {
+            get
+            {
+                return Startup.SignInManagerFactory(HttpContext.GetOwinContext());
+            }
+        }
 
 
         public AccountController() : this(Startup.UserManagerFactory.Invoke())
@@ -31,7 +39,7 @@ namespace WebUI.Controllers
         public AccountController(UserManager<ApplicationUser, int> userManager)
         {
             this.UserManager = userManager;
-            this.SignInManager = Startup.SignInManagerFactory.Invoke(Request.GetOwinContext());
+            //this.SignInManager = Startup.SignInManagerFactory.Invoke(ControllerContext.HttpContext.GetOwinContext());
         }
 
 
