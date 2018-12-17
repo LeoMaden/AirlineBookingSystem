@@ -58,6 +58,7 @@
     <Compile Include="Models\Staff.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\EmailService.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
