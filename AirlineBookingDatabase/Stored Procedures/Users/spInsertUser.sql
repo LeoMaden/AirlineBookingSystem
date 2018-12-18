@@ -9,8 +9,23 @@
     @DateCreated DATE,
 	@Id int = 0 out
 AS
-	Insert into Users(Title, FirstName, LastName, UserName, DateOfBirth, Email, PhoneNumber, DateCreated)
-	values(@Title, @FirstName, @LastName, @UserName, @DateOfBirth, @Email, @PhoneNumber, @DateCreated);
-
+	Insert into Users(Title, 
+					  FirstName, 
+					  LastName, 
+					  UserName, 
+					  DateOfBirth, 
+					  Email, 
+					  PhoneNumber, 
+					  DateCreated)
+	values(@Title, 
+		   @FirstName, 
+		   @LastName, 
+		   @UserName, 
+		   @DateOfBirth, 
+		   @Email, 
+		   @PhoneNumber, 
+		   @DateCreated);
+	
+	--Set @Id to the id of the record just inserted.
 	select @Id = SCOPE_IDENTITY();
 RETURN 0
