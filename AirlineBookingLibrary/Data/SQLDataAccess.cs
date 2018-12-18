@@ -44,7 +44,14 @@ namespace AirlineBookingLibrary.Data
 
         public async Task DeleteAsync(User user)
         {
-            throw new NotImplementedException();
+            using (IDbConnection connection = Connection)
+            {
+                var p = new DynamicParameters();
+                p.Add("@Id", user.Id);
+
+                await connection.ExecuteAsync("spDeleteUser", p, commandType: CommandType.StoredProcedure);
+
+            }
         }
 
         public async Task<User> FindByEmailAsync(string email)
@@ -59,7 +66,15 @@ namespace AirlineBookingLibrary.Data
 
         public async Task<User> FindByNameAsync(string userName)
         {
-            throw new NotImplementedException();
+            using (IDbConnection connection = Connection)
+            {
+                var p = new DynamicParameters();
+                p.Add("@Username", userName);
+
+                var user = await connection.QueryFirstAsync<User>("spGetUsersByName", p, commandType: CommandType.StoredProcedure);
+
+                return user;
+            }
         }
 
         public async Task<string> GetEmailAsync(User user)
