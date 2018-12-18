@@ -80,6 +80,7 @@
     <Build Include="Stored Procedures\Users\spSetUserPasswordHash.sql" />
     <Build Include="Stored Procedures\Users\spSetUserPhoneNumber.sql" />
     <Build Include="Stored Procedures\Users\spUpdateUser.sql" />
+    <Build Include="Stored Procedures\Users\spSetUserEmail.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="AirlineBookingDatabase.refactorlog" />
