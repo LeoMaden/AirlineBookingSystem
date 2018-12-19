@@ -51,7 +51,7 @@ namespace WebUI.Models.IdentityModels
 
         async Task<string> IUserEmailStore<ApplicationUser, int>.GetEmailAsync(ApplicationUser user)
         {
-            return await GlobalConfig.DbContext.GetEmailAsync(user);
+            return await Task.Run(() => user.Email);
         }
 
         async Task<bool> IUserEmailStore<ApplicationUser, int>.GetEmailConfirmedAsync(ApplicationUser user)
@@ -61,12 +61,12 @@ namespace WebUI.Models.IdentityModels
 
         async Task<string> IUserPasswordStore<ApplicationUser, int>.GetPasswordHashAsync(ApplicationUser user)
         {
-            return await GlobalConfig.DbContext.GetPasswordHashAsync(user);
+            return await Task.Run(() => user.PasswordHash);
         }
 
         async Task<string> IUserPhoneNumberStore<ApplicationUser, int>.GetPhoneNumberAsync(ApplicationUser user)
         {
-            return await GlobalConfig.DbContext.GetPhoneNumberAsync(user);
+            return await Task.Run(() => user.PhoneNumber);
         }
 
         async Task<bool> IUserPhoneNumberStore<ApplicationUser, int>.GetPhoneNumberConfirmedAsync(ApplicationUser user)
@@ -76,7 +76,10 @@ namespace WebUI.Models.IdentityModels
 
         async Task<bool> IUserPasswordStore<ApplicationUser, int>.HasPasswordAsync(ApplicationUser user)
         {
-            return await GlobalConfig.DbContext.HasPasswordAsync(user);
+            bool isPasswordNullOrEmpty = await Task.Run(() => string.IsNullOrEmpty(user.PasswordHash));
+
+            // Will return true if password not empty, false otherwise.
+            return isPasswordNullOrEmpty == false;
         }
 
         async Task IUserClaimStore<ApplicationUser, int>.RemoveClaimAsync(ApplicationUser user, Claim claim)
@@ -86,7 +89,7 @@ namespace WebUI.Models.IdentityModels
 
         async Task IUserEmailStore<ApplicationUser, int>.SetEmailAsync(ApplicationUser user, string email)
         {
-            await GlobalConfig.DbContext.SetEmailAsync(user, email);
+            await Task.Run(() => user.Email = email);
         }
 
         async Task IUserEmailStore<ApplicationUser, int>.SetEmailConfirmedAsync(ApplicationUser user, bool confirmed)
@@ -96,12 +99,12 @@ namespace WebUI.Models.IdentityModels
 
         async Task IUserPasswordStore<ApplicationUser, int>.SetPasswordHashAsync(ApplicationUser user, string passwordHash)
         {
-            await GlobalConfig.DbContext.SetPasswordHashAsync(user, passwordHash);
+            await Task.Run(() => user.PasswordHash = passwordHash);
         }
 
         async Task IUserPhoneNumberStore<ApplicationUser, int>.SetPhoneNumberAsync(ApplicationUser user, string phoneNumber)
         {
-            await GlobalConfig.DbContext.SetPhoneNumberAsync(user, phoneNumber);
+            await Task.Run(() => user.PhoneNumber = phoneNumber);
         }
 
         async Task IUserPhoneNumberStore<ApplicationUser, int>.SetPhoneNumberConfirmedAsync(ApplicationUser user, bool confirmed)
