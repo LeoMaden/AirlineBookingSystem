@@ -16,14 +16,9 @@ namespace WebUI.Controllers
     {
         private readonly UserManager<ApplicationUser, int> UserManager;
 
-        //private readonly SignInManager<ApplicationUser, int> SignInManager;
-
         public SignInManager<ApplicationUser, int> SignInManager
         {
-            get
-            {
-                return Startup.SignInManagerFactory(HttpContext.GetOwinContext());
-            }
+            get => Startup.SignInManagerFactory(HttpContext.GetOwinContext());
         }
 
 
@@ -35,7 +30,6 @@ namespace WebUI.Controllers
         public AccountController(UserManager<ApplicationUser, int> userManager)
         {
             this.UserManager = userManager;
-            //this.SignInManager = Startup.SignInManagerFactory.Invoke(ControllerContext.HttpContext.GetOwinContext());
         }
 
 
@@ -54,7 +48,7 @@ namespace WebUI.Controllers
         }
 
         //
-        // POST /Account/Login
+        // POST /Account/LogIn
         [AllowAnonymous]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -73,11 +67,6 @@ namespace WebUI.Controllers
                 case SignInStatus.Success:
                     return RedirectToAction(model.ReturnUrl.NullIfEmpty() ?? Url.Action("Index", "Home"));
 
-                //case SignInStatus.LockedOut:
-                //    break;
-                //case SignInStatus.RequiresVerification:
-                //    break;
-
                 case SignInStatus.Failure:
                     ModelState.AddModelError("", "Username or password was incorrect");
                     return View();
@@ -89,14 +78,13 @@ namespace WebUI.Controllers
         }
 
         //
-        // Log off action
+        // POST /Account/LogOff
+        [HttpPost]
         public ActionResult LogOff()
         {
-            var context = Request.GetOwinContext();
-            IAuthenticationManager accountManager = context.Authentication;
-
             // Sign user out and redirect to homepage.
-            accountManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+            SignInManager.AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+
             return RedirectToAction("Index", "Home");
         }
 
@@ -156,12 +144,9 @@ namespace WebUI.Controllers
 
         private async Task SignIn(ApplicationUser user)
         {
-            var context = Request.GetOwinContext();
-            IAuthenticationManager accountManager = context.Authentication;
-
             var identity = await UserManager.CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie);
 
-            accountManager.SignIn(identity);
+            SignInManager.AuthenticationManager.SignIn(identity);
         }
     }
 }
