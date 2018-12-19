@@ -8,6 +8,7 @@ namespace WebUI
     {
         public void Configuration(IAppBuilder app)
         {
+            // Configure authentication for the app.
             ConfigureAuth(app);
         }
     }

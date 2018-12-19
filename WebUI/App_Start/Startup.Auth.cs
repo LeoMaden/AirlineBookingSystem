@@ -14,6 +14,7 @@ namespace WebUI
         // Define factory for creating instances of UserManager.
         public static Func<UserManager<ApplicationUser, int>> UserManagerFactory { get; private set; }
 
+        // Define factory for creating instances of SignInManager from an IOwinContext.
         public static Func<IOwinContext, SignInManager<ApplicationUser, int>> SignInManagerFactory { get; private set; }
 
 
@@ -29,10 +30,10 @@ namespace WebUI
             });
 
 
-            // Assign a function to user manager factory. 
+            // Assign a function to UserManagerFactory.
             UserManagerFactory = () =>
             {
-                // Create a user manager that uses the library's store.
+                // Create a user manager that uses UserStore to persist user details.
                 var userManager = new UserManager<ApplicationUser, int>(new UserStore());
 
                 // Add user validator to validate usernames.
@@ -58,6 +59,7 @@ namespace WebUI
                 return userManager;
             };
 
+            // Assign a function to SignInManagerFactory.
             SignInManagerFactory = (IOwinContext context) =>
             {
                 var signInManager = new SignInManager<ApplicationUser, int>(UserManagerFactory.Invoke(), context.Authentication);

@@ -1,7 +1,6 @@
 ﻿using AirlineBookingLibrary.Helpers;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security;
 using System;
 using System.Threading.Tasks;
 using System.Web;
@@ -14,19 +13,29 @@ namespace WebUI.Controllers
     [Authorize]
     public class AccountController : Controller
     {
+        // Create fields for UserManager and SignInManager.
         private readonly UserManager<ApplicationUser, int> UserManager;
 
-        public SignInManager<ApplicationUser, int> SignInManager
+        private SignInManager<ApplicationUser, int> SignInManager
         {
             get => Startup.SignInManagerFactory(HttpContext.GetOwinContext());
         }
 
 
+        /// <summary>
+        /// Default constructor for AccountController.
+        /// Calls another constructor, passing is a UserManager object
+        /// from the UserManagerFactory.
+        /// </summary>
         public AccountController() : this(Startup.UserManagerFactory.Invoke())
         {
 
         }
 
+        /// <summary>
+        /// Constructor for AccountController that takes a UserManager
+        /// as input.
+        /// </summary>
         public AccountController(UserManager<ApplicationUser, int> userManager)
         {
             this.UserManager = userManager;
@@ -60,11 +69,13 @@ namespace WebUI.Controllers
                 return View();
             }
 
+            // Sign in user asynchronously.
             var result = await SignInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, false);
 
             switch (result)
             {
                 case SignInStatus.Success:
+                    // Redirect user to return url or index page if there is no return url.
                     return RedirectToAction(model.ReturnUrl.NullIfEmpty() ?? Url.Action("Index", "Home"));
 
                 case SignInStatus.Failure:
@@ -103,13 +114,13 @@ namespace WebUI.Controllers
         [HttpPost]
         public async Task<ActionResult> Register(RegisterModel model)
         {
+            // Check model is valid.
             if (ModelState.IsValid == false)
             {
                 return View();
             }
-
-            // Model is valid.
-            // Map RegisterModel to ApplicationUser
+            
+            // Map RegisterModel to ApplicationUser.
             var user = new ApplicationUser
             {
                 Title = model.Title,
@@ -123,10 +134,12 @@ namespace WebUI.Controllers
                 DateCreated = DateTime.Now
             };
 
+            // Create the user.
             var result = await UserManager.CreateAsync(user, model.Password);
 
             if (result.Succeeded)
             {
+                // Sign user in and redirect to home.
                 await SignInManager.SignInAsync(user, false, true);
                 return RedirectToAction("Index", "Home");
             }
@@ -139,14 +152,6 @@ namespace WebUI.Controllers
 
             return View();
             
-        }
-
-
-        private async Task SignIn(ApplicationUser user)
-        {
-            var identity = await UserManager.CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie);
-
-            SignInManager.AuthenticationManager.SignIn(identity);
         }
     }
 }
