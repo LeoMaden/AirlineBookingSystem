@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace AirlineBookingLibrary.Models
 {
+    /// <summary>
+    /// Represents a basket containing basket items.
+    /// </summary>
     public class Basket : ICollection<BasketItem>
     {
         public List<BasketItem> Items { get; set; }

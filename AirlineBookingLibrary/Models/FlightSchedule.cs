@@ -2,6 +2,9 @@
 
 namespace AirlineBookingLibrary.Models
 {
+    /// <summary>
+    /// Represents a flight that is scheduled each week.
+    /// </summary>
     public class FlightSchedule : IHasPrimaryKey<int>
     {
         public int Id { get; set; }

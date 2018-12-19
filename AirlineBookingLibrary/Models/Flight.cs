@@ -10,7 +10,8 @@ namespace AirlineBookingLibrary.Models
         public int Id { get; set; }
 
         /// <summary>
-        /// The FlightSchedule object that scheduled this flight (null if not on a regular schedule).
+        /// The FlightSchedule object that scheduled this flight 
+        /// (null if not on a regular schedule).
         /// </summary>
         public FlightSchedule Schedule { get; set; }
 

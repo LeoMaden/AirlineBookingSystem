@@ -3,7 +3,7 @@
 namespace AirlineBookingLibrary.Models
 {
     /// <summary>
-    /// Contains the filters for searches made by a user.
+    /// Contains the filter parameters for searches made by a user.
     /// </summary>
     public class SearchFilterParameters
     {

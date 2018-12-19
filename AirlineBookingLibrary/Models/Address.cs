@@ -1,5 +1,8 @@
 ﻿namespace AirlineBookingLibrary.Models
 {
+    /// <summary>
+    /// Represents a user's address.
+    /// </summary>
     public class Address
     {
         public string StreetAddress { get; set; }
