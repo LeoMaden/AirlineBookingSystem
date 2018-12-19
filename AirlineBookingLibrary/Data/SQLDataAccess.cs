@@ -192,19 +192,14 @@ namespace AirlineBookingLibrary.Data
 
         public async Task SetPasswordHashAsync(User user, string passwordHash)
         {
-            await Task.Run(() => 
+            using (IDbConnection connection = Connection)
             {
-                user.PasswordHash = passwordHash;
-            });
+                var p = new DynamicParameters();
+                p.Add("@Id", user.Id);
+                p.Add("@PasswordHash", passwordHash);
 
-            //using (IDbConnection connection = Connection)
-            //{
-            //    var p = new DynamicParameters();
-            //    p.Add("@Id", user.Id);
-            //    p.Add("@PasswordHash", passwordHash);
-
-            //    await connection.ExecuteAsync("dbo.spSetUserPasswordHash", p, commandType: CommandType.StoredProcedure);
-            //}
+                await connection.ExecuteAsync("dbo.spSetUserPasswordHash", p, commandType: CommandType.StoredProcedure);
+            }
         }
 
         public async Task SetPhoneNumberAsync(User user, string phoneNumber)
