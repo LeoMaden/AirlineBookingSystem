@@ -11,24 +11,9 @@ namespace AirlineBookingLibrary.Models
     /// </summary>
     public class SearchFilterParameters
     {
-        /// <summary>
-        /// The requested origin airport.
-        /// </summary>
         public Airport OriginAirport { get; set; }
-
-        /// <summary>
-        /// The requested destination airport.
-        /// </summary>
         public Airport DestinationAirport { get; set; }
-
-        /// <summary>
-        /// The outbound date for the journey.
-        /// </summary>
         public DateTime OutDate { get; set; }
-
-        /// <summary>
-        /// The inbound date (return) for the journey (can be null if oneway).
-        /// </summary>
         public DateTime InDate { get; set; }
 
         /// <summary>
