@@ -222,6 +222,7 @@
     <None Include="Resources\LogoLarge.png" />
     <None Include="Resources\BALogoLarge.png" />
     <None Include="Resources\MenuHamburger.png" />
+    <None Include="Resources\PersonGlyph.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">

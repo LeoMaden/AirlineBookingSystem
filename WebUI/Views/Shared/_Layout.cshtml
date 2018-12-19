@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title - British Airways</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
@@ -13,7 +13,8 @@
         <div class="container">
 
             <a href="@Url.Action("Index", "Home")">
-                <img src="~/Resources/BALogoLarge.png" alt="Logo" width="500"/>
+                <img src="~/Resources/BALogoLarge.png" alt="Logo" width="500" class="hidden-xs"/>
+                <img src="~/Resources/BALogoLarge.png" alt="Logo" class="img-responsive visible-xs"/>
             </a>
 
             <div class="pull-right hidden-xs" style="margin-top: 30px;">
@@ -26,20 +27,37 @@
     <div class="navbar">
         <div class="container">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle pull-left" data-toggle="collapse" data-target=".navbar-collapse">
+                <button type="button" class="navbar-toggle pull-left" data-toggle="collapse" data-target="#navbar" data-parent="#dropdownGroup">
                     <img src="~/Resources/MenuHamburger.png" alt="Expand/collapse menu" width="20" hight="20" />
                 </button>
+
+                <button type="button" class="navbar-toggle pull-right" data-toggle="collapse" data-target="#loginPartial" data-parent="#dropdownGroup">
+                    <img src="~/Resources/PersonGlyph.png" alt="Expand/collapse login" width="20" hight="20" />
+                </button>
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>
+
+            <div id="dropdownGroup">
+                <div class="panel" style="border: 0; margin: 0; box-shadow: none; padding: 0;">
+                    <div class="navbar-collapse collapse" id="navbar">
+                        <ul class="nav navbar-nav">
+                            <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                            <li>@Html.ActionLink("About", "About", "Home")</li>
+                            <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                        </ul>
+                    </div>
+
+                    <div class="navbar-collapse collapse" id="loginPartial">
+                        <div class="visible-xs">
+                            @Html.Partial("_LoginPartial")
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+
     <div class="container body-content">
+        @*Render the main content of the webpage.*@
         @RenderBody()
         <hr />
         <footer>
