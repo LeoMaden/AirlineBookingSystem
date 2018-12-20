@@ -6,16 +6,16 @@ namespace WebUI.Models
 {
     public class RegisterModel
     {
-        [Required]
+        [Required(ErrorMessage = "Please enter your title")]
         public string Title { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Please enter your first name")]
         public string FirstName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Please enter your last name")]
         public string LastName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Please enter your email address")]
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
@@ -29,6 +29,7 @@ namespace WebUI.Models
         [DataType(DataType.PostalCode)]
         public string Postcode { get; set; }
 
+        // TODO - Address autofill (https://getaddress.io).
         //[Required]
         public Address SelectedAddress { get; set; }
 
