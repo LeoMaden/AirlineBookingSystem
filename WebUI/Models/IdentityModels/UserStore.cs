@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using WebUI.Helpers;
 
 namespace WebUI.Models.IdentityModels
 {
@@ -31,17 +32,17 @@ namespace WebUI.Models.IdentityModels
 
         async Task<ApplicationUser> IUserEmailStore<ApplicationUser, int>.FindByEmailAsync(string email)
         {
-            return await GlobalConfig.DbContext.FindByEmailAsync(email) as ApplicationUser;
+            return (await GlobalConfig.DbContext.FindByEmailAsync(email)).ToApplicationUser();
         }
 
         async Task<ApplicationUser> IUserStore<ApplicationUser, int>.FindByIdAsync(int userId)
         {
-            return await GlobalConfig.DbContext.FindByIdAsync(userId) as ApplicationUser;
+            return (await GlobalConfig.DbContext.FindByIdAsync(userId)).ToApplicationUser();
         }
 
         async Task<ApplicationUser> IUserStore<ApplicationUser, int>.FindByNameAsync(string userName)
         {
-            return await GlobalConfig.DbContext.FindByNameAsync(userName) as ApplicationUser;
+            return (await GlobalConfig.DbContext.FindByNameAsync(userName)).ToApplicationUser();
         }
 
         async Task<IList<Claim>> IUserClaimStore<ApplicationUser, int>.GetClaimsAsync(ApplicationUser user)
