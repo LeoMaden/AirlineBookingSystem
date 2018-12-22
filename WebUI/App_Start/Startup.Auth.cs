@@ -10,8 +10,6 @@ using AirlineBookingLibrary.Models;
 using AirlineBookingLibrary.Data;
 using AirlineBookingLibrary.Services;
 using WebUI.Models.IdentityModels;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security;
 
 namespace WebUI
 {
@@ -19,8 +17,6 @@ namespace WebUI
     {
         // Define factory for creating instances of UserManager.
         public static Func<UserManager<ApplicationUser, int>> UserManagerFactory { get; private set; }
-
-        public static Func<IOwinContext, SignInManager<ApplicationUser, int>> SignInManagerFactory { get; private set; }
 
 
         public void ConfigureAuth(IAppBuilder app)
@@ -63,13 +59,7 @@ namespace WebUI
 
                 return userManager;
             };
-
-            SignInManagerFactory = (IOwinContext context) =>
-            {
-                var signInManager = new SignInManager<ApplicationUser, int>(UserManagerFactory.Invoke(), context.Authentication);
-
-                return signInManager;
-            };
+            
         }
     }
 }
