@@ -6,7 +6,8 @@
     @UserName NVARCHAR(100), 
     @DateOfBirth DATE, 
     @Email NVARCHAR(150), 
-    @PhoneNumber NVARCHAR(11)
+    @PhoneNumber NVARCHAR(11),
+	@PasswordHash NVARCHAR(MAX)
 AS
 	Update Users
 	Set Title = @Title,
@@ -15,6 +16,7 @@ AS
 		UserName = @UserName,
 		DateOfBirth = @DateOfBirth,
 		Email = @Email,
-		PhoneNumber = @PhoneNumber
+		PhoneNumber = @PhoneNumber,
+		PasswordHash = @PasswordHash
 	Where Id = @Id;
 RETURN 0

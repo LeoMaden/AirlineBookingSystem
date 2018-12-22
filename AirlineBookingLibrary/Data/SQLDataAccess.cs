@@ -30,6 +30,7 @@ namespace AirlineBookingLibrary.Data
                 p.Add("@Email", user.Email);
                 p.Add("@PhoneNumber", user.PhoneNumber);
                 p.Add("@DateCreated", user.DateCreated);
+                p.Add("@PasswordHash", user.PasswordHash);
                 p.Add("@Id", user.Id, direction: ParameterDirection.Output);
 
                 await connection.ExecuteAsync("dbo.spInsertUser", p, commandType: CommandType.StoredProcedure);
@@ -131,6 +132,7 @@ namespace AirlineBookingLibrary.Data
                 p.Add("@DateOfBirth", user.DateOfBirth);
                 p.Add("@Email", user.Email);
                 p.Add("@PhoneNumber", user.PhoneNumber);
+                p.Add("@PasswordHash", user.PasswordHash);
 
                 await connection.ExecuteAsync("dbo.spUpdateUser", p, commandType: CommandType.StoredProcedure);
                 

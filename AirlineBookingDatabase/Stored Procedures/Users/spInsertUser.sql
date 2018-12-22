@@ -1,4 +1,6 @@
-﻿CREATE PROCEDURE [dbo].[spInsertUser]
+﻿-- Insert a new user into the database.
+-- The Id of the user is assigned to an output parameter
+CREATE PROCEDURE [dbo].[spInsertUser]
     @Title NVARCHAR(10), 
     @FirstName NVARCHAR(50), 
     @LastName NVARCHAR(50), 
@@ -7,6 +9,7 @@
     @Email NVARCHAR(150), 
     @PhoneNumber NVARCHAR(11), 
     @DateCreated DATE,
+	@PasswordHash NVARCHAR(MAX),
 	@Id int = 0 out
 AS
 	Insert into Users(Title, 
@@ -16,7 +19,8 @@ AS
 					  DateOfBirth, 
 					  Email, 
 					  PhoneNumber, 
-					  DateCreated)
+					  DateCreated,
+					  PasswordHash)
 	values(@Title, 
 		   @FirstName, 
 		   @LastName, 
@@ -24,8 +28,9 @@ AS
 		   @DateOfBirth, 
 		   @Email, 
 		   @PhoneNumber, 
-		   @DateCreated);
+		   @DateCreated,
+		   @PasswordHash);
 	
-	--Set @Id to the id of the record just inserted.
+	-- Set @Id to the id of the record just inserted.
 	select @Id = SCOPE_IDENTITY();
 RETURN 0
