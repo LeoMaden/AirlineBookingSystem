@@ -8,11 +8,17 @@ using WebUI.Helpers;
 
 namespace WebUI.Models.IdentityModels
 {
-    public class UserStore : IUserStore<ApplicationUser, int>, IUserClaimStore<ApplicationUser, int>, IUserEmailStore<ApplicationUser, int>, IUserPasswordStore<ApplicationUser, int>, IUserPhoneNumberStore<ApplicationUser, int>
+    public class UserStore : IUserStore<ApplicationUser, int>,
+        IUserClaimStore<ApplicationUser, int>, 
+        IUserEmailStore<ApplicationUser, int>, 
+        IUserPasswordStore<ApplicationUser, int>, 
+        IUserPhoneNumberStore<ApplicationUser, int>,
+        IUserLockoutStore<ApplicationUser, int>,
+        IUserTwoFactorStore<ApplicationUser, int>
     {
         async Task IUserClaimStore<ApplicationUser, int>.AddClaimAsync(ApplicationUser user, Claim claim)
         {
-            throw new NotImplementedException();
+            return;
         }
 
         async Task IUserStore<ApplicationUser, int>.CreateAsync(ApplicationUser user)
@@ -45,9 +51,14 @@ namespace WebUI.Models.IdentityModels
             return (await GlobalConfig.DbContext.FindByNameAsync(userName)).ToApplicationUser();
         }
 
+        async Task<int> IUserLockoutStore<ApplicationUser, int>.GetAccessFailedCountAsync(ApplicationUser user)
+        {
+            return 0;
+        }
+
         async Task<IList<Claim>> IUserClaimStore<ApplicationUser, int>.GetClaimsAsync(ApplicationUser user)
         {
-            throw new NotImplementedException();
+            return new List<Claim>();
         }
 
         async Task<string> IUserEmailStore<ApplicationUser, int>.GetEmailAsync(ApplicationUser user)
@@ -57,7 +68,17 @@ namespace WebUI.Models.IdentityModels
 
         async Task<bool> IUserEmailStore<ApplicationUser, int>.GetEmailConfirmedAsync(ApplicationUser user)
         {
-            throw new NotImplementedException();
+            return true;
+        }
+
+        async Task<bool> IUserLockoutStore<ApplicationUser, int>.GetLockoutEnabledAsync(ApplicationUser user)
+        {
+            return false;
+        }
+
+        async Task<DateTimeOffset> IUserLockoutStore<ApplicationUser, int>.GetLockoutEndDateAsync(ApplicationUser user)
+        {
+            return new DateTimeOffset(DateTime.Now, TimeSpan.FromTicks(0));
         }
 
         async Task<string> IUserPasswordStore<ApplicationUser, int>.GetPasswordHashAsync(ApplicationUser user)
@@ -72,7 +93,12 @@ namespace WebUI.Models.IdentityModels
 
         async Task<bool> IUserPhoneNumberStore<ApplicationUser, int>.GetPhoneNumberConfirmedAsync(ApplicationUser user)
         {
-            throw new NotImplementedException();
+            return true;
+        }
+
+        async Task<bool> IUserTwoFactorStore<ApplicationUser, int>.GetTwoFactorEnabledAsync(ApplicationUser user)
+        {
+            return false;
         }
 
         async Task<bool> IUserPasswordStore<ApplicationUser, int>.HasPasswordAsync(ApplicationUser user)
@@ -83,9 +109,19 @@ namespace WebUI.Models.IdentityModels
             return isPasswordNullOrEmpty == false;
         }
 
+        async Task<int> IUserLockoutStore<ApplicationUser, int>.IncrementAccessFailedCountAsync(ApplicationUser user)
+        {
+            return 0;
+        }
+
         async Task IUserClaimStore<ApplicationUser, int>.RemoveClaimAsync(ApplicationUser user, Claim claim)
         {
-            throw new NotImplementedException();
+            return;
+        }
+
+        async Task IUserLockoutStore<ApplicationUser, int>.ResetAccessFailedCountAsync(ApplicationUser user)
+        {
+            return;
         }
 
         async Task IUserEmailStore<ApplicationUser, int>.SetEmailAsync(ApplicationUser user, string email)
@@ -95,7 +131,17 @@ namespace WebUI.Models.IdentityModels
 
         async Task IUserEmailStore<ApplicationUser, int>.SetEmailConfirmedAsync(ApplicationUser user, bool confirmed)
         {
-            throw new NotImplementedException();
+            return;
+        }
+
+        async Task IUserLockoutStore<ApplicationUser, int>.SetLockoutEnabledAsync(ApplicationUser user, bool enabled)
+        {
+            return;
+        }
+
+        async Task IUserLockoutStore<ApplicationUser, int>.SetLockoutEndDateAsync(ApplicationUser user, DateTimeOffset lockoutEnd)
+        {
+            return;
         }
 
         async Task IUserPasswordStore<ApplicationUser, int>.SetPasswordHashAsync(ApplicationUser user, string passwordHash)
@@ -110,7 +156,12 @@ namespace WebUI.Models.IdentityModels
 
         async Task IUserPhoneNumberStore<ApplicationUser, int>.SetPhoneNumberConfirmedAsync(ApplicationUser user, bool confirmed)
         {
-            throw new NotImplementedException();
+            return;
+        }
+
+        async Task IUserTwoFactorStore<ApplicationUser, int>.SetTwoFactorEnabledAsync(ApplicationUser user, bool enabled)
+        {
+            return;
         }
 
         async Task IUserStore<ApplicationUser, int>.UpdateAsync(ApplicationUser user)
