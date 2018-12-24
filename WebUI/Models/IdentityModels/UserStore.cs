@@ -1,4 +1,5 @@
 ﻿using AirlineBookingLibrary;
+using AirlineBookingLibrary.Models;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
@@ -38,17 +39,38 @@ namespace WebUI.Models.IdentityModels
 
         async Task<ApplicationUser> IUserEmailStore<ApplicationUser, int>.FindByEmailAsync(string email)
         {
-            return (await GlobalConfig.DbContext.FindByEmailAsync(email)).ToApplicationUser();
+            User user = await GlobalConfig.DbContext.FindByEmailAsync(email);
+
+            if (user == null)
+            {
+                return new ApplicationUser();
+            }
+
+            return user.ToApplicationUser();
         }
 
         async Task<ApplicationUser> IUserStore<ApplicationUser, int>.FindByIdAsync(int userId)
         {
-            return (await GlobalConfig.DbContext.FindByIdAsync(userId)).ToApplicationUser();
+            User user = await GlobalConfig.DbContext.FindByIdAsync(userId);
+
+            if (user == null)
+            {
+                return new ApplicationUser();
+            }
+
+            return user.ToApplicationUser();
         }
 
         async Task<ApplicationUser> IUserStore<ApplicationUser, int>.FindByNameAsync(string userName)
         {
-            return (await GlobalConfig.DbContext.FindByNameAsync(userName)).ToApplicationUser();
+            User user = await GlobalConfig.DbContext.FindByNameAsync(userName);
+
+            if (user == null)
+            {
+                return new ApplicationUser();
+            }
+
+            return user.ToApplicationUser();
         }
 
         async Task<int> IUserLockoutStore<ApplicationUser, int>.GetAccessFailedCountAsync(ApplicationUser user)
