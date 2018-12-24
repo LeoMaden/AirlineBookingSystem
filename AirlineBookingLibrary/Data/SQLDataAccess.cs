@@ -35,7 +35,7 @@ namespace AirlineBookingLibrary.Data
                 p.Add("@DateCreated", user.DateCreated);
                 p.Add("@Id", user.Id, direction: ParameterDirection.Output);
 
-                await connection.ExecuteAsync("dbo.spInsertUser", p, commandType: CommandType.StoredProcedure);
+                await connection.ExecuteAsync("spInsertUser", p, commandType: CommandType.StoredProcedure);
 
                 // Set user Id to value of output parameter.
                 user.Id = p.Get<int>("@Id");
@@ -49,53 +49,19 @@ namespace AirlineBookingLibrary.Data
                 var p = new DynamicParameters();
                 p.Add("@Id", user.Id);
 
-                await connection.ExecuteAsync("dbo.spDeleteUser", p, commandType: CommandType.StoredProcedure);
+                await connection.ExecuteAsync("spDeleteUser", p, commandType: CommandType.StoredProcedure);
 
             }
         }
 
         public async Task<User> FindByEmailAsync(string email)
         {
-            using (IDbConnection connection = Connection)
-            {
-                var p = new DynamicParameters();
-                p.Add("@Email", email);
-
-                User user = null;
-
-                try
-                {
-                    user = await connection.QueryFirstAsync<User>("dbo.spGetUsersByEmail", p, commandType: CommandType.StoredProcedure);
-                }
-                catch (InvalidOperationException)
-                {
-                    // User not found.
-                }
-
-                return user;
-            }
+            throw new NotImplementedException();
         }
 
         public async Task<User> FindByIdAsync(int userId)
         {
-            using (IDbConnection connection = Connection)
-            {
-                var p = new DynamicParameters();
-                p.Add("@Id", userId);
-
-                User user = null;
-
-                try
-                {
-                    user = await connection.QueryFirstAsync<User>("dbo.spGetUserById", p, commandType: CommandType.StoredProcedure);
-                }
-                catch (InvalidOperationException)
-                {
-                    // User not found.
-                }
-
-                return user;
-            }
+            throw new NotImplementedException();
         }
 
         public async Task<User> FindByNameAsync(string userName)
@@ -105,16 +71,7 @@ namespace AirlineBookingLibrary.Data
                 var p = new DynamicParameters();
                 p.Add("@Username", userName);
 
-                User user = null;
-
-                try
-                {
-                    user = await connection.QueryFirstAsync<User>("dbo.spGetUsersByName", p, commandType: CommandType.StoredProcedure);
-                }
-                catch (InvalidOperationException e)
-                {
-                    // User not found.
-                }
+                var user = await connection.QueryFirstAsync<User>("spGetUsersByName", p, commandType: CommandType.StoredProcedure);
 
                 return user;
             }
@@ -122,124 +79,49 @@ namespace AirlineBookingLibrary.Data
 
         public async Task<string> GetEmailAsync(User user)
         {
-            using (IDbConnection connection = Connection)
-            {
-                var p = new DynamicParameters();
-                p.Add("@Id", user.Id);
-
-                string email = null;
-
-                try
-                {
-                    email = await connection.QueryFirstAsync<string>("dbo.spGetUserEmail", p, commandType: CommandType.StoredProcedure);
-                }
-                catch (InvalidOperationException)
-                {
-                    // Email not found for user.
-                }
-
-                return email;
-            }
+            throw new NotImplementedException();
         }
 
         public async Task<string> GetPasswordHashAsync(User user)
         {
-            using (IDbConnection connection = Connection)
-            {
-                var p = new DynamicParameters();
-                p.Add("@Id", user.Id);
-
-                var passwordHash = await connection.QueryFirstAsync<string>("dbo.spGetUserPasswordHash", p, commandType: CommandType.StoredProcedure);
-
-                return passwordHash;
-            }
+            throw new NotImplementedException();
         }
 
         public async Task<string> GetPhoneNumberAsync(User user)
         {
-            using (IDbConnection connection = Connection)
-            {
-                var p = new DynamicParameters();
-                p.Add("@Id", user.Id);
-
-                var phone = await connection.QueryFirstAsync<string>("dbo.spGetUserPhoneNumber", p, commandType: CommandType.StoredProcedure);
-
-                return phone;
-            }
+            throw new NotImplementedException();
         }
 
         public async Task<bool> HasPasswordAsync(User user)
         {
-            var passwordHash = await GetPasswordHashAsync(user);
-
-            if (string.IsNullOrEmpty(passwordHash))
-            {
-                return false;
-            }
-
-            return true;
+            throw new NotImplementedException();
         }
 
         public async Task SetEmailAsync(User user, string email)
         {
-            using (IDbConnection connection = Connection)
-            {
-                var p = new DynamicParameters();
-                p.Add("@Id", user.Id);
-                p.Add("@Email", email);
-
-                await connection.ExecuteAsync("dbo.spSetUserEmail", p, commandType: CommandType.StoredProcedure);
-                
-            }
+            throw new NotImplementedException();
         }
 
         public async Task SetPasswordHashAsync(User user, string passwordHash)
         {
-            await Task.Run(() => 
+            using (IDbConnection connection = Connection)
             {
-                user.PasswordHash = passwordHash;
-            });
+                var p = new DynamicParameters();
+                p.Add("@Id", user.Id);
+                p.Add("@PasswordHash", passwordHash);
 
-            //using (IDbConnection connection = Connection)
-            //{
-            //    var p = new DynamicParameters();
-            //    p.Add("@Id", user.Id);
-            //    p.Add("@PasswordHash", passwordHash);
-
-            //    await connection.ExecuteAsync("dbo.spSetUserPasswordHash", p, commandType: CommandType.StoredProcedure);
-            //}
+                await connection.ExecuteAsync("spSetUserPasswordHash", p, commandType: CommandType.StoredProcedure);
+            }
         }
 
         public async Task SetPhoneNumberAsync(User user, string phoneNumber)
         {
-            using (IDbConnection connection = Connection)
-            {
-                var p = new DynamicParameters();
-                p.Add("@Id", user.Id);
-                p.Add("@PhoneNumber", phoneNumber);
-
-                await connection.ExecuteAsync("dbo.spSetUserPhoneNumber", p, commandType: CommandType.StoredProcedure);
-            }
+            throw new NotImplementedException();
         }
 
         public async Task UpdateAsync(User user)
         {
-            using (IDbConnection connection = Connection)
-            {
-                // Add parameters to query.
-                var p = new DynamicParameters();
-                p.Add("@Id", user.Id);
-                p.Add("@Title", user.Title);
-                p.Add("@FirstName", user.FirstName);
-                p.Add("@LastName", user.LastName);
-                p.Add("@UserName", user.UserName);
-                p.Add("@DateOfBirth", user.DateOfBirth);
-                p.Add("@Email", user.Email);
-                p.Add("@PhoneNumber", user.PhoneNumber);
-
-                await connection.ExecuteAsync("dbo.spUpdateUser", p, commandType: CommandType.StoredProcedure);
-                
-            }
+            throw new NotImplementedException();
         }
     }
 }
