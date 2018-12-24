@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using AirlineBookingLibrary.Models;
 using Dapper;
@@ -108,12 +111,114 @@ namespace AirlineBookingLibrary.Data
                 {
                     user = await connection.QueryFirstAsync<User>("dbo.spGetUsersByName", p, commandType: CommandType.StoredProcedure);
                 }
-                catch (InvalidOperationException)
+                catch (InvalidOperationException e)
                 {
                     // User not found.
                 }
 
                 return user;
+            }
+        }
+
+        public async Task<string> GetEmailAsync(User user)
+        {
+            using (IDbConnection connection = Connection)
+            {
+                var p = new DynamicParameters();
+                p.Add("@Id", user.Id);
+
+                string email = null;
+
+                try
+                {
+                    email = await connection.QueryFirstAsync<string>("dbo.spGetUserEmail", p, commandType: CommandType.StoredProcedure);
+                }
+                catch (InvalidOperationException)
+                {
+                    // Email not found for user.
+                }
+
+                return email;
+            }
+        }
+
+        public async Task<string> GetPasswordHashAsync(User user)
+        {
+            using (IDbConnection connection = Connection)
+            {
+                var p = new DynamicParameters();
+                p.Add("@Id", user.Id);
+
+                var passwordHash = await connection.QueryFirstAsync<string>("dbo.spGetUserPasswordHash", p, commandType: CommandType.StoredProcedure);
+
+                return passwordHash;
+            }
+        }
+
+        public async Task<string> GetPhoneNumberAsync(User user)
+        {
+            using (IDbConnection connection = Connection)
+            {
+                var p = new DynamicParameters();
+                p.Add("@Id", user.Id);
+
+                var phone = await connection.QueryFirstAsync<string>("dbo.spGetUserPhoneNumber", p, commandType: CommandType.StoredProcedure);
+
+                return phone;
+            }
+        }
+
+        public async Task<bool> HasPasswordAsync(User user)
+        {
+            var passwordHash = await GetPasswordHashAsync(user);
+
+            if (string.IsNullOrEmpty(passwordHash))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public async Task SetEmailAsync(User user, string email)
+        {
+            using (IDbConnection connection = Connection)
+            {
+                var p = new DynamicParameters();
+                p.Add("@Id", user.Id);
+                p.Add("@Email", email);
+
+                await connection.ExecuteAsync("dbo.spSetUserEmail", p, commandType: CommandType.StoredProcedure);
+                
+            }
+        }
+
+        public async Task SetPasswordHashAsync(User user, string passwordHash)
+        {
+            await Task.Run(() => 
+            {
+                user.PasswordHash = passwordHash;
+            });
+
+            //using (IDbConnection connection = Connection)
+            //{
+            //    var p = new DynamicParameters();
+            //    p.Add("@Id", user.Id);
+            //    p.Add("@PasswordHash", passwordHash);
+
+            //    await connection.ExecuteAsync("dbo.spSetUserPasswordHash", p, commandType: CommandType.StoredProcedure);
+            //}
+        }
+
+        public async Task SetPhoneNumberAsync(User user, string phoneNumber)
+        {
+            using (IDbConnection connection = Connection)
+            {
+                var p = new DynamicParameters();
+                p.Add("@Id", user.Id);
+                p.Add("@PhoneNumber", phoneNumber);
+
+                await connection.ExecuteAsync("dbo.spSetUserPhoneNumber", p, commandType: CommandType.StoredProcedure);
             }
         }
 
