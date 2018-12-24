@@ -76,7 +76,7 @@ namespace WebUI.Controllers
             {
                 case SignInStatus.Success:
                     // Redirect user to return url or index page if there is no return url.
-                    return RedirectToAction(model.ReturnUrl.NullIfEmpty() ?? Url.Action("Index", "Home"));
+                    return Redirect(model.ReturnUrl.NullIfEmpty() ?? Url.Action("Index", "Home"));
 
                 case SignInStatus.Failure:
                     ModelState.AddModelError("", "Username or password was incorrect");
