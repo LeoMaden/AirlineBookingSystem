@@ -16,7 +16,7 @@ namespace WebUI.Helpers
                 Id = user.Id,
                 Title = user.Title,
                 FirstName = user.FirstName,
-                LastName = user.FirstName,
+                LastName = user.LastName,
                 UserName = user.UserName,
                 DateOfBirth = user.DateOfBirth,
                 Address = user.Address,
