@@ -16,6 +16,21 @@ namespace AirlineBookingLibrary.Data
             }
         }
 
+        public async Task CreateAddressAsync(User user)
+        {
+            using (IDbConnection connection = Connection)
+            {
+                // Add parameters to query.
+                var p = new DynamicParameters();
+                p.Add("@Id", user.Id);
+                p.Add("@StreetAddress", user.Address.StreetAddress);
+                p.Add("@Locality", user.Address.Locality);
+                p.Add("@City", user.Address.City);
+                p.Add("@Postcode", user.Address.Postcode);
+
+                await connection.ExecuteAsync("dbo.spInsertUserAddress", p, commandType: CommandType.StoredProcedure);
+            }
+        }
         public async Task CreateAsync(User user)
         {
             using (IDbConnection connection = Connection)
@@ -37,9 +52,22 @@ namespace AirlineBookingLibrary.Data
 
                 // Set user Id to value of output parameter.
                 user.Id = p.Get<int>("@Id");
+
+                // Store address of user.
+                await CreateAddressAsync(user);
             }
         }
 
+        public async Task DeleteAddressAsync(User user)
+        {
+            using (IDbConnection connection = Connection)
+            {
+                var p = new DynamicParameters();
+                p.Add("@Id", user.Id);
+
+                await connection.ExecuteAsync("dbo.spDeleteUserAddress", p, commandType: CommandType.StoredProcedure);
+            }
+        }
         public async Task DeleteAsync(User user)
         {
             using (IDbConnection connection = Connection)
@@ -49,6 +77,19 @@ namespace AirlineBookingLibrary.Data
 
                 await connection.ExecuteAsync("dbo.spDeleteUser", p, commandType: CommandType.StoredProcedure);
 
+                // Delete user address.
+                await DeleteAddressAsync(user);
+            }
+        }
+
+        public async Task<Address> FindAddressByIdAsync(int userId)
+        {
+            using (IDbConnection connection = Connection)
+            {
+                var p = new DynamicParameters();
+                p.Add("@Id", userId);
+
+                return await connection.QueryFirstAsync<Address>("dbo.spGetUserAddress", p, commandType: CommandType.StoredProcedure);
             }
         }
 
@@ -64,6 +105,9 @@ namespace AirlineBookingLibrary.Data
                 try
                 {
                     user = await connection.QueryFirstAsync<User>("dbo.spGetUsersByEmail", p, commandType: CommandType.StoredProcedure);
+
+                    // Add user address to User object.
+                    user.Address = await FindAddressByIdAsync(user.Id);
                 }
                 catch (InvalidOperationException)
                 {
@@ -73,7 +117,6 @@ namespace AirlineBookingLibrary.Data
                 return user;
             }
         }
-
         public async Task<User> FindByIdAsync(int userId)
         {
             using (IDbConnection connection = Connection)
@@ -86,6 +129,9 @@ namespace AirlineBookingLibrary.Data
                 try
                 {
                     user = await connection.QueryFirstAsync<User>("dbo.spGetUserById", p, commandType: CommandType.StoredProcedure);
+
+                    // Add user address to User object.
+                    user.Address = await FindAddressByIdAsync(user.Id);
                 }
                 catch (InvalidOperationException)
                 {
@@ -95,7 +141,6 @@ namespace AirlineBookingLibrary.Data
                 return user;
             }
         }
-
         public async Task<User> FindByNameAsync(string userName)
         {
             using (IDbConnection connection = Connection)
@@ -108,6 +153,9 @@ namespace AirlineBookingLibrary.Data
                 try
                 {
                     user = await connection.QueryFirstAsync<User>("dbo.spGetUsersByName", p, commandType: CommandType.StoredProcedure);
+
+                    // Add user address to User object.
+                    user.Address = await FindAddressByIdAsync(user.Id);
                 }
                 catch (InvalidOperationException)
                 {
@@ -118,6 +166,20 @@ namespace AirlineBookingLibrary.Data
             }
         }
 
+        public async Task UpdateAddressAsync(User user)
+        {
+            using (IDbConnection connection = Connection)
+            {
+                var p = new DynamicParameters();
+                p.Add("@Id", user.Id);
+                p.Add("@StreetAddress", user.Address.StreetAddress);
+                p.Add("@Locality", user.Address.Locality);
+                p.Add("@City", user.Address.City);
+                p.Add("@Postcode", user.Address.Postcode);
+
+                await connection.ExecuteAsync("dbo.spUpdateUserAddress", p, commandType: CommandType.StoredProcedure);
+            }
+        }
         public async Task UpdateAsync(User user)
         {
             using (IDbConnection connection = Connection)
@@ -135,7 +197,9 @@ namespace AirlineBookingLibrary.Data
                 p.Add("@PasswordHash", user.PasswordHash);
 
                 await connection.ExecuteAsync("dbo.spUpdateUser", p, commandType: CommandType.StoredProcedure);
-                
+
+                // Update user's address.
+                await UpdateAddressAsync(user);
             }
         }
     }

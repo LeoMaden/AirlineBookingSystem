@@ -85,6 +85,7 @@
     <Build Include="Stored Procedures\Users\spInsertUserAddress.sql" />
     <Build Include="Stored Procedures\Users\spDeleteUserAddress.sql" />
     <Build Include="Stored Procedures\Users\spGetUserAddress.sql" />
+    <Build Include="Stored Procedures\Users\spUpdateUserAddress.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="AirlineBookingDatabase.refactorlog" />
