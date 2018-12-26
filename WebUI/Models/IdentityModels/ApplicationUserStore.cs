@@ -1,4 +1,5 @@
 ﻿using AirlineBookingLibrary;
+using AirlineBookingLibrary.Data;
 using AirlineBookingLibrary.Models;
 using Microsoft.AspNet.Identity;
 using System;
@@ -17,6 +18,23 @@ namespace WebUI.Models.IdentityModels
         IUserLockoutStore<ApplicationUser, int>,
         IUserTwoFactorStore<ApplicationUser, int>
     {
+        /// <summary>
+        /// Private variable for the IDataAccess dependancy.
+        /// </summary>
+        private IDataAccess _dataAccess;
+
+
+        /// <summary>
+        /// Create a new instance of ApplicationUserStore that accesses
+        /// a store using the provided IDataAccess.
+        /// </summary>
+        /// <param name="dataAccess">The IDataAccess used to access the store.</param>
+        public ApplicationUserStore(IDataAccess dataAccess)
+        {
+            _dataAccess = dataAccess;
+        }
+
+
         async Task IUserClaimStore<ApplicationUser, int>.AddClaimAsync(ApplicationUser user, Claim claim)
         {
             return;
@@ -24,12 +42,12 @@ namespace WebUI.Models.IdentityModels
 
         async Task IUserStore<ApplicationUser, int>.CreateAsync(ApplicationUser user)
         {
-            await GlobalConfig.DbContext.CreateAsync(user);
+            await _dataAccess.CreateAsync(user);
         }
 
         async Task IUserStore<ApplicationUser, int>.DeleteAsync(ApplicationUser user)
         {
-            await GlobalConfig.DbContext.DeleteAsync(user);
+            await _dataAccess.DeleteAsync(user);
         }
 
         void IDisposable.Dispose()
@@ -39,7 +57,7 @@ namespace WebUI.Models.IdentityModels
 
         async Task<ApplicationUser> IUserEmailStore<ApplicationUser, int>.FindByEmailAsync(string email)
         {
-            User user = await GlobalConfig.DbContext.FindByEmailAsync(email);
+            User user = await _dataAccess.FindByEmailAsync(email);
 
             if (user == null)
             {
@@ -51,7 +69,7 @@ namespace WebUI.Models.IdentityModels
 
         async Task<ApplicationUser> IUserStore<ApplicationUser, int>.FindByIdAsync(int userId)
         {
-            User user = await GlobalConfig.DbContext.FindByIdAsync(userId);
+            User user = await _dataAccess.FindByIdAsync(userId);
 
             if (user == null)
             {
@@ -63,7 +81,7 @@ namespace WebUI.Models.IdentityModels
 
         async Task<ApplicationUser> IUserStore<ApplicationUser, int>.FindByNameAsync(string userName)
         {
-            User user = await GlobalConfig.DbContext.FindByNameAsync(userName);
+            User user = await _dataAccess.FindByNameAsync(userName);
 
             if (user == null)
             {
@@ -188,7 +206,7 @@ namespace WebUI.Models.IdentityModels
 
         async Task IUserStore<ApplicationUser, int>.UpdateAsync(ApplicationUser user)
         {
-            await GlobalConfig.DbContext.UpdateAsync(user);
+            await _dataAccess.UpdateAsync(user);
         }
     }
 }

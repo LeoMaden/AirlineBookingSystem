@@ -9,6 +9,7 @@ using WebUI.Models.IdentityModels;
 using Autofac.Integration.Mvc;
 using System.Web.Mvc;
 using WebUI.Controllers;
+using AirlineBookingLibrary.Data;
 
 namespace WebUI.App_Start
 {
@@ -27,10 +28,13 @@ namespace WebUI.App_Start
             builder.RegisterType<AccountController>().InstancePerRequest();
             builder.RegisterType<ManageController>().InstancePerRequest();
 
-            // Register types.
+            // Register WebUI types.
             builder.RegisterType<ApplicationUserStore>().As<IUserStore<ApplicationUser, int>>();
             builder.RegisterType<ApplicationUserManager>().As<UserManager<ApplicationUser, int>>();
             builder.RegisterType<ApplicationSignInManager>().As<SignInManager<ApplicationUser, int>>();
+
+            // Register AirlineBookingLibrary types.
+            builder.RegisterType<SQLDataAccess>().As<IDataAccess>();
 
             // Build container.
             IContainer container = builder.Build();
