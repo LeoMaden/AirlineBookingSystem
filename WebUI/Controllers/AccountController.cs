@@ -13,32 +13,21 @@ namespace WebUI.Controllers
     [Authorize]
     public class AccountController : Controller
     {
-        // Create fields for UserManager and SignInManager.
-        private readonly UserManager<ApplicationUser, int> UserManager;
+        // Create private fields for UserManager and SignInManager.
+        private UserManager<ApplicationUser, int> _userManager;
+        private SignInManager<ApplicationUser, int> _signInManager;
 
-        private SignInManager<ApplicationUser, int> SignInManager
-        {
-            get => Startup.SignInManagerFactory(HttpContext.GetOwinContext());
-        }
-
-
+        
         /// <summary>
-        /// Default constructor for AccountController.
-        /// Calls another constructor, passing is a UserManager object
-        /// from the UserManagerFactory.
+        /// Create a new AccountController instance using supplied
+        /// UserManager and SignInManager.
         /// </summary>
-        public AccountController() : this(Startup.UserManagerFactory.Invoke())
+        /// <param name="userManager">The UserManager object that will manage users</param>
+        /// <param name="signInManager">The SignInManagerObject that will manage user sign ins</param>
+        public AccountController(UserManager<ApplicationUser, int> userManager, SignInManager<ApplicationUser, int> signInManager)
         {
-
-        }
-
-        /// <summary>
-        /// Constructor for AccountController that takes a UserManager
-        /// as input.
-        /// </summary>
-        public AccountController(UserManager<ApplicationUser, int> userManager)
-        {
-            this.UserManager = userManager;
+            _userManager = userManager;
+            _signInManager = signInManager;
         }
 
 
@@ -70,7 +59,7 @@ namespace WebUI.Controllers
             }
 
             // Sign in user asynchronously.
-            var result = await SignInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, false);
+            var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, false);
 
             switch (result)
             {
@@ -94,7 +83,7 @@ namespace WebUI.Controllers
         public ActionResult LogOff()
         {
             // Sign user out and redirect to homepage.
-            SignInManager.AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+            _signInManager.AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
 
             return RedirectToAction("Index", "Home");
         }
@@ -135,12 +124,12 @@ namespace WebUI.Controllers
             };
 
             // Create the user.
-            var result = await UserManager.CreateAsync(user, model.Password);
+            var result = await _userManager.CreateAsync(user, model.Password);
 
             if (result.Succeeded)
             {
                 // Sign user in and redirect to home.
-                await SignInManager.SignInAsync(user, false, true);
+                await _signInManager.SignInAsync(user, false, true);
                 return RedirectToAction("Index", "Home");
             }
 

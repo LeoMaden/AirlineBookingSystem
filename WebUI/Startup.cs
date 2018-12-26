@@ -1,5 +1,6 @@
 ﻿using Microsoft.Owin;
 using Owin;
+using WebUI.App_Start;
 
 [assembly: OwinStartupAttribute(typeof(WebUI.Startup))]
 namespace WebUI
@@ -10,6 +11,10 @@ namespace WebUI
         {
             // Configure authentication for the app.
             ConfigureAuth(app);
+
+            // Register app to use Autofac.
+            app.UseAutofacMiddleware(ContainerConfig.Configure());
+            app.UseAutofacMvc();
         }
     }
 }

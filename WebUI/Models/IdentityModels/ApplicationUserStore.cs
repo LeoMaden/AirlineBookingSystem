@@ -9,7 +9,7 @@ using WebUI.Helpers;
 
 namespace WebUI.Models.IdentityModels
 {
-    public class UserStore : IUserStore<ApplicationUser, int>,
+    public class ApplicationUserStore : IUserStore<ApplicationUser, int>,
         IUserClaimStore<ApplicationUser, int>, 
         IUserEmailStore<ApplicationUser, int>, 
         IUserPasswordStore<ApplicationUser, int>, 
@@ -34,7 +34,7 @@ namespace WebUI.Models.IdentityModels
 
         void IDisposable.Dispose()
         {
-            throw new NotImplementedException();
+            return;
         }
 
         async Task<ApplicationUser> IUserEmailStore<ApplicationUser, int>.FindByEmailAsync(string email)
