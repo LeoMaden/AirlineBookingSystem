@@ -23,5 +23,18 @@ namespace AirlineBookingLibrary.Tests
             // Assert
             Assert.Equal(expected, actual);
         }
+
+        [Theory]
+        [InlineData("hello world")]
+        [InlineData("test string")]
+        [InlineData("s")]
+        public void NullIfEmpty_ReturnsStringCorrectly(string str)
+        {
+            string expected = str;
+
+            string actual = str.NullIfEmpty();
+
+            Assert.Equal(expected, actual);
+        }
     }
 }
