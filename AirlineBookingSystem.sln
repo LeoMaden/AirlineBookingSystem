@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebUI", "WebUI\WebUI.csproj
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "AirlineBookingDatabase", "AirlineBookingDatabase\AirlineBookingDatabase.sqlproj", "{4F3DD8FD-B911-4A14-82E9-E02CB669DDC5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirlineBookingLibrary.Tests", "AirlineBookingLibrary.Tests\AirlineBookingLibrary.Tests.csproj", "{272F7603-3BBD-4661-9A49-EB9322299DC3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +31,10 @@ Global
 		{4F3DD8FD-B911-4A14-82E9-E02CB669DDC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4F3DD8FD-B911-4A14-82E9-E02CB669DDC5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4F3DD8FD-B911-4A14-82E9-E02CB669DDC5}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{272F7603-3BBD-4661-9A49-EB9322299DC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{272F7603-3BBD-4661-9A49-EB9322299DC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{272F7603-3BBD-4661-9A49-EB9322299DC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{272F7603-3BBD-4661-9A49-EB9322299DC3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
