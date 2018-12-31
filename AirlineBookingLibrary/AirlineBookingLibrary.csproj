@@ -45,9 +45,19 @@
     <Compile Include="Enums\TravelClass.cs" />
     <Compile Include="GlobalConfig.cs" />
     <Compile Include="Helpers\StringExtensions.cs" />
+    <Compile Include="Logic\BookingManager.cs" />
+    <Compile Include="Logic\FlightManager.cs" />
+    <Compile Include="Logic\FlightPriceCalculator.cs" />
+    <Compile Include="Logic\IFlightManager.cs" />
+    <Compile Include="Logic\IBookingManager.cs" />
+    <Compile Include="Logic\IFlightPriceCalculator.cs" />
+    <Compile Include="Logic\IPaymentManager.cs" />
+    <Compile Include="Logic\MethodResult.cs" />
+    <Compile Include="Logic\PaymentManager.cs" />
+    <Compile Include="Models\PaymentInfo.cs" />
+    <Compile Include="Models\SelectedFlights.cs" />
+    <Compile Include="Services\IMessageService.cs" />
     <Compile Include="Models\Address.cs" />
-    <Compile Include="Models\Basket.cs" />
-    <Compile Include="Models\BasketItem.cs" />
     <Compile Include="Models\FlightSchedule.cs" />
     <Compile Include="Data\IDataAccess.cs" />
     <Compile Include="Data\SQLDataAccess.cs" />
@@ -68,6 +78,9 @@
     <PackageReference Include="Microsoft.AspNet.Identity.Owin">
       <Version>2.2.2</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Diagrams\ClassDiagram.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

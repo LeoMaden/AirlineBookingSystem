@@ -1,0 +1,268 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
+  <Class Name="AirlineBookingLibrary.Models.Address">
+    <Position X="22" Y="1.25" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAIAAAAgAAAgAAAAAAAAAAAAAAAABA=</HashCode>
+      <FileName>Models\Address.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AirlineBookingLibrary.Models.Airport" BaseTypeListCollapsed="true">
+    <Position X="24" Y="6.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAQAAAAAAA=</HashCode>
+      <FileName>Models\Airport.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="AirlineBookingLibrary.Models.Booking" BaseTypeListCollapsed="true">
+    <Position X="23.25" Y="10" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAEAAAAAEEgAAAIAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Booking.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="FlightsDetails" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="AirlineBookingLibrary.Models.Flight" BaseTypeListCollapsed="true">
+    <Position X="19" Y="6.5" Width="3" />
+    <AssociationLine Name="Schedule" Type="AirlineBookingLibrary.Models.FlightSchedule" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="21.812" Y="7.988" />
+        <Point X="21.812" Y="8.908" />
+        <Point X="30.188" Y="8.908" />
+        <Point X="30.188" Y="8.373" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAACEAAAAAAAAAAAAAIAAAAAAEAAAAAgAQAAAAAAAAA=</HashCode>
+      <FileName>Models\Flight.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="OriginAirport" />
+      <Property Name="DestinationAirport" />
+      <Property Name="Schedule" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="AirlineBookingLibrary.Models.FlightSchedule" BaseTypeListCollapsed="true">
+    <Position X="28.75" Y="6.5" Width="2.75" />
+    <AssociationLine Name="DestinationAirport" Type="AirlineBookingLibrary.Models.Airport">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.056" Y="0.139" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="OriginAirport" Type="AirlineBookingLibrary.Models.Airport">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.064" Y="0.162" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAACEAAAAAAAAAIAAAAAEAAAACAAAAAAAQAEAAAAAAA=</HashCode>
+      <FileName>Models\FlightSchedule.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="DestinationAirport" />
+      <Property Name="OriginAirport" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="AirlineBookingLibrary.Models.SearchFilterParameters">
+    <Position X="28" Y="4" Width="2.75" />
+    <AssociationLine Name="DestinationAirport" Type="AirlineBookingLibrary.Models.Airport" FixedToPoint="true">
+      <Path>
+        <Point X="28" Y="4.53" />
+        <Point X="25.938" Y="4.53" />
+        <Point X="25.938" Y="6.5" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-1.97" Y="2.003" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="OriginAirport" Type="AirlineBookingLibrary.Models.Airport" FixedToPoint="true">
+      <Path>
+        <Point X="28" Y="5.04" />
+        <Point X="26.312" Y="5.04" />
+        <Point X="26.312" Y="6.5" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-1.66" Y="1.536" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAEAEAAAAAAAAAAAAAAAABAAAAAAAAAQAAEAAAAAA=</HashCode>
+      <FileName>Models\SearchFilterParameters.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="DestinationAirport" />
+      <Property Name="OriginAirport" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="AirlineBookingLibrary.Models.Staff" BaseTypeListCollapsed="true">
+    <Position X="29" Y="1.25" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AACCAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>Models\Staff.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="AirlineBookingLibrary.Models.User" BaseTypeListCollapsed="true">
+    <Position X="18" Y="1.25" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AACCAEAAACAAAEAAAAAAQAAAAAAQAAACAQAEAAAAAAg=</HashCode>
+      <FileName>Models\User.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Address" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="AirlineBookingLibrary.Data.SQLDataAccess" Collapsed="true">
+    <Position X="15.5" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAACAIEAAAAAIAAAAgAACAgAAAAAAIAgAIA=</HashCode>
+      <FileName>Data\SQLDataAccess.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="AirlineBookingLibrary.Services.EmailService" Collapsed="true">
+    <Position X="15.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\EmailService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="AirlineBookingLibrary.Models.SelectedFlights">
+    <Position X="19" Y="10" Width="2.5" />
+    <AssociationLine Name="Outbound" Type="AirlineBookingLibrary.Models.Flight" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="19" Y="10.449" />
+        <Point X="17.807" Y="10.449" />
+        <Point X="17.807" Y="7.244" />
+        <Point X="19" Y="7.244" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.071" Y="0.092" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="Inbound" Type="AirlineBookingLibrary.Models.Flight" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="19" Y="10.897" />
+        <Point X="17.482" Y="10.897" />
+        <Point X="17.482" Y="6.841" />
+        <Point X="19" Y="6.841" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.077" Y="0.124" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAIAAgAAAAAIAAAAAAAAAAAAQAQQAAIAAAAAAAAAA=</HashCode>
+      <FileName>Models\SelectedFlights.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Outbound" />
+      <Property Name="Inbound" />
+      <Property Name="TravelClass" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="AirlineBookingLibrary.Models.PaymentInfo">
+    <Position X="25.5" Y="1.25" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>IAAACAAAAAAAAAAAAAAAAAAAQAAAAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>Models\PaymentInfo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AirlineBookingLibrary.Logic.BookingManager" Collapsed="true">
+    <Position X="15.5" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAQABAAAAAAAAGAAAAAAAAAAAAAAAAAAACAAAAA=</HashCode>
+      <FileName>Logic\BookingManager.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="AirlineBookingLibrary.Logic.PaymentManager" Collapsed="true">
+    <Position X="15.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Logic\PaymentManager.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="AirlineBookingLibrary.Logic.FlightManager" Collapsed="true">
+    <Position X="15.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAAAAQAAAAAAAAAAAAgAAIAAAAAAAQAACAAA=</HashCode>
+      <FileName>Logic\FlightManager.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="AirlineBookingLibrary.Logic.FlightPriceCalculator" Collapsed="true">
+    <Position X="15.5" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAA=</HashCode>
+      <FileName>Logic\FlightPriceCalculator.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="AirlineBookingLibrary.Models.IHasPrimaryKey&lt;TKey&gt;">
+    <Position X="4.25" Y="4" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\IHasPrimaryKey.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="AirlineBookingLibrary.Data.IDataAccess">
+    <Position X="4.25" Y="0.75" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAACAIAAAAAAIAAAAgAACAgAAAAAAIAgAIA=</HashCode>
+      <FileName>Data\IDataAccess.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="AirlineBookingLibrary.Services.IMessageService">
+    <Position X="6.75" Y="4" Width="4.25" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\IMessageService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="AirlineBookingLibrary.Logic.IBookingManager">
+    <Position X="8" Y="0.75" Width="7" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAA=</HashCode>
+      <FileName>Logic\IBookingManager.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="AirlineBookingLibrary.Logic.IFlightPriceCalculator">
+    <Position X="4.25" Y="8" Width="5.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAA=</HashCode>
+      <FileName>Logic\IFlightPriceCalculator.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="AirlineBookingLibrary.Logic.IPaymentManager">
+    <Position X="8" Y="2.5" Width="5.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Logic\IPaymentManager.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="AirlineBookingLibrary.Logic.IFlightManager">
+    <Position X="4.25" Y="5.5" Width="8.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAAAAQAAAAAAAAAAAAgAAIAAAAAAAQAACAAA=</HashCode>
+      <FileName>Logic\IFlightManager.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="AirlineBookingLibrary.Enums.TravelClass">
+    <Position X="19.5" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAEAAAAAA=</HashCode>
+      <FileName>Enums\TravelClass.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
