@@ -34,9 +34,6 @@ namespace WebUI.Models.IdentityModels
                 RequireNonLetterOrDigit = false,
                 RequireUppercase = false
             };
-
-            // Add email service for sending email confirmations.
-            EmailService = new EmailService();
         }
     }
 }
