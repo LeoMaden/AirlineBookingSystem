@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
 using AirlineBookingLibrary.Models;
@@ -58,6 +59,11 @@ namespace AirlineBookingLibrary.Data
             }
         }
 
+        public Task CreateBookingAsync(Booking booking, User user)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task DeleteAddressAsync(User user)
         {
             using (IDbConnection connection = Connection)
@@ -91,6 +97,11 @@ namespace AirlineBookingLibrary.Data
 
                 return await connection.QueryFirstAsync<Address>("dbo.spGetUserAddress", p, commandType: CommandType.StoredProcedure);
             }
+        }
+
+        public Task<ICollection<Booking>> FindBookingsByUserIdAsync(int userId)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task<User> FindByEmailAsync(string email)
@@ -164,6 +175,11 @@ namespace AirlineBookingLibrary.Data
 
                 return user;
             }
+        }
+
+        public Task<ICollection<Flight>> FindFlightsAsync(Airport origin, Airport destination, DateTime date)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task UpdateAddressAsync(User user)

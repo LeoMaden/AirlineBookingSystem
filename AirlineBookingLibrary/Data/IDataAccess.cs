@@ -1,4 +1,6 @@
 ﻿using AirlineBookingLibrary.Models;
+using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace AirlineBookingLibrary.Data
@@ -22,5 +24,10 @@ namespace AirlineBookingLibrary.Data
 
         Task UpdateAsync(User user);
         Task UpdateAddressAsync(User user);
+
+        Task<ICollection<Booking>> FindBookingsByUserIdAsync(int userId);
+        Task CreateBookingAsync(Booking booking, User user);
+
+        Task<ICollection<Flight>> FindFlightsAsync(Airport origin, Airport destination, DateTime date);
     }
 }

@@ -26,7 +26,7 @@ namespace AirlineBookingLibrary.Logic
 
         public async Task<IEnumerable<Booking>> FindBookingsByUserAsync(User user)
         {
-            throw new NotImplementedException();
+            return await _dataAccess.FindBookingsByUserIdAsync(user.Id);
         }
 
         public async Task<MethodResult> MakeBookingAsync(User user, SelectedFlights selectedFlights, PaymentInfo paymentInfo)

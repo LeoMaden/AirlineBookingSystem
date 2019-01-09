@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace AirlineBookingLibrary.Tests
+namespace AirlineBookingLibrary.Tests.HelpersTests
 {
     public class StringExtensionsTests
     {
