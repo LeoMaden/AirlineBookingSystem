@@ -64,6 +64,16 @@ namespace AirlineBookingLibrary.Data
             throw new NotImplementedException();
         }
 
+        public Task CreateFlightAsync(Flight flight)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task CreateStaffAsync(Staff staff)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task DeleteAddressAsync(User user)
         {
             using (IDbConnection connection = Connection)
@@ -86,6 +96,16 @@ namespace AirlineBookingLibrary.Data
                 // Delete user address.
                 await DeleteAddressAsync(user);
             }
+        }
+
+        public Task DeleteFlightAsync(Flight flight)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task DeleteStaffAsync(Staff staff)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task<Address> FindAddressByIdAsync(int userId)
@@ -182,6 +202,21 @@ namespace AirlineBookingLibrary.Data
             throw new NotImplementedException();
         }
 
+        public Task<Staff> FindStaffByIdAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Staff> FindStaffByNameAsync(string userName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<ICollection<Airport>> GetAirportsAsync()
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task UpdateAddressAsync(User user)
         {
             using (IDbConnection connection = Connection)
@@ -217,6 +252,16 @@ namespace AirlineBookingLibrary.Data
                 // Update user's address.
                 await UpdateAddressAsync(user);
             }
+        }
+
+        public Task UpdateFlightAsync(Flight flight)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task UpdateStaffAsync(Staff staff)
+        {
+            throw new NotImplementedException();
         }
     }
 }

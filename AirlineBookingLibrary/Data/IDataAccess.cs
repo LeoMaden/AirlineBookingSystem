@@ -25,9 +25,30 @@ namespace AirlineBookingLibrary.Data
         Task UpdateAsync(User user);
         Task UpdateAddressAsync(User user);
 
+        //
+        // Booking data access.
         Task<ICollection<Booking>> FindBookingsByUserIdAsync(int userId);
         Task CreateBookingAsync(Booking booking, User user);
 
+        //
+        // Flight data access.
+        Task CreateFlightAsync(Flight flight);
+        Task DeleteFlightAsync(Flight flight);
+        Task UpdateFlightAsync(Flight flight);
         Task<ICollection<Flight>> FindFlightsAsync(Airport origin, Airport destination, DateTime date);
+
+        //
+        // Airport data access.
+        Task<ICollection<Airport>> GetAirportsAsync();
+
+        //
+        // Staff data access.
+        Task CreateStaffAsync(Staff staff);
+        Task DeleteStaffAsync(Staff staff);
+        Task UpdateStaffAsync(Staff staff);
+
+        Task<Staff> FindStaffByIdAsync(int id);
+
+        Task<Staff> FindStaffByNameAsync(string userName);
     }
 }
