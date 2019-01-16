@@ -16,7 +16,13 @@ namespace AirlineBookingLibrary.Models
         /// <summary>
         /// Whether the journey is return (true) or one way (false).
         /// </summary>
-        public bool Return { get; }
+        public bool Return
+        {
+            get
+            {
+                return InDate != new DateTime();
+            }
+        }
 
 
 

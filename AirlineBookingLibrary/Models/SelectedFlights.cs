@@ -4,6 +4,9 @@ using System.Collections.Generic;
 
 namespace AirlineBookingLibrary.Models
 {
+    /// <summary>
+    /// Contains details about flights selected by a user.
+    /// </summary>
     public class SelectedFlights : IEquatable<SelectedFlights>
     {
         public Flight Outbound { get; set; }
@@ -12,7 +15,13 @@ namespace AirlineBookingLibrary.Models
         public int NumChildren { get; set; }
         public decimal TotalPrice { get; set; }
         public TravelClass TravelClass { get; set; }
-        public bool IsReturn { get; }
+        public bool IsReturn
+        {
+            get
+            {
+                return Inbound != null;
+            }
+        }
 
 
 

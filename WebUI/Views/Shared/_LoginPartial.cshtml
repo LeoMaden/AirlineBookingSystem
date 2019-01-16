@@ -3,6 +3,7 @@
 
 @if (Request.IsAuthenticated)
 {
+    @*Begin a LogOff form is user is authenticated so the user can log off if they want.*@
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
         @Html.AntiForgeryToken()
@@ -17,6 +18,7 @@
 }
 else
 {
+    @*Give user option to log in or register if they have not been authenticated.*@
     <ul class="nav navbar-nav navbar-right">
         <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
         <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>

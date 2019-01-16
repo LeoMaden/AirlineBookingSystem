@@ -3,12 +3,17 @@ using System.Collections.Generic;
 
 namespace AirlineBookingLibrary.Models
 {
+    /// <summary>
+    /// Contains a user's card details.
+    /// </summary>
     public class PaymentInfo : IEquatable<PaymentInfo>
     {
         public string NameOnCard { get; set; }
         public string CardNumber { get; set; }
         public DateTime ExpirationDate { get; set; }
         public string CVV { get; set; }
+
+
 
         public override bool Equals(object obj)
         {

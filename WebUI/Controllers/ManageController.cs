@@ -5,6 +5,9 @@ using WebUI.Helpers;
 
 namespace WebUI.Controllers
 {
+    /// <summary>
+    /// The controller responsible for managing user accounts.
+    /// </summary>
     [Authorize]
     public class ManageController : Controller
     {

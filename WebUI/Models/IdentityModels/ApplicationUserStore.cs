@@ -9,6 +9,11 @@ using WebUI.Helpers;
 
 namespace WebUI.Models.IdentityModels
 {
+    /// <summary>
+    /// The IUserStore for this application.
+    /// Implements the IUser____Store interfaces required for the 
+    /// UserManager and SignInManager to work.
+    /// </summary>
     public class ApplicationUserStore : IUserStore<ApplicationUser, int>,
         IUserClaimStore<ApplicationUser, int>, 
         IUserEmailStore<ApplicationUser, int>, 
@@ -36,6 +41,7 @@ namespace WebUI.Models.IdentityModels
 
         async Task IUserClaimStore<ApplicationUser, int>.AddClaimAsync(ApplicationUser user, Claim claim)
         {
+            // Do nothing as claims are not currently being stored.
             return;
         }
 
@@ -57,9 +63,10 @@ namespace WebUI.Models.IdentityModels
         async Task<ApplicationUser> IUserEmailStore<ApplicationUser, int>.FindByEmailAsync(string email)
         {
             User user = await _dataAccess.FindByEmailAsync(email);
-
+            
             if (user == null)
             {
+                // Return default ApplicationUser if no user is found.
                 return new ApplicationUser();
             }
 
@@ -72,6 +79,7 @@ namespace WebUI.Models.IdentityModels
 
             if (user == null)
             {
+                // Return default ApplicationUser if no user is found.
                 return new ApplicationUser();
             }
 
@@ -84,6 +92,7 @@ namespace WebUI.Models.IdentityModels
 
             if (user == null)
             {
+                // Return default ApplicationUser if no user is found.
                 return new ApplicationUser();
             }
 
@@ -92,11 +101,13 @@ namespace WebUI.Models.IdentityModels
 
         async Task<int> IUserLockoutStore<ApplicationUser, int>.GetAccessFailedCountAsync(ApplicationUser user)
         {
+            // Return 0 as lockouts are not being implemented currently.
             return 0;
         }
 
         async Task<IList<Claim>> IUserClaimStore<ApplicationUser, int>.GetClaimsAsync(ApplicationUser user)
         {
+            // Return an empty List<Claim> as claims are not being stored currently.
             return new List<Claim>();
         }
 
@@ -107,16 +118,19 @@ namespace WebUI.Models.IdentityModels
 
         async Task<bool> IUserEmailStore<ApplicationUser, int>.GetEmailConfirmedAsync(ApplicationUser user)
         {
+            // Return true as email is not being confirmed currently.
             return true;
         }
 
         async Task<bool> IUserLockoutStore<ApplicationUser, int>.GetLockoutEnabledAsync(ApplicationUser user)
         {
+            // Return false as lockouts are not being implemented currently.
             return false;
         }
 
         async Task<DateTimeOffset> IUserLockoutStore<ApplicationUser, int>.GetLockoutEndDateAsync(ApplicationUser user)
         {
+            // Return lockout end date as now as lockouts are not being implemented currently.
             return new DateTimeOffset(DateTime.Now, TimeSpan.FromTicks(0));
         }
 
@@ -132,11 +146,13 @@ namespace WebUI.Models.IdentityModels
 
         async Task<bool> IUserPhoneNumberStore<ApplicationUser, int>.GetPhoneNumberConfirmedAsync(ApplicationUser user)
         {
+            // Return true as user phone numbers are not being confirmed currently.
             return true;
         }
 
         async Task<bool> IUserTwoFactorStore<ApplicationUser, int>.GetTwoFactorEnabledAsync(ApplicationUser user)
         {
+            // Return false as two factor auth is not being used currently.
             return false;
         }
 
@@ -150,16 +166,19 @@ namespace WebUI.Models.IdentityModels
 
         async Task<int> IUserLockoutStore<ApplicationUser, int>.IncrementAccessFailedCountAsync(ApplicationUser user)
         {
+            // Return 0 as lockouts are not being implemented currently.
             return 0;
         }
 
         async Task IUserClaimStore<ApplicationUser, int>.RemoveClaimAsync(ApplicationUser user, Claim claim)
         {
+            // Do nothing as user claims are not currently being stored.
             return;
         }
 
         async Task IUserLockoutStore<ApplicationUser, int>.ResetAccessFailedCountAsync(ApplicationUser user)
         {
+            // Do nothing as lockouts are not being implemented currently.
             return;
         }
 
@@ -170,16 +189,19 @@ namespace WebUI.Models.IdentityModels
 
         async Task IUserEmailStore<ApplicationUser, int>.SetEmailConfirmedAsync(ApplicationUser user, bool confirmed)
         {
+            // Do nothing as this feature is not being implemented currently.
             return;
         }
 
         async Task IUserLockoutStore<ApplicationUser, int>.SetLockoutEnabledAsync(ApplicationUser user, bool enabled)
         {
+            // Do nothing as this feature is not being implemented currently.
             return;
         }
 
         async Task IUserLockoutStore<ApplicationUser, int>.SetLockoutEndDateAsync(ApplicationUser user, DateTimeOffset lockoutEnd)
         {
+            // Do nothing as this feature is not being implemented currently.
             return;
         }
 
@@ -195,11 +217,13 @@ namespace WebUI.Models.IdentityModels
 
         async Task IUserPhoneNumberStore<ApplicationUser, int>.SetPhoneNumberConfirmedAsync(ApplicationUser user, bool confirmed)
         {
+            // Do nothing as this feature is not being implemented currently.
             return;
         }
 
         async Task IUserTwoFactorStore<ApplicationUser, int>.SetTwoFactorEnabledAsync(ApplicationUser user, bool enabled)
         {
+            // Do nothing as this feature is not being implemented currently.
             return;
         }
 

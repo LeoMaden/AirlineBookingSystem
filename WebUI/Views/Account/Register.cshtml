@@ -23,6 +23,7 @@
         </div>
     </div>
 
+    @*First and Last name*@
     <div class="form-group">
         @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
@@ -39,6 +40,7 @@
         </div>
     </div>
 
+    @*Email*@
     <div class="form-group">
         @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
@@ -47,6 +49,7 @@
         </div>
     </div>
 
+    @*Phone Number*@
     <div class="form-group">
         @Html.LabelFor(model => model.PhoneNumber, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
@@ -146,6 +149,7 @@
     
     <script type="text/javascript">
         $(document).ready(function () {
+            @* Use IdealPostcodes API to autocomplete addresses using a postcode *@
             var controller = new IdealPostcodes.Autocomplete.Controller(
             {
                 api_key: "iddqd",

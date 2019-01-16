@@ -7,6 +7,9 @@ namespace WebUI
 {
     public partial class Startup
     {
+        /// <summary>
+        /// Configure the authentication for this application.
+        /// </summary>
         public void ConfigureAuth(IAppBuilder app)
         {
             // Tell ASP.NET identity framework to use cookie authentication.

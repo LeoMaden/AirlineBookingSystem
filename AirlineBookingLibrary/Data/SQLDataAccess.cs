@@ -13,6 +13,9 @@ namespace AirlineBookingLibrary.Data
     /// </summary>
     public class SQLDataAccess : IDataAccess
     {
+        /// <summary>
+        /// Gets an IDbConnection to the database referenced in GlobalConfig.ConnectionString.
+        /// </summary>
         private IDbConnection Connection
         {
             get
@@ -135,6 +138,7 @@ namespace AirlineBookingLibrary.Data
                 var p = new DynamicParameters();
                 p.Add("@Email", email);
 
+                // Create a null user.
                 User user = null;
 
                 try
@@ -146,7 +150,7 @@ namespace AirlineBookingLibrary.Data
                 }
                 catch (InvalidOperationException)
                 {
-                    // User not found.
+                    // User not found - null will be returned.
                 }
 
                 return user;

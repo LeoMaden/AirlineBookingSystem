@@ -3,27 +3,22 @@ using System.Configuration;
 
 namespace AirlineBookingLibrary
 {
+    /// <summary>
+    /// A static class that provides global access to certain data.
+    /// </summary>
     public static class GlobalConfig
     {
-        public static IDataAccess DbContext { get; private set; }
-
+        /// <summary>
+        /// Get the DefaultConnection connection string from the .config
+        /// file where this library is being run from.
+        /// E.g. App.Config or Web.config file.
+        /// </summary>
         public static string ConnectionString
         {
             get
             {
                 return ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             }
-        }
-
-
-        static GlobalConfig()
-        {
-            InitialiseConnection();
-        }
-
-        private static void InitialiseConnection()
-        {
-            DbContext = new SQLDataAccess() as IDataAccess;
         }
     }
 }

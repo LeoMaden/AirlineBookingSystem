@@ -29,8 +29,7 @@ namespace WebUI.Models
         [DataType(DataType.PostalCode)]
         public string Postcode { get; set; }
 
-        // TODO - Address autofill (https://getaddress.io).
-        //[Required]
+        [Required]
         public Address SelectedAddress { get; set; }
 
         [Required]

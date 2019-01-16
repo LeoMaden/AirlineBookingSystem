@@ -2,6 +2,10 @@
 
 namespace WebUI.Models.IdentityModels
 {
+    /// <summary>
+    /// The UserManager for this application. Allows the default
+    /// AspNet.Identity.UserManager to be customised and configured.
+    /// </summary>
     public class ApplicationUserManager : UserManager<ApplicationUser, int>
     {
         /// <summary>

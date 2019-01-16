@@ -13,8 +13,7 @@ namespace WebUI
             ConfigureAuth(app);
 
             // Register app to use Autofac.
-            app.UseAutofacMiddleware(ContainerConfig.Configure());
-            app.UseAutofacMvc();
+            ConfigureContainer(app);
         }
     }
 }

@@ -9,6 +9,9 @@ using AirlineBookingLibrary.Data;
 
 namespace WebUI.App_Start
 {
+    /// <summary>
+    /// Configure the AutoFac container for this application.
+    /// </summary>
     public static class ContainerConfig
     {
         public static IContainer Configure()

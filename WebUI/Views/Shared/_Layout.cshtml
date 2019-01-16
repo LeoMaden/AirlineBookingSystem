@@ -9,14 +9,19 @@
 
 </head>
 <body>
+    @*Page header*@
     <div class="page-header">
         <div class="container">
 
+            @*Large header logo*@
             <a href="@Url.Action("Index", "Home")">
+                @*Image has width 500 when viewed from any screen larger than xs.*@
                 <img src="~/Resources/BALogoLarge.png" alt="Logo" width="500" class="hidden-xs"/>
+                @*Full width image visible on xs (mobile) screens.*@
                 <img src="~/Resources/BALogoLarge.png" alt="Logo" class="img-responsive visible-xs"/>
             </a>
 
+            @*Login controls*@
             <div class="pull-right hidden-xs" style="margin-top: 30px;">
                 @Html.Partial("_LoginPartial")
             </div>
@@ -24,13 +29,14 @@
         </div>
     </div>
 
+    @*navbar*@
     <div class="navbar">
         <div class="container">
             <div class="navbar-header">
+                @*Navbar menu expander and login control expander visible on mobile screens.*@
                 <button type="button" class="navbar-toggle pull-left" data-toggle="collapse" data-target="#navbar" data-parent="#dropdownGroup">
                     <img src="~/Resources/MenuHamburger.png" alt="Expand/collapse menu" width="20" hight="20" />
                 </button>
-
                 <button type="button" class="navbar-toggle pull-right" data-toggle="collapse" data-target="#loginPartial" data-parent="#dropdownGroup">
                     <img src="~/Resources/PersonGlyph.png" alt="Expand/collapse login" width="20" hight="20" />
                 </button>
@@ -38,6 +44,7 @@
 
             <div id="dropdownGroup">
                 <div class="panel" style="border: 0; margin: 0; box-shadow: none; padding: 0;">
+                    @*Navbar links.*@
                     <div class="navbar-collapse collapse" id="navbar">
                         <ul class="nav navbar-nav">
                             <li>@Html.ActionLink("Home", "Index", "Home")</li>
@@ -46,6 +53,7 @@
                         </ul>
                     </div>
 
+                    @*Render login controls inside a dropdown when display is xs.*@
                     <div class="navbar-collapse collapse" id="loginPartial">
                         <div class="visible-xs">
                             @Html.Partial("_LoginPartial")

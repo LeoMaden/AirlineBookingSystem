@@ -9,6 +9,10 @@ using WebUI.Models.IdentityModels;
 
 namespace WebUI.Controllers
 {
+    /// <summary>
+    /// The controller responsible for handling account requests and
+    /// user authentication.
+    /// </summary>
     [Authorize]
     public class AccountController : Controller
     {
@@ -36,6 +40,7 @@ namespace WebUI.Controllers
         [HttpGet]
         public ActionResult LogIn(string returnUrl)
         {
+            // Add return url to model.
             var model = new LogInModel
             {
                 ReturnUrl = returnUrl
