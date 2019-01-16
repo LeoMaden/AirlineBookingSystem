@@ -2,11 +2,9 @@
 using AirlineBookingLibrary.Logic;
 using AirlineBookingLibrary.Models;
 using Autofac.Extras.Moq;
-using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -31,6 +29,31 @@ namespace AirlineBookingLibrary.Tests.LogicTests
 
                 
                 Assert.Equal(expected, actual);
+            }
+        }
+
+        [Fact]
+        public async void MakeBookingAsync_MakesBookingCorrectly()
+        {
+            using (var mock = AutoMock.GetLoose())
+            {
+                User testUser = new User
+                {
+                    Id = 42,
+                    UserName = "TestUser",
+                    Email = "testuser@test.com"
+                };
+
+                Booking testBooking = GetSampleBookings().First();
+
+
+                //mock.Mock<IMessageService>()
+                //    .Setup(x => x.SendAsync(testUser.Email,
+                //                            Messages.GetBookingConfirmationEmailSubject(testBooking),
+                //                            Messages.GetBookingConfirmationEmailBody(testBooking, testUser)))
+                //    .Returns(Task.Run(() => MethodResult.Success));
+
+                
             }
         }
 

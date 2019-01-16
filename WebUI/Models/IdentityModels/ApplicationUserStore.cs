@@ -1,5 +1,4 @@
-﻿using AirlineBookingLibrary;
-using AirlineBookingLibrary.Data;
+﻿using AirlineBookingLibrary.Data;
 using AirlineBookingLibrary.Models;
 using Microsoft.AspNet.Identity;
 using System;

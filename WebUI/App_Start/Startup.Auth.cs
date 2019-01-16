@@ -1,11 +1,7 @@
 ﻿using Owin;
-using System;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin;
 using Microsoft.AspNet.Identity;
-using AirlineBookingLibrary.Services;
-using WebUI.Models.IdentityModels;
-using Microsoft.AspNet.Identity.Owin;
 
 namespace WebUI
 {

@@ -5,6 +5,10 @@ using System.Threading.Tasks;
 
 namespace AirlineBookingLibrary.Data
 {
+    /// <summary>
+    /// Defines methods for creating, updating, retrieving, and deleting
+    /// data from a persistant storage location.
+    /// </summary>
     public interface IDataAccess
     {
         //

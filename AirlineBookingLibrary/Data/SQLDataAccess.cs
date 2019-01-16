@@ -7,6 +7,10 @@ using Dapper;
 
 namespace AirlineBookingLibrary.Data
 {
+    /// <summary>
+    /// An implementation of the IDataAccess interface that uses a SQL Server
+    /// as the persistant data store.
+    /// </summary>
     public class SQLDataAccess : IDataAccess
     {
         private IDbConnection Connection

@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="Enums\TravelClass.cs" />
     <Compile Include="GlobalConfig.cs" />
+    <Compile Include="Helpers\Messages.cs" />
     <Compile Include="Helpers\StringExtensions.cs" />
     <Compile Include="Logic\BookingManager.cs" />
     <Compile Include="Logic\FlightManager.cs" />

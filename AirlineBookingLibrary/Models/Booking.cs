@@ -1,5 +1,4 @@
-﻿using AirlineBookingLibrary.Enums;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace AirlineBookingLibrary.Models
