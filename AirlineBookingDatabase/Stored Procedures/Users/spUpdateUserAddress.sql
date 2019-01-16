@@ -1,4 +1,8 @@
-﻿CREATE PROCEDURE [dbo].[spUpdateUserAddress]
+﻿--
+-- Update the user with the given Id's address to  
+-- have fields that match the values given.
+--
+CREATE PROCEDURE [dbo].[spUpdateUserAddress]
 	@Id int,
 	@StreetAddress nvarchar(100),
 	@Locality nvarchar(100),

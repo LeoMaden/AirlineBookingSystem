@@ -1,4 +1,8 @@
-﻿CREATE PROCEDURE [dbo].[spDeleteUser]
+﻿--
+-- Delete a user from the database using 
+-- their unique Id.
+--
+CREATE PROCEDURE [dbo].[spDeleteUser]
 	@Id int
 AS
 	Delete from Users

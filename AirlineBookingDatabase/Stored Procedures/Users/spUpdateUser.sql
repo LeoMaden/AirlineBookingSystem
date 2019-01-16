@@ -1,4 +1,8 @@
-﻿CREATE PROCEDURE [dbo].[spUpdateUser]
+﻿--
+-- Update the user with the given Id to have 
+-- fields that match the values given.
+--
+CREATE PROCEDURE [dbo].[spUpdateUser]
 	@Id int,
     @Title NVARCHAR(10), 
     @FirstName NVARCHAR(50), 

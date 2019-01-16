@@ -1,4 +1,8 @@
-﻿CREATE PROCEDURE [dbo].[spInsertUserAddress]
+﻿--
+-- Insert an address for a user into the database
+-- using the user's Id.
+--
+CREATE PROCEDURE [dbo].[spInsertUserAddress]
 	@Id int,
 	@StreetAddress nvarchar(100),
 	@Locality nvarchar(100),
