@@ -1,4 +1,5 @@
-﻿using Microsoft.Owin;
+﻿using AirlineBookingLibrary;
+using Microsoft.Owin;
 using Owin;
 using WebUI.App_Start;
 
@@ -14,6 +15,9 @@ namespace WebUI
 
             // Register app to use Autofac.
             ConfigureContainer(app);
+
+            // Configure connection string for database.
+            GlobalConfig.ConfigureConnectionString();
         }
     }
 }
