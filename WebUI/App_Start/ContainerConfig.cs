@@ -6,6 +6,8 @@ using Autofac.Integration.Mvc;
 using System.Web.Mvc;
 using WebUI.Controllers;
 using AirlineBookingLibrary.Data;
+using AirlineBookingLibrary.Logic;
+using AirlineBookingLibrary.Services;
 
 namespace WebUI.App_Start
 {
@@ -34,6 +36,11 @@ namespace WebUI.App_Start
 
             // Register AirlineBookingLibrary types.
             builder.RegisterType<SQLDataAccess>().As<IDataAccess>();
+            builder.RegisterType<BookingManager>().As<IBookingManager>();
+            builder.RegisterType<FlightManager>().As<IFlightManager>();
+            builder.RegisterType<FlightPriceCalculator>().As<IFlightPriceCalculator>();
+            builder.RegisterType<PaymentManager>().As<IPaymentManager>();
+            builder.RegisterType<EmailService>().As<IMessageService>();
 
             // Build container.
             IContainer container = builder.Build();

@@ -5,20 +5,21 @@ namespace AirlineBookingLibrary.Tests.HelpersTests
 {
     public class StringExtensionsTests
     {
+        // Tests whether the NullIfEmpty method will return null
+        // when given an empty string.
         [Fact]
         public void NullIfEmpty_ReturnsNullCorrectly()
         {
-            // Arrange
             object expected = null;
-
-            // Act
+            
             string str = "";
             string actual = str.NullIfEmpty();
-
-            // Assert
+            
             Assert.Equal(expected, actual);
         }
 
+        // Tests whether the NullIfEmpty method will return the
+        // string value when the string is not null.
         [Theory]
         [InlineData("hello world")]
         [InlineData("test string")]
