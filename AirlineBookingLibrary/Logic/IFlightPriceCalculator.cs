@@ -9,12 +9,17 @@ namespace AirlineBookingLibrary.Logic
     public interface IFlightPriceCalculator
     {
         /// <summary>
-        /// Calculate the price of a flight for a given number of people.
+        /// Calculate the base price of a flight.
         /// </summary>
-        /// <param name="flight">The flight to find the price of.</param>
-        /// <param name="numAdults">The number of adults.</param>
-        /// <param name="numChildren">The number of children.</param>
+        /// <param name="flight">The flight to find the base price of.</param>
         /// <returns>An asynchronous task for calculating the price of the flight.</returns>
-        Task<decimal> CalculatePriceAsync(Flight flight, int numAdults, int numChildren);
+        Task<decimal> CalculateBasePriceAsync(Flight flight);
+
+        /// <summary>
+        /// Calculate the total price for the specified flights and passengers.
+        /// </summary>
+        /// <param name="flights">The SelectedFlights object containing flight and passenger information.</param>
+        /// <returns>An asynchronous task for calculating the total price.</returns>
+        Task<decimal> CalculateTotalPriceAsync(SelectedFlights flights);
     }
 }

@@ -88,6 +88,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="LogicTests\BookingManagerTests.cs" />
+    <Compile Include="LogicTests\FlightPriceCalculatorTests.cs" />
+    <Compile Include="LogicTests\PaymentManagerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="HelpersTests\StringExtensionsTests.cs" />
   </ItemGroup>
