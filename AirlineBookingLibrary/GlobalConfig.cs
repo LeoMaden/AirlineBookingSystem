@@ -31,7 +31,7 @@ namespace AirlineBookingLibrary
             {
                 if (_apiClient is null)
                 {
-                    throw new HttpRequestException("API Client has not been configured.");
+                    ConfigureApiClient();
                 }
 
                 return _apiClient;
@@ -48,8 +48,7 @@ namespace AirlineBookingLibrary
             {
                 if (_currentConnectionStringName is null)
                 {
-                    // Throw exception if connection string has not been initialised.
-                    throw new InvalidOperationException("Connection string has not been configured");
+                    ConfigureConnectionString();
                 }
 
                 // Get connection string from config file.

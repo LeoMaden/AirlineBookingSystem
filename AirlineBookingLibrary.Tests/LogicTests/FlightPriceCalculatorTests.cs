@@ -135,8 +135,8 @@ namespace AirlineBookingLibrary.Tests.LogicTests
             // [100 + (100 * 0.6)] for outbound + [150 + (150 * 0.6)] for inbound = 400
             output.Add(new object[] { TravelClass.Economy, 1, 1, 400 });
 
-            // [(2 * 100) + (100 * 0.6)] * 3 for outbound + [(2 * 150) + (150 * 0.6)] * 3 for inbound = 1950
-            output.Add(new object[] { TravelClass.First, 2, 1, 1950 });
+            // [(2 * 100) + (100 * 0.6)] * 5 for outbound + [(2 * 150) + (150 * 0.6)] * 5 for inbound = 3250
+            output.Add(new object[] { TravelClass.First, 2, 1, 3250 });
 
             return output;
         }

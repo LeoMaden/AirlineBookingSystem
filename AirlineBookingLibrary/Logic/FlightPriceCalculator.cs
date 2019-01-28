@@ -63,22 +63,22 @@ namespace AirlineBookingLibrary.Logic
         {
             decimal firstClassMultiplier = 5;
             decimal childMultiplier = 0.6M;
-
-            decimal perPersonCost = 0;
+            
             decimal actualCost = 0;
 
             decimal outboundBaseCost = await CalculateBasePriceAsync(flights.Outbound);
             // Inbound flight base cost is calculated if return flight or 0 is flight is one-way.
             decimal inboundBaseCost = flights.IsReturn ? await CalculateBasePriceAsync(flights.Inbound) : 0;
 
-            perPersonCost = outboundBaseCost + inboundBaseCost;
+            decimal outboundTotalCost = (flights.NumAdults * outboundBaseCost) + (flights.NumChildren * childMultiplier * outboundBaseCost);
+            decimal inboundTotalCost = (flights.NumAdults * inboundBaseCost) + (flights.NumChildren * childMultiplier * inboundBaseCost);
+
+            actualCost = outboundTotalCost + inboundTotalCost;
 
             if (flights.TravelClass == Enums.TravelClass.First)
             {
-                perPersonCost *= firstClassMultiplier;
+                actualCost *= firstClassMultiplier;
             }
-
-            actualCost = (flights.NumAdults * perPersonCost) + (flights.NumChildren * perPersonCost * childMultiplier);
 
             flights.TotalPrice = actualCost;
 
