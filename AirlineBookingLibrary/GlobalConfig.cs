@@ -2,6 +2,8 @@
 using System;
 using System.Configuration;
 using System.Diagnostics;
+using System.Net.Http;
+using System.Net.Http.Headers;
 
 namespace AirlineBookingLibrary
 {
@@ -17,17 +19,22 @@ namespace AirlineBookingLibrary
         // The name of the connection string this application is using.
         private static string _currentConnectionStringName = null;
 
+        private static HttpClient _apiClient = null;
 
-        public static void ConfigureConnectionString()
+
+        /// <summary>
+        /// Get a HttpClient for use in API calls throughtout the application.
+        /// </summary>
+        public static HttpClient ApiClient
         {
-            if (Debugger.IsAttached)
+            get
             {
-                // Use debug database if debugger is attached.
-                _currentConnectionStringName = _debugConnectionStringName;
-            }
-            else
-            {
-                _currentConnectionStringName = _releaseConnectionStringName;
+                if (_apiClient is null)
+                {
+                    throw new HttpRequestException("API Client has not been configured.");
+                }
+
+                return _apiClient;
             }
         }
 
@@ -49,5 +56,30 @@ namespace AirlineBookingLibrary
                 return ConfigurationManager.ConnectionStrings[_currentConnectionStringName].ConnectionString;
             }
         }
+
+
+
+        public static void ConfigureConnectionString()
+        {
+            if (Debugger.IsAttached)
+            {
+                // Use debug database if debugger is attached.
+                _currentConnectionStringName = _debugConnectionStringName;
+            }
+            else
+            {
+                _currentConnectionStringName = _releaseConnectionStringName;
+            }
+        }
+
+        public static void ConfigureApiClient()
+        {
+            _apiClient = new HttpClient();
+
+            _apiClient.DefaultRequestHeaders.Accept.Clear();
+            _apiClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+        }
+
+        
     }
 }

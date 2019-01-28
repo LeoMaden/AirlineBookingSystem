@@ -18,6 +18,9 @@ namespace WebUI
 
             // Configure connection string for database.
             GlobalConfig.ConfigureConnectionString();
+
+            // Configure an API client.
+            GlobalConfig.ConfigureApiClient();
         }
     }
 }

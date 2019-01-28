@@ -26,7 +26,13 @@ namespace AirlineBookingLibrary.Logic
         {
             get
             {
-                throw new NotImplementedException();
+                MethodResult output = new MethodResult
+                {
+                    Succeeded = true,
+                    Errors = null
+                };
+
+                return output;
             }
         }
 
@@ -37,7 +43,13 @@ namespace AirlineBookingLibrary.Logic
         /// <returns>A failure MethodResult containg the given errors.</returns>
         public static MethodResult Failed(params string[] errors)
         {
-            throw new NotImplementedException();
+            MethodResult output = new MethodResult
+            {
+                Succeeded = false,
+                Errors = errors
+            };
+
+            return output;
         }
 
     }

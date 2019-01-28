@@ -52,6 +52,11 @@ namespace AirlineBookingLibrary.Models
             return hashCode;
         }
 
+        public override string ToString()
+        {
+            return $"{ DestinationAirport.AirportCode }-{ OriginAirport.AirportCode }";
+        }
+
         public static bool operator ==(Flight flight1, Flight flight2)
         {
             return EqualityComparer<Flight>.Default.Equals(flight1, flight2);

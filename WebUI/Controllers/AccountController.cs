@@ -26,7 +26,7 @@ namespace WebUI.Controllers
         /// UserManager and SignInManager.
         /// </summary>
         /// <param name="userManager">The UserManager object that will manage users</param>
-        /// <param name="signInManager">The SignInManagerObject that will manage user sign ins</param>
+        /// <param name="signInManager">The SignInManager object that will manage user sign ins</param>
         public AccountController(UserManager<ApplicationUser, int> userManager, SignInManager<ApplicationUser, int> signInManager)
         {
             _userManager = userManager;

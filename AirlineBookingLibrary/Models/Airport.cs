@@ -36,6 +36,11 @@ namespace AirlineBookingLibrary.Models
             return hashCode;
         }
 
+        public override string ToString()
+        {
+            return $"{ AirportCode }, { FriendlyName }";
+        }
+
         public static bool operator ==(Airport airport1, Airport airport2)
         {
             return EqualityComparer<Airport>.Default.Equals(airport1, airport2);

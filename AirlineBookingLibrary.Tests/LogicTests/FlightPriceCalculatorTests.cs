@@ -30,40 +30,33 @@ namespace AirlineBookingLibrary.Tests.LogicTests
         [MemberData(nameof(GetTotalPriceData))]
         public async void CalculateTotalPriceAsync_CalculatesCorrectTotalPrice(TravelClass travelClass, int numAdults, int numChildren, decimal expectedPrice)
         {
-            using (var mock = AutoMock.GetLoose())
+            Mock<FlightPriceCalculator> mock = new Mock<FlightPriceCalculator>();
+            mock.SetupSequence(x => x.CalculateBasePriceAsync(It.IsAny<Flight>()))
+                .ReturnsAsync(100M)
+                .ReturnsAsync(150M);
+
+            var calculator = mock.Object;
+
+            SelectedFlights selectedFlights = new SelectedFlights()
             {
-                // Mock the CalculateBasePriceAsync method to return 100 as the price on
-                // the first call and 150 as the price on the second call, regardless of 
-                // which flight is being passed.
-                mock.Mock<IFlightPriceCalculator>()
-                    .SetupSequence(x => x.CalculateBasePriceAsync(It.IsAny<Flight>()))
-                    .Returns(Task.Run(() => 100M))
-                    .Returns(Task.Run(() => 150M));
+                Outbound = new Flight(),
+                Inbound = new Flight(),
+                TravelClass = travelClass,
+                NumAdults = numAdults,
+                NumChildren = numChildren
+            };
 
-                var calculator = mock.Create<FlightPriceCalculator>();
-
-
-                SelectedFlights selectedFlights = new SelectedFlights()
-                {
-                    Outbound = new Flight(),
-                    Inbound = new Flight(),
-                    TravelClass = travelClass,
-                    NumAdults = numAdults,
-                    NumChildren = numChildren
-                };
-
-                decimal actualPrice = await calculator.CalculateTotalPriceAsync(selectedFlights);
+            decimal actualPrice = await calculator.CalculateTotalPriceAsync(selectedFlights);
 
 
-                // Check expected and actual prices match.
-                Assert.Equal(expectedPrice, actualPrice);
+            // Check expected and actual prices match.
+            Assert.Equal(expectedPrice, actualPrice);
 
-                // Check that TotalPrice property is set in selectedFlights
-                Assert.True(selectedFlights.TotalPrice == expectedPrice);
-
-            }
+            // Check that TotalPrice property is set in selectedFlights
+            Assert.True(selectedFlights.TotalPrice == expectedPrice);
+            
+            
         }
-
         
 
 
@@ -89,7 +82,7 @@ namespace AirlineBookingLibrary.Tests.LogicTests
                 DepartureDateTime = DateTime.Now.AddDays(14)
             };
 
-            // 50 + (0.15 * 3440) rounded up to £5
+            // 50 + (0.15 * 3451) rounded up to £5
             decimal price1 = 570;
 
             flights.Add(new object[] { flight1, price1 });
@@ -103,7 +96,7 @@ namespace AirlineBookingLibrary.Tests.LogicTests
                 DepartureDateTime = DateTime.Now.AddDays(7)
             };
 
-            // [50 + (0.15 * 726)] * 1.5 rounded up to £5
+            // [50 + (0.15 * 728)] * 1.5 rounded up to £5
             decimal price2 = 240;
 
             flights.Add(new object[] { flight2, price2 });
@@ -114,10 +107,10 @@ namespace AirlineBookingLibrary.Tests.LogicTests
             {
                 OriginAirport = new Airport() { AirportCode = "STN", FriendlyName = "London Stansted Airport" },
                 DestinationAirport = new Airport() { AirportCode = "INN", FriendlyName = "Innsbruck Airport" },
-                DepartureDateTime = DateTime.Now.AddDays(7)
+                DepartureDateTime = DateTime.Now.AddHours(2)
             };
 
-            // [50 + (0.15 * 591)] * 3 rounded up to £5
+            // [50 + (0.15 * 592)] * 3 rounded up to £5
             decimal price3 = 420;
 
             flights.Add(new object[] { flight3, price3 });
