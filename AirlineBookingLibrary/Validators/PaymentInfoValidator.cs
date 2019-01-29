@@ -14,7 +14,8 @@ namespace AirlineBookingLibrary.Validators
         {
             RuleFor(x => x.NameOnCard)
                 .NotNull()
-                .Must(BeAValidName);
+                .Must(BeAValidName)
+                .NotEmpty();
 
             RuleFor(x => x.CardNumber)
                 .CreditCard();
