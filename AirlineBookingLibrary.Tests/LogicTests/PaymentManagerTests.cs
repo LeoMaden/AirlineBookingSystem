@@ -40,7 +40,7 @@ namespace AirlineBookingLibrary.Tests.LogicTests
             PaymentInfo paymentInfo = new PaymentInfo()
             {
                 NameOnCard = "Test User",
-                CardNumber = "1234123456785678",
+                CardNumber = "5555555555554444",
                 ExpirationDate = DateTime.Now.AddYears(2),
                 CVV = "123"
             };
@@ -58,7 +58,7 @@ namespace AirlineBookingLibrary.Tests.LogicTests
             PaymentInfo paymentInfo = new PaymentInfo()
             {
                 NameOnCard = "Test User",
-                CardNumber = "1234123456785678",
+                CardNumber = "5555555555554444",
                 ExpirationDate = DateTime.Now.AddYears(2),
                 CVV = "123"
             };
@@ -76,19 +76,20 @@ namespace AirlineBookingLibrary.Tests.LogicTests
             List<object[]> output = new List<object[]>();
 
             // Invalid nameOnCard.
-            output.Add(new object[] { "1234", "1234567812345678", DateTime.Now.AddYears(2), "123" });
-            output.Add(new object[] { "", "1234567812345678", DateTime.Now.AddYears(2), "123" });
+            output.Add(new object[] { "1234", "5555555555554444", DateTime.Now.AddYears(2), "123" });
+            output.Add(new object[] { "", "5555555555554444", DateTime.Now.AddYears(2), "123" });
 
             // Invalid cardNumber
             output.Add(new object[] { "Test User", "121", DateTime.Now.AddYears(2), "123" });
             output.Add(new object[] { "Test User", "aaaabbbbccccdddd", DateTime.Now.AddYears(2), "123" });
+            output.Add(new object[] { "Test User", "1234123456785678", DateTime.Now.AddYears(2), "123" });
 
             // Invalid expiry.
-            output.Add(new object[] { "Test User", "1234123456785678", DateTime.Now.AddYears(-1), "123" });
+            output.Add(new object[] { "Test User", "5555555555554444", DateTime.Now.AddYears(-1), "123" });
 
             // Invalid CVV.
-            output.Add(new object[] { "Test User", "1234123456785678", DateTime.Now.AddYears(2), "1" });
-            output.Add(new object[] { "Test User", "1234123456785678", DateTime.Now.AddYears(2), "abc" });
+            output.Add(new object[] { "Test User", "5555555555554444", DateTime.Now.AddYears(2), "1" });
+            output.Add(new object[] { "Test User", "5555555555554444", DateTime.Now.AddYears(2), "abc" });
 
             return output;
         }

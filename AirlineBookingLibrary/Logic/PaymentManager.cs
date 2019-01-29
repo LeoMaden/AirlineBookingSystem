@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using AirlineBookingLibrary.Models;
+using AirlineBookingLibrary.Validators;
+using FluentValidation.Results;
 
 namespace AirlineBookingLibrary.Logic
 {
@@ -17,7 +20,31 @@ namespace AirlineBookingLibrary.Logic
         /// <returns>An asynchronous task of MethodResult indicating whether the operation was successful or not.</returns>
         public async Task<MethodResult> TakePaymentAsync(PaymentInfo paymentInfo, decimal amount)
         {
-            throw new NotImplementedException();
+            if (amount <= 0)
+            {
+                MethodResult paymentFailed = MethodResult.Failed("Amount must be greater than zero");
+
+                return paymentFailed;
+            }
+
+            // Validate the payment info provided.
+            var paymentInfoValidator = new PaymentInfoValidator();
+            ValidationResult paymentValidResult = await paymentInfoValidator.ValidateAsync(paymentInfo);
+
+            if (paymentValidResult.IsValid == false)
+            {
+                // Convert each ValidationFailure to an error message string and assign to an array. 
+                string[] errors = ((List<ValidationFailure>)paymentValidResult.Errors).ConvertAll(x => x.ErrorMessage).ToArray();
+
+                MethodResult paymentFailed = MethodResult.Failed(errors);
+
+                return paymentFailed;
+            }
+
+            // Payment info and ammount are valid.
+            // Simulate taking a payment.
+
+            return MethodResult.Success;
         }
     }
 }
