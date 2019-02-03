@@ -74,7 +74,7 @@ namespace AirlineBookingLibrary.Tests.LogicTests
             List<object[]> flights = new List<object[]>();
 
 
-            // LHR -> JDK, in 14 days.
+            // LHR -> JFK, in 14 days.
             Flight flight1 = new Flight()
             {
                 OriginAirport = new Airport() { AirportCode = "LHR", FriendlyName = "London Heathrow" },
@@ -114,6 +114,20 @@ namespace AirlineBookingLibrary.Tests.LogicTests
             decimal price3 = 420;
 
             flights.Add(new object[] { flight3, price3 });
+
+
+            //// JFK -> LAX, today.
+            //Flight flight4 = new Flight()
+            //{
+            //    OriginAirport = new Airport() { AirportCode = "JFK", FriendlyName = "London Stansted Airport" },
+            //    DestinationAirport = new Airport() { AirportCode = "LAX", FriendlyName = "Innsbruck Airport" },
+            //    DepartureDateTime = DateTime.Now.AddHours(2)
+            //};
+
+            //// [50 + (0.15 * 592)] * 3 rounded up to £5
+            //decimal price4 = 420;
+
+            //flights.Add(new object[] { flight4, price4 });
 
 
             return flights;

@@ -15,7 +15,7 @@ namespace AirlineBookingLibrary.Tests.LogicTests
     public class FlightManagerTests
     {
         [Fact]
-        public async void ExistsFlightAsync()
+        public async void ExistsFlightAsync_DeterminesWhetherFlightExistsCorrectly()
         {
             using (var mock = AutoMock.GetLoose())
             {
@@ -42,35 +42,45 @@ namespace AirlineBookingLibrary.Tests.LogicTests
         [Fact]
         public async void FindCheapestInboundFlightAsync_FindsCheapestFlight()
         {
-            using (var mock = AutoMock.GetLoose())
+            List<Flight> flights = GetFlights().ToList();
+
+
+            // Mock the flight price calculator class to return specified values for each
+            // call of CalculateBasePriceAsync regardless of what flight is passed.
+            var flightPriceCalcMock = new Mock<FlightPriceCalculator>();
+
+            flightPriceCalcMock
+                .SetupSequence(x => x.CalculateBasePriceAsync(It.IsAny<Flight>()))
+                .ReturnsAsync(500)
+                .ReturnsAsync(200)
+                .ReturnsAsync(100)
+                .ReturnsAsync(120);
+
+
+            // Mock an IDataAccess interface with no implementation of methods as
+            // they are not required in this test.
+            var dataAccessMock = new Mock<IDataAccess>();
+
+
+            // Mock the FlightManager class, instantiating it with the mocked IDataAccess and 
+            // FlightPriceCalculator objects, to return the list of flights declared above
+            // whenever FindInboundFlightsAsync is called with any SearchFilterParameters.
+            var flightManagerMock = new Mock<FlightManager>(dataAccessMock.Object, flightPriceCalcMock.Object)
             {
-                List<Flight> flights = GetFlights().ToList();
+                CallBase = true
+            };
 
-                // Mock the IFlightManager interface to return the flights from GetFlights
-                // when FindInboundFlightsAsync is called.
-                mock.Mock<IFlightManager>()
-                    .Setup(x => x.FindInboundFlightsAsync(It.IsAny<SearchFilterParameters>()))
-                    .ReturnsAsync(flights);
+            flightManagerMock
+                .Setup(x => x.FindInboundFlightsAsync(It.IsAny<SearchFilterParameters>()))
+                .ReturnsAsync(flights);
 
-                // Mock the IFlightPriceCalculatorInterface to return different prices
-                // for the first 4 calls on CalculateBasePriceAsync - the 3rd call returns
-                // the lowest price.
-                mock.Mock<IFlightPriceCalculator>()
-                    .SetupSequence(x => x.CalculateBasePriceAsync(It.IsAny<Flight>()))
-                    .ReturnsAsync(500)
-                    .ReturnsAsync(200)
-                    .ReturnsAsync(100)
-                    .ReturnsAsync(120);
 
-                FlightManager flightManager = mock.Create<FlightManager>();
+            // Expected cheapest flight is the 3rd flight.
+            Flight expected = flights[2];
 
-                // Expected cheapest flight is the 3rd flight.
-                Flight expected = flights[2];
+            Flight actual = await flightManagerMock.Object.FindCheapestInboundFlightAsync(new SearchFilterParameters());
 
-                Flight actual = await flightManager.FindCheapestInboundFlightAsync(new SearchFilterParameters());
-
-                Assert.Equal(expected, actual);
-            }
+            Assert.Equal(expected, actual);
         }
 
 

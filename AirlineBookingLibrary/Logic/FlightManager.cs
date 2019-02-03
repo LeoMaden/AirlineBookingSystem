@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AirlineBookingLibrary.Data;
 using AirlineBookingLibrary.Models;
@@ -45,7 +46,15 @@ namespace AirlineBookingLibrary.Logic
         /// <returns>An asynchronous task for finding whether a flight exists or not.</returns>
         public async Task<bool> ExistsFlightAsync(Airport fromAirport, Airport toAirport, DateTime onDate)
         {
-            throw new NotImplementedException();
+            ICollection<Flight> flights = await _dataAccess.FindFlightsAsync(fromAirport, toAirport, onDate);
+
+            if (flights.Count == 0)
+            {
+                // No flights.
+                return false;
+            }
+            
+            return true;
         }
 
         /// <summary>
@@ -55,7 +64,34 @@ namespace AirlineBookingLibrary.Logic
         /// <returns>An asynchronous task for finding the flight.</returns>
         public async Task<Flight> FindCheapestInboundFlightAsync(SearchFilterParameters filterParameters)
         {
-            throw new NotImplementedException();
+            List<Flight> flights = (await FindInboundFlightsAsync(filterParameters)).ToList();
+            
+            if (flights.Count == 0)
+            {
+                // If there are no flights that match, return null.
+                return null;
+            }
+
+            // Initialise the cheapest flight to the first one and calculate its price.
+            Flight cheapestFlight = flights.First();
+            decimal cheapestPrice = await _flightPriceCalculator.CalculateBasePriceAsync(cheapestFlight);
+
+            // Loop through the rest of the flights.
+            foreach (var flight in flights.Skip(1))
+            {
+                // Calculate the price of the current flight.
+                decimal price = await _flightPriceCalculator.CalculateBasePriceAsync(flight);
+                
+                if (price < cheapestPrice)
+                {
+                    // If price of flight is cheaper than current cheapest flight, update
+                    // cheaest flight and cheapest price.
+                    cheapestFlight = flight;
+                    cheapestPrice = price;
+                }
+            }
+
+            return cheapestFlight;
         }
 
         /// <summary>
@@ -88,9 +124,9 @@ namespace AirlineBookingLibrary.Logic
         /// </summary>
         /// <param name="filterParameters">The parameters to filter the flight by.</param>
         /// <returns>An asynchronous task for finding the flights.</returns>
-        public async Task<ICollection<Flight>> FindInboundFlightsAsync(SearchFilterParameters filterParameters)
+        public virtual async Task<ICollection<Flight>> FindInboundFlightsAsync(SearchFilterParameters filterParameters)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("me");
         }
 
         /// <summary>
@@ -98,7 +134,7 @@ namespace AirlineBookingLibrary.Logic
         /// </summary>
         /// <param name="filterParameters">The parameters to filter the flight by.</param>
         /// <returns>An asynchronous task for finding the flights.</returns>
-        public async Task<ICollection<Flight>> FindOutboundFlightsAsync(SearchFilterParameters filterParameters)
+        public virtual async Task<ICollection<Flight>> FindOutboundFlightsAsync(SearchFilterParameters filterParameters)
         {
             throw new NotImplementedException();
         }

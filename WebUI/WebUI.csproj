@@ -238,6 +238,8 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <None Include="Properties\PublishProfiles\FolderProfile1.pubxml" />
     <None Include="Resources\LogoLarge.png" />
     <None Include="Resources\BALogoLarge.png" />
     <None Include="Resources\MenuHamburger.png" />
