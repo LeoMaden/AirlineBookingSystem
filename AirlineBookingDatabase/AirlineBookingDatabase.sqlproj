@@ -60,6 +60,9 @@
     <Folder Include="Tables" />
     <Folder Include="Stored Procedures" />
     <Folder Include="Stored Procedures\Users" />
+    <Folder Include="Stored Procedures\Bookings" />
+    <Folder Include="Stored Procedures\Flights" />
+    <Folder Include="Stored Procedures\Airports" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Users.sql" />
@@ -79,6 +82,16 @@
     <Build Include="Stored Procedures\Users\spDeleteUserAddress.sql" />
     <Build Include="Stored Procedures\Users\spGetUserAddress.sql" />
     <Build Include="Stored Procedures\Users\spUpdateUserAddress.sql" />
+    <Build Include="Stored Procedures\Bookings\spInsertBooking.sql" />
+    <Build Include="Stored Procedures\Bookings\spDeleteBooking.sql" />
+    <Build Include="Stored Procedures\Bookings\spGetBookingsByUser.sql" />
+    <Build Include="Stored Procedures\Bookings\spGetBookingByReference.sql" />
+    <Build Include="Stored Procedures\Flights\spInsertFlight.sql" />
+    <Build Include="Stored Procedures\Flights\spGetFlights.sql" />
+    <Build Include="Stored Procedures\Flights\spDeleteFlight.sql" />
+    <Build Include="Stored Procedures\Flights\spUpdateFlight.sql" />
+    <Build Include="Stored Procedures\Airports\spGetAirports.sql" />
+    <Build Include="Stored Procedures\Flights\spGetFlightById.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="AirlineBookingDatabase.refactorlog" />

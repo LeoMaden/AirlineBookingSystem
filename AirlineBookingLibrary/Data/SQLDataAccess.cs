@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using System.Threading.Tasks;
 using AirlineBookingLibrary.Models;
 using Dapper;
@@ -66,14 +67,45 @@ namespace AirlineBookingLibrary.Data
             }
         }
 
-        public Task CreateBookingAsync(Booking booking, User user)
+        public async Task CreateBookingAsync(Booking booking, User user)
         {
-            throw new NotImplementedException();
+            using (IDbConnection connection = Connection)
+            {
+                var p = new DynamicParameters();
+                p.Add("@BookingReference", booking.BookingReference);
+                p.Add("@UserId", user.Id);
+                p.Add("@OutFlight", booking.FlightsDetails.Outbound);
+                p.Add("@InFlight", booking.FlightsDetails.Inbound);
+                p.Add("@NumberAdults", booking.FlightsDetails.NumberAdults);
+                p.Add("@NumberChildren", booking.FlightsDetails.NumberChildren);
+                p.Add("@TravelClass", booking.FlightsDetails.TravelClass);
+                p.Add("@Last4CardDigits", booking.Last4CardDigits);
+                p.Add("@CardType", booking.CardType);
+                p.Add("@Price", booking.FlightsDetails.Price);
+                p.Add("@DateTimeCreated", booking.DateTimeCreated);
+
+                await connection.ExecuteAsync("dbo.spInsertBooking", p, commandType: CommandType.StoredProcedure);
+
+                // Set booking Id to value of output parameter.
+                booking.Id = p.Get<int>("@Id");
+            }
         }
 
-        public Task CreateFlightAsync(Flight flight)
+        public async Task CreateFlightAsync(Flight flight)
         {
-            throw new NotImplementedException();
+            using (IDbConnection connection = Connection)
+            {
+                var p = new DynamicParameters();
+                p.Add("@FlightScheduleId", flight.Schedule.Id);
+                p.Add("@OriginAirport", flight.OriginAirport);
+                p.Add("@DestinationAirport", flight.DestinationAirport);
+                p.Add("@DepartureDateTime", flight.DepartureDateTime);
+                p.Add("@ArrivalDateTime", flight.ArrivalDateTime);
+
+                await connection.ExecuteAsync("dbo.spInsertFlight", p, commandType: CommandType.StoredProcedure);
+
+                flight.Id = p.Get<int>("@Id");
+            }
         }
 
         public Task CreateStaffAsync(Staff staff)
@@ -126,7 +158,38 @@ namespace AirlineBookingLibrary.Data
             }
         }
 
-        public Task<ICollection<Booking>> FindBookingsByUserIdAsync(int userId)
+        public async Task<ICollection<Booking>> FindBookingsByUserIdAsync(int userId)
+        {
+            using (IDbConnection connection = Connection)
+            {
+                var p = new DynamicParameters();
+                p.Add("@UserId", userId);
+
+                var results = await connection.QueryMultipleAsync("dbo.spGetBookingsByUser", p, commandType: CommandType.StoredProcedure);
+
+                List<Booking> bookings = results.Read<Booking, SelectedFlights, Booking>((booking, flights) =>
+                {
+                    booking.FlightsDetails = flights;
+                    return booking;
+                }).ToList();
+
+                List<dynamic> flightIds = results.Read().ToList();
+
+                foreach (var booking in bookings)
+                {
+                    dynamic flightId = (from i in flightIds
+                                       where i.Id == booking.Id
+                                       select i).First();
+
+                    booking.FlightsDetails.Outbound = await FindFlightByIdAsync(flightId.OutFlight);
+                    booking.FlightsDetails.Inbound = await FindFlightByIdAsync(flightId.InFlight);
+                }
+
+                return bookings;
+            }
+        }
+
+        public Task<Flight> FindFlightByIdAsync(int flightId)
         {
             throw new NotImplementedException();
         }

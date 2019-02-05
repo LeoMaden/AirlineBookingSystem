@@ -11,9 +11,9 @@ namespace AirlineBookingLibrary.Models
     {
         public Flight Outbound { get; set; }
         public Flight Inbound { get; set; }
-        public int NumAdults { get; set; }
-        public int NumChildren { get; set; }
-        public decimal TotalPrice { get; set; }
+        public int NumberAdults { get; set; }
+        public int NumberChildren { get; set; }
+        public decimal Price { get; set; }
         public TravelClass TravelClass { get; set; }
         public bool IsReturn
         {
@@ -35,9 +35,9 @@ namespace AirlineBookingLibrary.Models
             return other != null &&
                    EqualityComparer<Flight>.Default.Equals(Outbound, other.Outbound) &&
                    EqualityComparer<Flight>.Default.Equals(Inbound, other.Inbound) &&
-                   NumAdults == other.NumAdults &&
-                   NumChildren == other.NumChildren &&
-                   TotalPrice == other.TotalPrice &&
+                   NumberAdults == other.NumberAdults &&
+                   NumberChildren == other.NumberChildren &&
+                   Price == other.Price &&
                    TravelClass == other.TravelClass &&
                    IsReturn == other.IsReturn;
         }
@@ -47,9 +47,9 @@ namespace AirlineBookingLibrary.Models
             var hashCode = 319552321;
             hashCode = hashCode * -1521134295 + EqualityComparer<Flight>.Default.GetHashCode(Outbound);
             hashCode = hashCode * -1521134295 + EqualityComparer<Flight>.Default.GetHashCode(Inbound);
-            hashCode = hashCode * -1521134295 + NumAdults.GetHashCode();
-            hashCode = hashCode * -1521134295 + NumChildren.GetHashCode();
-            hashCode = hashCode * -1521134295 + TotalPrice.GetHashCode();
+            hashCode = hashCode * -1521134295 + NumberAdults.GetHashCode();
+            hashCode = hashCode * -1521134295 + NumberChildren.GetHashCode();
+            hashCode = hashCode * -1521134295 + Price.GetHashCode();
             hashCode = hashCode * -1521134295 + TravelClass.GetHashCode();
             hashCode = hashCode * -1521134295 + IsReturn.GetHashCode();
             return hashCode;

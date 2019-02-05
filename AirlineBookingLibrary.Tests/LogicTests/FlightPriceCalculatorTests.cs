@@ -42,8 +42,8 @@ namespace AirlineBookingLibrary.Tests.LogicTests
                 Outbound = new Flight(),
                 Inbound = new Flight(),
                 TravelClass = travelClass,
-                NumAdults = numAdults,
-                NumChildren = numChildren
+                NumberAdults = numAdults,
+                NumberChildren = numChildren
             };
 
             decimal actualPrice = await calculator.CalculateTotalPriceAsync(selectedFlights);
@@ -53,7 +53,7 @@ namespace AirlineBookingLibrary.Tests.LogicTests
             Assert.Equal(expectedPrice, actualPrice);
 
             // Check that TotalPrice property is set in selectedFlights
-            Assert.True(selectedFlights.TotalPrice == expectedPrice);
+            Assert.True(selectedFlights.Price == expectedPrice);
             
             
         }

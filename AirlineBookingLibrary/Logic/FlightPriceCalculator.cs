@@ -70,8 +70,8 @@ namespace AirlineBookingLibrary.Logic
             // Inbound flight base cost is calculated if return flight or 0 is flight is one-way.
             decimal inboundBaseCost = flights.IsReturn ? await CalculateBasePriceAsync(flights.Inbound) : 0;
 
-            decimal outboundTotalCost = (flights.NumAdults * outboundBaseCost) + (flights.NumChildren * childMultiplier * outboundBaseCost);
-            decimal inboundTotalCost = (flights.NumAdults * inboundBaseCost) + (flights.NumChildren * childMultiplier * inboundBaseCost);
+            decimal outboundTotalCost = (flights.NumberAdults * outboundBaseCost) + (flights.NumberChildren * childMultiplier * outboundBaseCost);
+            decimal inboundTotalCost = (flights.NumberAdults * inboundBaseCost) + (flights.NumberChildren * childMultiplier * inboundBaseCost);
 
             actualCost = outboundTotalCost + inboundTotalCost;
 
@@ -80,7 +80,7 @@ namespace AirlineBookingLibrary.Logic
                 actualCost *= firstClassMultiplier;
             }
 
-            flights.TotalPrice = actualCost;
+            flights.Price = actualCost;
 
             return actualCost;
         }

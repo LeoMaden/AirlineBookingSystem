@@ -40,6 +40,7 @@ namespace AirlineBookingLibrary.Data
         Task DeleteFlightAsync(Flight flight);
         Task UpdateFlightAsync(Flight flight);
         Task<ICollection<Flight>> FindFlightsAsync(Airport origin, Airport destination, DateTime date);
+        Task<Flight> FindFlightByIdAsync(int flightId);
 
         //
         // Airport data access.
