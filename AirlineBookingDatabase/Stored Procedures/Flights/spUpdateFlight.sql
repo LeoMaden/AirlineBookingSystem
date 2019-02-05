@@ -13,7 +13,7 @@ AS
 	Update Flights
 	Set FlightScheduleId = @FlightScheduleId,
 		OriginAirport = @OriginAirport,
-		DestinationAirport = @DepartureDateTime,
+		DestinationAirport = @DestinationAirport,
 		DepartureDateTime = @DepartureDateTime,
 		ArrivalDateTime = @ArrivalDateTime
 	Where Id = @Id;
