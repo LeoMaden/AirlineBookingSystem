@@ -56,6 +56,16 @@ namespace AirlineBookingLibrary.Logic
         }
 
         /// <summary>
+        /// Generate the unique 10 digit long booking reference for this booking.
+        /// </summary>
+        /// <param name="booking">The booking to generate the reference for.</param>
+        /// <returns>The asynchronous task for calculating the booking reference.</returns>
+        public async Task<string> GenerateBookingReference(Booking booking)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
         /// Make a booking and take payment from a user.
         /// </summary>
         /// <param name="user">The user that is making the booking.</param>

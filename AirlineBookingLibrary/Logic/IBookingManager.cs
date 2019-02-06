@@ -32,5 +32,12 @@ namespace AirlineBookingLibrary.Logic
         /// <param name="booking">The booking that was made.</param>
         /// <returns>An asynchronous task for sending the confirmation email.</returns>
         Task SendBookingConfirmationAsync(User user, Booking booking);
+
+        /// <summary>
+        /// Generate the unique booking reference for this booking.
+        /// </summary>
+        /// <param name="booking">The booking to generate the reference for.</param>
+        /// <returns>The asynchronous task for calculating the booking reference.</returns>
+        Task<string> GenerateBookingReference(Booking booking);
     }
 }
