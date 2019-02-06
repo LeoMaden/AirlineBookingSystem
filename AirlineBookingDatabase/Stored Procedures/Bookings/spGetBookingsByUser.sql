@@ -5,7 +5,17 @@
 CREATE PROCEDURE [dbo].[spGetBookingsByUser]
 	@UserId int
 AS
-	Select * From Bookings
+	Select [Id], 
+		[BookingReference], 
+		[Last4CardDigits], 
+		[CardType], 
+		[DateTimeCreated], 
+		[UserId], 
+		[NumberAdults], 
+		[NumberChildren], 
+		[TravelClass], 
+		[Price]
+	From Bookings
 	Where UserId = @UserId;
 
 	-- Select the in and out flight ids foreach booking.

@@ -167,20 +167,26 @@ namespace AirlineBookingLibrary.Data
 
                 var results = await connection.QueryMultipleAsync("dbo.spGetBookingsByUser", p, commandType: CommandType.StoredProcedure);
 
+                // Read the results and map the results to the Booking and SelectedFlights models.
                 List<Booking> bookings = results.Read<Booking, SelectedFlights, Booking>((booking, flights) =>
                 {
                     booking.FlightsDetails = flights;
                     return booking;
-                }).ToList();
+                },
+                splitOn: "UserId").ToList();
 
+                // Read the table of in and out flight ids.
                 List<dynamic> flightIds = results.Read().ToList();
 
                 foreach (var booking in bookings)
                 {
+                    // Select the row where the booking Id of the table
+                    // matched the booking Id of the booking model.
                     dynamic flightId = (from i in flightIds
                                        where i.Id == booking.Id
                                        select i).First();
 
+                    // Populate in and out flights in FlightDetails by querying the Id to get the flight object.
                     booking.FlightsDetails.Outbound = await FindFlightByIdAsync(flightId.OutFlight);
                     booking.FlightsDetails.Inbound = await FindFlightByIdAsync(flightId.InFlight);
                 }
@@ -189,9 +195,43 @@ namespace AirlineBookingLibrary.Data
             }
         }
 
-        public Task<Flight> FindFlightByIdAsync(int flightId)
+        public async Task<Flight> FindFlightByIdAsync(int flightId)
         {
-            throw new NotImplementedException();
+            using (IDbConnection connection = Connection)
+            {
+                var p = new DynamicParameters();
+                p.Add("@Id", flightId);
+                
+                var results = await connection.QueryMultipleAsync("dbo.spGetFlightById", p, commandType: CommandType.StoredProcedure);
+
+                // Read results and map results to Flight and origin and destination Airport models.
+                Flight output = results.Read<Flight, Airport, Airport, Flight>(
+                    (flight, origin, destination) =>
+                    {
+                        flight.OriginAirport = origin;
+                        flight.DestinationAirport = destination;
+
+                        return flight;
+                    },
+                    splitOn: "OriginId, DestinationId").ToList().First();
+
+
+                // Read flight schedule Id from results.
+                dynamic scheduleIdRow = results.ReadFirst();
+                int? scheduleId = scheduleIdRow.FlightScheduleId;
+
+                if (scheduleId is null)
+                {
+                    output.Schedule = null;
+
+                    return output;
+                }
+
+                // ScheduleId not null then query object using its id.
+                output.Schedule = await FindScheduleByIdAsync(scheduleId.Value);
+
+                return output;
+            }
         }
 
         public async Task<User> FindByEmailAsync(string email)
@@ -333,6 +373,11 @@ namespace AirlineBookingLibrary.Data
         public Task UpdateStaffAsync(Staff staff)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<FlightSchedule> FindScheduleByIdAsync(int scheduleId)
+        {
+            return new FlightSchedule { Id = scheduleId };
         }
     }
 }

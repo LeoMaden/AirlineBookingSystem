@@ -35,4 +35,25 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="[FK_Flights_OriginAirport]" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="677c841d-8087-4890-95c5-ffaa9c953271" ChangeDateTime="02/06/2019 22:35:43">
+    <Property Name="ElementName" Value="[dbo].[Flights].[OriginAirport]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Flights]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="[OriginAirportId]" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="786fe034-1c61-48d1-b0f8-3137f4a646e1" ChangeDateTime="02/06/2019 22:35:55">
+    <Property Name="ElementName" Value="[dbo].[Flights].[DestinationAirport]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Flights]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="[DestinationAirportId]" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="755ef5f8-0d8b-46d3-878a-1404b6ec175b" ChangeDateTime="02/06/2019 22:37:33">
+    <Property Name="ElementName" Value="[dbo].[Airports].[Code]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Airports]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="[AirportCode]" />
+  </Operation>
 </Operations>

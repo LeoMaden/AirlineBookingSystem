@@ -10,6 +10,6 @@ CREATE PROCEDURE [dbo].[spGetFlights]
 AS
 	Select * From Flights
 	Where CONVERT(Date, DepartureDateTime) = @Date
-	and OriginAirport = @OriginAirport
-	and DestinationAirport = @DestinationAirport;
+	and [OriginAirportId] = @OriginAirport
+	and [DestinationAirportId] = @DestinationAirport;
 RETURN 0

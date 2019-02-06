@@ -13,8 +13,8 @@ CREATE PROCEDURE [dbo].[spInsertFlight]
 	@Id int = 0 out
 AS
 	Insert into Flights(FlightScheduleId,
-						OriginAirport,
-						DestinationAirport,
+						[OriginAirportId],
+						[DestinationAirportId],
 						DepartureDateTime,
 						ArrivalDateTime)
 	values(@FlightScheduleId, 

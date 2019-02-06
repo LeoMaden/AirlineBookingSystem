@@ -43,6 +43,10 @@ namespace AirlineBookingLibrary.Data
         Task<Flight> FindFlightByIdAsync(int flightId);
 
         //
+        // Schedule data access.
+        Task<FlightSchedule> FindScheduleByIdAsync(int scheduleId);
+
+        //
         // Airport data access.
         Task<ICollection<Airport>> GetAirportsAsync();
 

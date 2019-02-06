@@ -12,8 +12,8 @@ CREATE PROCEDURE [dbo].[spUpdateFlight]
 AS
 	Update Flights
 	Set FlightScheduleId = @FlightScheduleId,
-		OriginAirport = @OriginAirport,
-		DestinationAirport = @DestinationAirport,
+		[OriginAirportId] = @OriginAirport,
+		[DestinationAirportId] = @DestinationAirport,
 		DepartureDateTime = @DepartureDateTime,
 		ArrivalDateTime = @ArrivalDateTime
 	Where Id = @Id;
