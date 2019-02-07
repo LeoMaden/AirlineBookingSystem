@@ -65,7 +65,24 @@ namespace AirlineBookingLibrary.Logic
         public async Task<Flight> FindCheapestInboundFlightAsync(SearchFilterParameters filterParameters)
         {
             List<Flight> flights = (await FindInboundFlightsAsync(filterParameters)).ToList();
-            
+
+            return await FindCheapestFlightAsync(flights);
+        }
+
+        /// <summary>
+        /// Find the cheapest outbound flight that matches the given parameters.
+        /// </summary>
+        /// <param name="filterParameters">The SearchFilterParameters to filter the flights by.</param>
+        /// <returns>An asynchronous task for finding the flight.</returns>
+        public async Task<Flight> FindCheapestOutboundFlightAsync(SearchFilterParameters filterParameters)
+        {
+            List<Flight> flights = (await FindOutboundFlightsAsync(filterParameters)).ToList();
+
+            return await FindCheapestFlightAsync(flights);
+        }
+
+        private async Task<Flight> FindCheapestFlightAsync(List<Flight> flights)
+        {
             if (flights.Count == 0)
             {
                 // If there are no flights that match, return null.
@@ -81,7 +98,7 @@ namespace AirlineBookingLibrary.Logic
             {
                 // Calculate the price of the current flight.
                 decimal price = await _flightPriceCalculator.CalculateBasePriceAsync(flight);
-                
+
                 if (price < cheapestPrice)
                 {
                     // If price of flight is cheaper than current cheapest flight, update
@@ -92,16 +109,6 @@ namespace AirlineBookingLibrary.Logic
             }
 
             return cheapestFlight;
-        }
-
-        /// <summary>
-        /// Find the cheapest outbound flight that matches the given parameters.
-        /// </summary>
-        /// <param name="filterParameters">The SearchFilterParameters to filter the flights by.</param>
-        /// <returns>An asynchronous task for finding the flight.</returns>
-        public async Task<Flight> FindCheapestOutboundFlightAsync(SearchFilterParameters filterParameters)
-        {
-            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -126,7 +133,20 @@ namespace AirlineBookingLibrary.Logic
         /// <returns>An asynchronous task for finding the flights.</returns>
         public virtual async Task<ICollection<Flight>> FindInboundFlightsAsync(SearchFilterParameters filterParameters)
         {
-            throw new NotImplementedException("me");
+            if (filterParameters.Return == false)
+            {
+                // Flight is not a return flight.
+                throw new InvalidOperationException("Flight is not a return flight");
+            }
+
+            Airport origin = filterParameters.OriginAirport;
+            Airport destination = filterParameters.DestinationAirport;
+            DateTime date = filterParameters.InDate;
+
+            // Get flights from database going from destination -> origin on date.
+            ICollection<Flight> flights = await _dataAccess.FindFlightsAsync(destination, origin, date);
+
+            return flights;
         }
 
         /// <summary>
@@ -136,7 +156,14 @@ namespace AirlineBookingLibrary.Logic
         /// <returns>An asynchronous task for finding the flights.</returns>
         public virtual async Task<ICollection<Flight>> FindOutboundFlightsAsync(SearchFilterParameters filterParameters)
         {
-            throw new NotImplementedException();
+            Airport origin = filterParameters.OriginAirport;
+            Airport destination = filterParameters.DestinationAirport;
+            DateTime date = filterParameters.OutDate;
+
+            // Get flights from database going from origin -> destination on date.
+            ICollection<Flight> flights = await _dataAccess.FindFlightsAsync(origin, destination, date);
+
+            return flights;
         }
     }
 }
