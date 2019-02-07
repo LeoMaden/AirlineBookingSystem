@@ -38,6 +38,6 @@ namespace AirlineBookingLibrary.Logic
         /// </summary>
         /// <param name="booking">The booking to generate the reference for.</param>
         /// <returns>The asynchronous task for calculating the booking reference.</returns>
-        Task<string> GenerateBookingReference(Booking booking);
+        Task<string> GenerateBookingReferenceAsync(Booking booking);
     }
 }

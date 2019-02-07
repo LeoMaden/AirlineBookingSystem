@@ -57,6 +57,60 @@ namespace AirlineBookingLibrary.Tests.LogicTests
             }
         }
 
+        [Fact]
+        public async void GenerateBookingReferenceAsync_ReferenceIsCorrectLength()
+        {
+            using (var mock = AutoMock.GetLoose())
+            {
+                Booking booking1 = new Booking
+                {
+                    DateTimeCreated = DateTime.Now,
+                    Id = new Random().Next()
+                };
+
+
+                BookingManager bookingManager = mock.Create<BookingManager>();
+
+                string bookingRef = await bookingManager.GenerateBookingReferenceAsync(booking1);
+
+                Assert.Equal(10, bookingRef.Length);
+            }
+        }
+
+        [Fact]
+        public async void GenerateBookingReferenceAsync_ReferenceChangesBasedOnIdAndDateTimeCreated()
+        {
+            using (var mock = AutoMock.GetLoose())
+            {
+                Booking booking1 = new Booking
+                {
+                    DateTimeCreated = DateTime.Now,
+                    Id = 1
+                };
+                Booking booking2 = new Booking
+                {
+                    DateTimeCreated = DateTime.Now.AddSeconds(0.5),
+                    Id = 1
+                };
+                Booking booking3 = new Booking
+                {
+                    DateTimeCreated = DateTime.Now,
+                    Id = 3
+                };
+
+
+                BookingManager bookingManager = mock.Create<BookingManager>();
+
+                string ref1 = await bookingManager.GenerateBookingReferenceAsync(booking1);
+                string ref2 = await bookingManager.GenerateBookingReferenceAsync(booking2);
+                string ref3 = await bookingManager.GenerateBookingReferenceAsync(booking3);
+
+                Assert.True(ref1 != ref2);
+                Assert.True(ref1 != ref3);
+                Assert.True(ref2 != ref3);
+            }
+        }
+
         private List<Booking> GetSampleBookings()
         {
             var output = new List<Booking>

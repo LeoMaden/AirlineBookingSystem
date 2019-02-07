@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AirlineBookingLibrary.Models;
 using AirlineBookingLibrary.Validators;
@@ -12,6 +13,28 @@ namespace AirlineBookingLibrary.Logic
     /// </summary>
     public class PaymentManager : IPaymentManager
     {
+        // Private variable containing information on card issuers.
+        private readonly Dictionary<string[], string> _cardIssuers = new Dictionary<string[], string>
+        {
+            {
+                new[] { "4" },
+                "Visa"
+            },
+            {
+                new[] { "51", "52", "53", "54", "55" },
+                "Mastercard"
+            },
+            {
+                new[] { "50", "56", "57", "58", "639", "67" },
+                "Maestro"
+            },
+            {
+                new[] { "34", "37" },
+                "American Express"
+            }
+        };
+
+
         /// <summary>
         /// Take the payment using the given card details.
         /// </summary>
@@ -45,6 +68,25 @@ namespace AirlineBookingLibrary.Logic
             // Simulate taking a payment.
 
             return MethodResult.Success;
+        }
+
+        public async Task<string> GetCardIssuerAsync(string cardNumber)
+        {
+            // Loop through each issuer in issuer dictionary.
+            foreach (var issuerPair in _cardIssuers)
+            {
+                // Loop through each of the starting values for each issuer.
+                foreach (var startNumber in issuerPair.Key)
+                {
+                    if (cardNumber.StartsWith(startNumber))
+                    {
+                        return issuerPair.Value;
+                    }
+                }
+            }
+
+            // No issuer found
+            return "Unknown";
         }
     }
 }

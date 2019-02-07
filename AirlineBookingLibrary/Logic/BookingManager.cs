@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
 using AirlineBookingLibrary.Data;
 using AirlineBookingLibrary.Models;
@@ -60,9 +63,37 @@ namespace AirlineBookingLibrary.Logic
         /// </summary>
         /// <param name="booking">The booking to generate the reference for.</param>
         /// <returns>The asynchronous task for calculating the booking reference.</returns>
-        public async Task<string> GenerateBookingReference(Booking booking)
+        public async Task<string> GenerateBookingReferenceAsync(Booking booking)
         {
-            throw new NotImplementedException();
+            // Define the length of the booking reference.
+            const int length = 10;
+
+            // Get byte[]s for the DateTimeCreated and Id fields.
+            byte[] dateBytes = Encoding.ASCII.GetBytes(booking.DateTimeCreated.ToBinary().ToString());
+            byte[] idBytes = Encoding.ASCII.GetBytes(booking.Id.ToString());
+
+            // Join byte[]s together.
+            byte[] totalBytes = dateBytes.Concat(idBytes).ToArray();
+
+            using (SHA256 hasher = SHA256.Create())
+            {
+                // Hash the totalBytes.
+                byte[] hashResult = hasher.ComputeHash(totalBytes);
+
+                // Convert the hash to a string.
+                string hashString = Convert.ToBase64String(hashResult);
+
+                // Remove + and / characters and make all letters uppercase.
+                string base36HashString = hashString.Replace("+", "").Replace("/", "").ToUpper();
+
+                // Take the first n bits of the base 36 hash string.
+                string bookingRef = base36HashString.Substring(0, length);
+
+
+                booking.BookingReference = bookingRef;
+
+                return bookingRef;
+            }
         }
 
         /// <summary>
@@ -74,7 +105,34 @@ namespace AirlineBookingLibrary.Logic
         /// <returns>An asynchronous task of MethodResult indicating whether the operation was successful or not.</returns>
         public async Task<MethodResult> MakeBookingAsync(User user, SelectedFlights selectedFlights, PaymentInfo paymentInfo)
         {
-            throw new NotImplementedException();
+            decimal price = selectedFlights.Price;
+
+            var paymentResult = await _paymentManager.TakePaymentAsync(paymentInfo, price);
+
+            if (paymentResult.Succeeded == false)
+            {
+                return MethodResult.Failed(paymentResult.Errors.ToArray());
+            }
+
+            // Payment succeeded - create booking.
+            Booking newBooking = new Booking
+            {
+                Last4CardDigits = paymentInfo.CardNumber.Substring(11, 4),
+                CardType = await _paymentManager.GetCardIssuerAsync(paymentInfo.CardNumber),
+                DateTimeCreated = DateTime.Now,
+                FlightsDetails = selectedFlights
+            };
+
+            // Generate the booking reference.
+            await GenerateBookingReferenceAsync(newBooking);
+
+            // Crate booking in database.
+            await _dataAccess.CreateBookingAsync(newBooking, user);
+
+            // Send confirmation email.
+            await SendBookingConfirmationAsync(user, newBooking);
+
+            return MethodResult.Success;
         }
 
         /// <summary>

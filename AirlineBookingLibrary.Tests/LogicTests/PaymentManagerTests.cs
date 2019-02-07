@@ -1,5 +1,6 @@
 ﻿using AirlineBookingLibrary.Logic;
 using AirlineBookingLibrary.Models;
+using Autofac.Extras.Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -68,7 +69,22 @@ namespace AirlineBookingLibrary.Tests.LogicTests
             Assert.True(actualResult.Succeeded == true);
         }
 
+        [Theory]
+        [InlineData("4xxxxxxxxxxxxxxx", "Visa")]
+        [InlineData("53xxxxxxxxxxxxxx", "Mastercard")]
+        [InlineData("37xxxxxxxxxxxxxx", "American Express")]
+        [InlineData("639xxxxxxxxxxxxx", "Maestro")]
+        public async void GetCardIssuerAsync_ReturnsCorrectIssuer(string number, string expectedIssuer)
+        {
+            using (var mock = AutoMock.GetLoose())
+            {
+                PaymentManager paymentManager = mock.Create<PaymentManager>();
 
+                string actualIssuer = await paymentManager.GetCardIssuerAsync(number);
+
+                Assert.Equal(expectedIssuer, actualIssuer);
+            }
+        }
 
 
         public static List<object[]> GetTakePaymentFailureData()
