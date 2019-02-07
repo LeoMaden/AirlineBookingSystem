@@ -308,9 +308,19 @@ namespace AirlineBookingLibrary.Data
             }
         }
 
-        public Task<ICollection<Flight>> FindFlightsAsync(Airport origin, Airport destination, DateTime date)
+        public async Task<ICollection<Flight>> FindFlightsAsync(Airport origin, Airport destination, DateTime date)
         {
-            throw new NotImplementedException();
+            using (IDbConnection connection = Connection)
+            {
+                var p = new DynamicParameters();
+                p.Add("@OriginAirport", origin.Id);
+                p.Add("@DestinationAirport", destination.Id);
+                p.Add("@Date", date);
+
+                List<Flight> flights = (await connection.QueryAsync<Flight>("dbo.spGetFlights", p, commandType: CommandType.StoredProcedure)).ToList();
+
+                return flights;
+            }
         }
 
         public Task<Staff> FindStaffByIdAsync(int id)
@@ -323,9 +333,14 @@ namespace AirlineBookingLibrary.Data
             throw new NotImplementedException();
         }
 
-        public Task<ICollection<Airport>> GetAirportsAsync()
+        public async Task<ICollection<Airport>> GetAirportsAsync()
         {
-            throw new NotImplementedException();
+            using (IDbConnection connection = Connection)
+            {
+                List<Airport> airports = (await connection.QueryAsync<Airport>("dbo.spGetAirports", commandType: CommandType.StoredProcedure)).ToList();
+
+                return airports;
+            }
         }
 
         public async Task UpdateAddressAsync(User user)
