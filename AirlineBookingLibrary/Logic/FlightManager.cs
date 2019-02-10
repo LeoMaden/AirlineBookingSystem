@@ -74,7 +74,7 @@ namespace AirlineBookingLibrary.Logic
         /// </summary>
         /// <param name="filterParameters">The SearchFilterParameters to filter the flights by.</param>
         /// <returns>An asynchronous task for finding the flight.</returns>
-        public async Task<Flight> FindCheapestOutboundFlightAsync(SearchFilterParameters filterParameters)
+        public virtual async Task<Flight> FindCheapestOutboundFlightAsync(SearchFilterParameters filterParameters)
         {
             List<Flight> flights = (await FindOutboundFlightsAsync(filterParameters)).ToList();
 
@@ -123,7 +123,26 @@ namespace AirlineBookingLibrary.Logic
         /// <returns>An asynchronous task for retrieving a dictionary of dates and prices.</returns>
         public async Task<IDictionary<DateTime, decimal>> FindCheapestPricesOnSimilarDatesAsync(SearchFilterParameters filterParameters, int searchPeriod)
         {
-            throw new NotImplementedException();
+            DateTime middleDate = filterParameters.OutDate;
+            Dictionary<DateTime, decimal> output = new Dictionary<DateTime, decimal>();
+
+            for (int i = -searchPeriod; i <= searchPeriod; i++)
+            {
+                DateTime date = middleDate.AddDays(i);
+                Flight cheapestFlight = await FindCheapestOutboundFlightAsync(filterParameters);
+
+                if (cheapestFlight is null)
+                {
+                    output.Add(date, -1);
+                    continue;
+                }
+
+                decimal price = await _flightPriceCalculator.CalculateBasePriceAsync(cheapestFlight);
+
+                output.Add(date, price);
+            }
+
+            return output;
         }
 
         /// <summary>

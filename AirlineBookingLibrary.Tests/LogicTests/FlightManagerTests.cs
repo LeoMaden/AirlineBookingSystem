@@ -83,7 +83,56 @@ namespace AirlineBookingLibrary.Tests.LogicTests
             Assert.Equal(expected, actual);
         }
 
+        [Fact]
+        public async void FindCheapestPricesOnSimilarDatesAsync_ReturnsCorrectDatesAndPrices()
+        {
+            // Mock an empty IDataAccess interface.
+            var dataAccessMock = new Mock<IDataAccess>();
 
+            // Mock an IFlightPriceCalculator, setting up the CalculateBasePrice method to
+            // return set values on each call regardless of Flight object passed to it.
+            var priceCalculatorMock = new Mock<IFlightPriceCalculator>();
+
+            priceCalculatorMock.SetupSequence(x => x.CalculateBasePriceAsync(It.IsAny<Flight>()))
+                .ReturnsAsync(100)
+                .ReturnsAsync(150)
+                .ReturnsAsync(110)
+                .ReturnsAsync(75)
+                .ReturnsAsync(90);
+
+
+            // Mock the FlightManager class, taking the mocked IDataAccess and IFlightPriceCalculator
+            // interfaces as parameters, setting up the FindCheapestOutboundFlightAsync method to
+            // return flights with specified departure dates on each call.
+            var flightManagerMock = new Mock<FlightManager>(dataAccessMock.Object, priceCalculatorMock.Object)
+            {
+                CallBase = true
+            };
+
+            flightManagerMock.SetupSequence(x => x.FindCheapestOutboundFlightAsync(It.IsAny<SearchFilterParameters>()))
+                .ReturnsAsync(new Flight { DepartureDateTime = DateTime.Today.AddDays(-2) })
+                .ReturnsAsync(new Flight { DepartureDateTime = DateTime.Today.AddDays(-1) })
+                .ReturnsAsync(new Flight { DepartureDateTime = DateTime.Today.AddDays(0) })
+                .ReturnsAsync(new Flight { DepartureDateTime = DateTime.Today.AddDays(1) })
+                .ReturnsAsync(new Flight { DepartureDateTime = DateTime.Today.AddDays(2) });
+
+
+            var flightManager = flightManagerMock.Object;
+
+            var expected = new Dictionary<DateTime, decimal>
+            {
+                { DateTime.Today.AddDays(-2), 100 },
+                { DateTime.Today.AddDays(-1), 150 },
+                { DateTime.Today.AddDays(0), 110 },
+                { DateTime.Today.AddDays(1), 75 },
+                { DateTime.Today.AddDays(2), 90 }
+            };
+
+            var actual = await flightManager.FindCheapestPricesOnSimilarDatesAsync(new SearchFilterParameters { OutDate = DateTime.Today }, 2);
+
+
+            Assert.Equal(expected, actual);
+        }
 
         private ICollection<Flight> GetFlights()
         {
