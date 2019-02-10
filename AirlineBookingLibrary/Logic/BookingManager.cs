@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mail;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using AirlineBookingLibrary.Data;
 using AirlineBookingLibrary.Models;
 using AirlineBookingLibrary.Services;
+using AirlineBookingLibrary.Helpers;
 
 namespace AirlineBookingLibrary.Logic
 {
@@ -143,7 +145,21 @@ namespace AirlineBookingLibrary.Logic
         /// <returns>An asynchronous task for sending the confirmation email.</returns>
         public async Task SendBookingConfirmationAsync(User user, Booking booking)
         {
-            throw new NotImplementedException();
+            MailAddress senderEmail = new MailAddress("britishairwaysproject@gmail.com", "British Airways Project");
+            MailAddress recipientEmail = new MailAddress(user.Email);
+
+            MailMessage mail = new MailMessage(senderEmail, recipientEmail);
+            SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
+            
+            mail.To.Add(user.Email);
+            mail.Subject = Messages.GetBookingConfirmationEmailSubject(booking);
+            mail.Body = Messages.GetBookingConfirmationEmailBody(booking, user);
+
+            SmtpServer.Port = 587;
+            SmtpServer.Credentials = new System.Net.NetworkCredential("britishairwaysproject@gmail.com", "kHDmiK@88x6v");
+            SmtpServer.EnableSsl = true;
+
+            SmtpServer.Send(mail);
         }
     }
 }

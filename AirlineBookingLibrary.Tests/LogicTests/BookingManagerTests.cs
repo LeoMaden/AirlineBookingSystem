@@ -110,6 +110,21 @@ namespace AirlineBookingLibrary.Tests.LogicTests
                 Assert.True(ref2 != ref3);
             }
         }
+        
+        //[Fact]
+        public async void EmailTest()
+        {
+            using (var mock = AutoMock.GetLoose())
+            {
+                BookingManager bookingManager = mock.Create<BookingManager>();
+
+                //await bookingManager.SendBookingConfirmationAsync(new User { Email = "" }, new Booking {
+                //    FlightsDetails = new SelectedFlights { Outbound = new Flight { OriginAirport = new Airport { FriendlyName = "London Heathrow" } } },
+                //    BookingReference = "ABC123DEF5"});
+
+                Assert.True(false);
+            }
+        }
 
         private List<Booking> GetSampleBookings()
         {
