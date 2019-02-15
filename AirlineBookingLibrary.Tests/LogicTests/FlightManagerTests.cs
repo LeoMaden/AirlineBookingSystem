@@ -14,6 +14,8 @@ namespace AirlineBookingLibrary.Tests.LogicTests
 {
     public class FlightManagerTests
     {
+        // Test whether the method will return true correctly if the flight exists
+        // and false if it dos not exist.
         [Fact]
         public async void ExistsFlightAsync_DeterminesWhetherFlightExistsCorrectly()
         {
@@ -39,6 +41,8 @@ namespace AirlineBookingLibrary.Tests.LogicTests
             }
         }
 
+        // Test whether the method correctly finds the cheapest flight from
+        // all available flights.
         [Fact]
         public async void FindCheapestInboundFlightAsync_FindsCheapestFlight()
         {
@@ -83,6 +87,8 @@ namespace AirlineBookingLibrary.Tests.LogicTests
             Assert.Equal(expected, actual);
         }
 
+        // Tests whether the method will find the cheapest flights on the number of days
+        // surrounding the initial date.
         [Fact]
         public async void FindCheapestPricesOnSimilarDatesAsync_ReturnsCorrectDatesAndPrices()
         {
@@ -134,6 +140,10 @@ namespace AirlineBookingLibrary.Tests.LogicTests
             Assert.Equal(expected, actual);
         }
 
+        /// <summary>
+        /// Get a collection of sample flights.
+        /// </summary>
+        /// <returns>An ICollection of sample flight object.</returns>
         private ICollection<Flight> GetFlights()
         {
             var output = new List<Flight>

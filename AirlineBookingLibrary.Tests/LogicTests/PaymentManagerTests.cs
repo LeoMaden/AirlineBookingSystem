@@ -12,6 +12,7 @@ namespace AirlineBookingLibrary.Tests.LogicTests
 {
     public class PaymentManagerTests
     {
+        // Test that the method will fail when the given payment info is invalid.
         [Theory]
         [MemberData(nameof(GetTakePaymentFailureData))]
         public async void TakePaymentAsync_ReturnsFailureWhenPaymentInfoIsInvalid(string nameOnCard, string cardNumber, DateTime expirationDate, string cvv)
@@ -31,6 +32,7 @@ namespace AirlineBookingLibrary.Tests.LogicTests
             Assert.True(actualResult.Succeeded == false);
         }
 
+        // Test that the method will fail when the amound is not greater than 0.
         [Theory]
         [InlineData(-1)]
         [InlineData(0)]
@@ -51,6 +53,7 @@ namespace AirlineBookingLibrary.Tests.LogicTests
             Assert.True(actualResult.Succeeded == false);
         }
 
+        // Tests that the method succeeds when valid payment data is passed to it.
         [Fact]
         public async void TakePaymentAsync_ReturnsSuccessWhenValidValuesPassed()
         {
@@ -69,6 +72,7 @@ namespace AirlineBookingLibrary.Tests.LogicTests
             Assert.True(actualResult.Succeeded == true);
         }
 
+        // Tests that the correct card issuer for each of the card numbers is returned.
         [Theory]
         [InlineData("4xxxxxxxxxxxxxxx", "Visa")]
         [InlineData("53xxxxxxxxxxxxxx", "Mastercard")]
@@ -87,6 +91,10 @@ namespace AirlineBookingLibrary.Tests.LogicTests
         }
 
 
+        /// <summary>
+        /// Get sample payment data that is invalid.
+        /// </summary>
+        /// <returns>An object[] with the data in the format { Name, Number, Expiry, CVV }</returns>
         public static List<object[]> GetTakePaymentFailureData()
         {
             List<object[]> output = new List<object[]>();

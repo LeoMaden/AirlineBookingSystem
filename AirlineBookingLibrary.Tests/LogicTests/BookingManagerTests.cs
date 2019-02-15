@@ -12,11 +12,15 @@ namespace AirlineBookingLibrary.Tests.LogicTests
 {
     public class BookingManagerTests
     {
+        // Tests whether the method will use the database connection to retrieve
+        // bookings with the given user ID and return the correct values.
         [Fact]
         public async void FindBookingsByUserAsync_FindsBookingsForUser()
         {
             using (var mock = AutoMock.GetLoose())
             {
+                // Mock an IDataAccess interface so when FindBookingsByUserIdAsync is
+                // called, it returns the sample bookings.
                 mock.Mock<IDataAccess>()
                     .Setup(x =>  x.FindBookingsByUserIdAsync(1))
                     .Returns(Task.Run(() => (ICollection<Booking>)GetSampleBookings()));
@@ -32,31 +36,34 @@ namespace AirlineBookingLibrary.Tests.LogicTests
             }
         }
 
-        [Fact]
-        public async void MakeBookingAsync_MakesBookingCorrectly()
-        {
-            using (var mock = AutoMock.GetLoose())
-            {
-                User testUser = new User
-                {
-                    Id = 42,
-                    UserName = "TestUser",
-                    Email = "testuser@test.com"
-                };
+        //// 
+        //[Fact]
+        //public async void MakeBookingAsync_MakesBookingCorrectly()
+        //{
+        //    using (var mock = AutoMock.GetLoose())
+        //    {
+        //        User testUser = new User
+        //        {
+        //            Id = 42,
+        //            UserName = "TestUser",
+        //            Email = "testuser@test.com"
+        //        };
 
-                Booking testBooking = GetSampleBookings().First();
+        //        Booking testBooking = GetSampleBookings().First();
 
 
-                //mock.Mock<IMessageService>()
-                //    .Setup(x => x.SendAsync(testUser.Email,
-                //                            Messages.GetBookingConfirmationEmailSubject(testBooking),
-                //                            Messages.GetBookingConfirmationEmailBody(testBooking, testUser)))
-                //    .Returns(Task.Run(() => MethodResult.Success));
+        //        //mock.Mock<IMessageService>()
+        //        //    .Setup(x => x.SendAsync(testUser.Email,
+        //        //                            Messages.GetBookingConfirmationEmailSubject(testBooking),
+        //        //                            Messages.GetBookingConfirmationEmailBody(testBooking, testUser)))
+        //        //    .Returns(Task.Run(() => MethodResult.Success));
 
                 
-            }
-        }
+        //    }
+        //}
 
+
+        // Tests that booking references generated are the correct length (10).
         [Fact]
         public async void GenerateBookingReferenceAsync_ReferenceIsCorrectLength()
         {
@@ -77,6 +84,8 @@ namespace AirlineBookingLibrary.Tests.LogicTests
             }
         }
 
+        // Test that the booking reference changes when the Id and/or time created
+        // for the booking change.
         [Fact]
         public async void GenerateBookingReferenceAsync_ReferenceChangesBasedOnIdAndDateTimeCreated()
         {
@@ -111,21 +120,25 @@ namespace AirlineBookingLibrary.Tests.LogicTests
             }
         }
         
-        //[Fact]
-        public async void EmailTest()
-        {
-            using (var mock = AutoMock.GetLoose())
-            {
-                BookingManager bookingManager = mock.Create<BookingManager>();
+        ////[Fact]
+        //public async void EmailTest()
+        //{
+        //    using (var mock = AutoMock.GetLoose())
+        //    {
+        //        BookingManager bookingManager = mock.Create<BookingManager>();
 
-                //await bookingManager.SendBookingConfirmationAsync(new User { Email = "" }, new Booking {
-                //    FlightsDetails = new SelectedFlights { Outbound = new Flight { OriginAirport = new Airport { FriendlyName = "London Heathrow" } } },
-                //    BookingReference = "ABC123DEF5"});
+        //        //await bookingManager.SendBookingConfirmationAsync(new User { Email = "" }, new Booking {
+        //        //    FlightsDetails = new SelectedFlights { Outbound = new Flight { OriginAirport = new Airport { FriendlyName = "London Heathrow" } } },
+        //        //    BookingReference = "ABC123DEF5"});
 
-                Assert.True(false);
-            }
-        }
+        //        Assert.True(false);
+        //    }
+        //}
 
+        /// <summary>
+        /// Get a list that contains sample bookings.
+        /// </summary>
+        /// <returns>A list of sample booking objects.</returns>
         private List<Booking> GetSampleBookings()
         {
             var output = new List<Booking>

@@ -1,19 +1,17 @@
 ﻿using AirlineBookingLibrary.Enums;
 using AirlineBookingLibrary.Logic;
 using AirlineBookingLibrary.Models;
-using Autofac.Extras.Moq;
 using Moq;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace AirlineBookingLibrary.Tests.LogicTests
 {
     public class FlightPriceCalculatorTests
     {
+        // Test that the method will calculate the correct base price
+        // of a flight.
         [Theory]
         [MemberData(nameof(GetFlightPriceData))]
         public async void CalculateBasePriceAsync_CalculatesCorrectBasePrice(Flight flight, decimal expectedPrice)
@@ -25,7 +23,8 @@ namespace AirlineBookingLibrary.Tests.LogicTests
             Assert.Equal(expectedPrice, actualPrice);
         }
 
-
+        // Test that the method will calculate the correct total price for the
+        // flights, travel class, and number of passengers.
         [Theory]
         [MemberData(nameof(GetTotalPriceData))]
         public async void CalculateTotalPriceAsync_CalculatesCorrectTotalPrice(TravelClass travelClass, int numAdults, int numChildren, decimal expectedPrice)
@@ -114,20 +113,6 @@ namespace AirlineBookingLibrary.Tests.LogicTests
             decimal price3 = 420;
 
             flights.Add(new object[] { flight3, price3 });
-
-
-            //// JFK -> LAX, today.
-            //Flight flight4 = new Flight()
-            //{
-            //    OriginAirport = new Airport() { AirportCode = "JFK", FriendlyName = "London Stansted Airport" },
-            //    DestinationAirport = new Airport() { AirportCode = "LAX", FriendlyName = "Innsbruck Airport" },
-            //    DepartureDateTime = DateTime.Now.AddHours(2)
-            //};
-
-            //// [50 + (0.15 * 592)] * 3 rounded up to £5
-            //decimal price4 = 420;
-
-            //flights.Add(new object[] { flight4, price4 });
 
 
             return flights;
