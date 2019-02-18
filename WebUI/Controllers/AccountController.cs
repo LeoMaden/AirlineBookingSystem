@@ -2,6 +2,7 @@
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using System;
+using System.Data.SqlClient;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using WebUI.Models;
@@ -145,6 +146,19 @@ namespace WebUI.Controllers
 
             return View();
             
+        }
+
+
+        protected override void OnException(ExceptionContext filterContext)
+        {
+            filterContext.ExceptionHandled = true;
+
+            Exception exception = filterContext.Exception;
+
+            if (exception is SqlException sqlException)
+            {
+                filterContext.Result = new ViewResult { ViewName = "~/Views/Shared/Error.cshtml" };
+            }
         }
     }
 }
