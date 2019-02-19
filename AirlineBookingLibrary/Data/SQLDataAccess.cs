@@ -394,5 +394,18 @@ namespace AirlineBookingLibrary.Data
         {
             return new FlightSchedule { Id = scheduleId };
         }
+
+        public async Task<Airport> FindAirportByIdAsync(int airportId)
+        {
+            using (IDbConnection connection = Connection)
+            {
+                var p = new DynamicParameters();
+                p.Add("@Id", airportId);
+
+                Airport output = await connection.QueryFirstAsync<Airport>("dbo.spGetAirportById", p, commandType: CommandType.StoredProcedure);
+
+                return output;
+            }
+        }
     }
 }

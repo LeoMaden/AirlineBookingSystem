@@ -49,6 +49,7 @@ namespace AirlineBookingLibrary.Data
         //
         // Airport data access.
         Task<ICollection<Airport>> GetAirportsAsync();
+        Task<Airport> FindAirportByIdAsync(int airportId);
 
         //
         // Staff data access.
