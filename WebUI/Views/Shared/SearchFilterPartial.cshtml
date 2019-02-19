@@ -1,0 +1,67 @@
+﻿@model WebUI.Models.SearchFilterModel
+
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+
+@using (Html.BeginForm("Index", "Search", FormMethod.Post))
+{
+
+    @*Error summary.*@
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="form-group">
+        @Html.DropDownListFor(m => m.SelectedOriginAirportId, Model.Airports, "- Select an origin -", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.SelectedOriginAirportId, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        <img src="https://via.placeholder.com/100x50.png?text=Plane+Image" />
+    </div>
+
+    <div class="form-group">
+        @Html.DropDownListFor(m => m.SelectedDestinationAirportId, Model.Airports, "- Select an destination -", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.SelectedDestinationAirportId, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.EditorFor(m => m.OutboundDate, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.OutboundDate, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.RadioButtonFor(m => m.ReturnFlight, "false", new { @id = "one-way-flight-radio", @onClick = "hideReturnDiv()" })
+        @Html.Label("One-way", new { @for = "one-way-flight-radio" })
+
+        @Html.RadioButtonFor(m => m.ReturnFlight, "true", new { @id = "return-flight-radio", @onClick = "showReturnDiv()" })
+        @Html.Label("Return", new { @for = "return-flight-radio" })
+
+        @Html.ValidationMessageFor(m => m.ReturnFlight, "", new { @class = "text-danger" })
+    </div>
+
+    <div id="return-flight-option">
+        <div class="form-group">
+            @Html.EditorFor(m => m.InboundDate, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.InboundDate, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.Label("Adults")
+        @Html.EditorFor(m => m.NumberAdults, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.NumberAdults, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.Label("Children")
+        @Html.EditorFor(m => m.NumberChildren, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.NumberChildren, "", new { @class = "text-danger" })
+    </div>
+
+
+    @*Submit*@
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Create" class="btn btn-default" />
+        </div>
+    </div>
+
+}
