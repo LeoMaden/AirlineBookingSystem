@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using AirlineBookingLibrary.Data;
 using AirlineBookingLibrary.Models;
 using AirlineBookingLibrary.Services;
+using AirlineBookingLibrary.Helpers;
 
 namespace AirlineBookingLibrary.Logic
 {
@@ -143,7 +144,12 @@ namespace AirlineBookingLibrary.Logic
         /// <returns>An asynchronous task for sending the confirmation email.</returns>
         public async Task SendBookingConfirmationAsync(User user, Booking booking)
         {
-            throw new NotImplementedException();
+            string destination = user.Email;
+            string subject = Messages.GetBookingConfirmationEmailSubject(booking);
+            string body = Messages.GetBookingConfirmationEmailBody(booking, user);
+
+            await _messageService.SendAsync(destination, subject, body);
+
         }
     }
 }

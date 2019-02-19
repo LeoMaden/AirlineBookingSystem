@@ -183,8 +183,8 @@ namespace AirlineBookingLibrary.Data
                     // Select the row where the booking Id of the table
                     // matched the booking Id of the booking model.
                     dynamic flightId = (from i in flightIds
-                                       where i.Id == booking.Id
-                                       select i).First();
+                                        where i.Id == booking.Id
+                                        select i).First();
 
                     // Populate in and out flights in FlightDetails by querying the Id to get the flight object.
                     booking.FlightsDetails.Outbound = await FindFlightByIdAsync(flightId.OutFlight);
@@ -201,7 +201,7 @@ namespace AirlineBookingLibrary.Data
             {
                 var p = new DynamicParameters();
                 p.Add("@Id", flightId);
-                
+
                 var results = await connection.QueryMultipleAsync("dbo.spGetFlightById", p, commandType: CommandType.StoredProcedure);
 
                 // Read results and map results to Flight and origin and destination Airport models.
