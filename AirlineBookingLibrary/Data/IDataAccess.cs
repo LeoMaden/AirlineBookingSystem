@@ -31,7 +31,7 @@ namespace AirlineBookingLibrary.Data
 
         //
         // Booking data access.
-        Task<ICollection<Booking>> FindBookingsByUserIdAsync(int userId);
+        Task<List<Booking>> FindBookingsByUserIdAsync(int userId);
         Task CreateBookingAsync(Booking booking, User user);
 
         //
@@ -39,7 +39,7 @@ namespace AirlineBookingLibrary.Data
         Task CreateFlightAsync(Flight flight);
         Task DeleteFlightAsync(Flight flight);
         Task UpdateFlightAsync(Flight flight);
-        Task<ICollection<Flight>> FindFlightsAsync(Airport origin, Airport destination, DateTime date);
+        Task<List<Flight>> FindFlightsAsync(Airport origin, Airport destination, DateTime date);
         Task<Flight> FindFlightByIdAsync(int flightId);
 
         //
@@ -48,7 +48,7 @@ namespace AirlineBookingLibrary.Data
 
         //
         // Airport data access.
-        Task<ICollection<Airport>> GetAirportsAsync();
+        Task<List<Airport>> GetAirportsAsync();
         Task<Airport> FindAirportByIdAsync(int airportId);
 
         //

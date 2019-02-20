@@ -23,7 +23,7 @@ namespace AirlineBookingLibrary.Logic
         /// </summary>
         /// <param name="user">The user whose bookings to find.</param>
         /// <returns>An asynchronous task of the user's bookings.</returns>
-        Task<IEnumerable<Booking>> FindBookingsByUserAsync(User user);
+        Task<List<Booking>> FindBookingsByUserAsync(User user);
 
         /// <summary>
         /// Send the user a confirmation email for their booking.

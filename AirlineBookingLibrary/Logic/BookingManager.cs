@@ -54,7 +54,7 @@ namespace AirlineBookingLibrary.Logic
         /// </summary>
         /// <param name="user">The user whose bookings to find.</param>
         /// <returns>An asynchronous task of the user's bookings.</returns>
-        public async Task<IEnumerable<Booking>> FindBookingsByUserAsync(User user)
+        public async Task<List<Booking>> FindBookingsByUserAsync(User user)
         {
             return await _dataAccess.FindBookingsByUserIdAsync(user.Id);
         }

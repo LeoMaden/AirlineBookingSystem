@@ -15,14 +15,14 @@ namespace AirlineBookingLibrary.Logic
         /// </summary>
         /// <param name="filterParameters">The paramaters to filter the search by.</param>
         /// <returns>The asynchronous task for finding an ICollection of flights.</returns>
-        Task<ICollection<Flight>> FindOutboundFlightsAsync(SearchFilterParameters filterParameters);
+        Task<List<Flight>> FindOutboundFlightsAsync(SearchFilterParameters filterParameters);
 
         /// <summary>
         /// Find inbound flights that match the given search parameters, asynchronously.
         /// </summary>
         /// <param name="filterParameters">The paramaters to filter the search by.</param>
         /// <returns>The asynchronous task for finding an ICollection of flights.</returns>
-        Task<ICollection<Flight>> FindInboundFlightsAsync(SearchFilterParameters filterParameters);
+        Task<List<Flight>> FindInboundFlightsAsync(SearchFilterParameters filterParameters);
 
         /// <summary>
         /// Find the cheapest outbound flight that matches the given search parameters, asynchronously.
@@ -58,6 +58,6 @@ namespace AirlineBookingLibrary.Logic
         /// <returns>The asynchronous task for finding a dictionary of dates and cheapest roundtrip prices
         /// that match the search parameters on similar dates.
         /// </returns>
-        Task<IDictionary<DateTime, decimal>> FindCheapestPricesOnSimilarDatesAsync(SearchFilterParameters filterParameters, int searchPeriod);
+        Task<Dictionary<DateTime, decimal>> FindCheapestPricesOnSimilarDatesAsync(SearchFilterParameters filterParameters, int searchPeriod);
     }
 }

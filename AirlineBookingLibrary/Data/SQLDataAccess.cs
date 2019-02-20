@@ -158,7 +158,7 @@ namespace AirlineBookingLibrary.Data
             }
         }
 
-        public async Task<ICollection<Booking>> FindBookingsByUserIdAsync(int userId)
+        public async Task<List<Booking>> FindBookingsByUserIdAsync(int userId)
         {
             using (IDbConnection connection = Connection)
             {
@@ -308,7 +308,7 @@ namespace AirlineBookingLibrary.Data
             }
         }
 
-        public async Task<ICollection<Flight>> FindFlightsAsync(Airport origin, Airport destination, DateTime date)
+        public async Task<List<Flight>> FindFlightsAsync(Airport origin, Airport destination, DateTime date)
         {
             using (IDbConnection connection = Connection)
             {
@@ -333,7 +333,7 @@ namespace AirlineBookingLibrary.Data
             throw new NotImplementedException();
         }
 
-        public async Task<ICollection<Airport>> GetAirportsAsync()
+        public async Task<List<Airport>> GetAirportsAsync()
         {
             using (IDbConnection connection = Connection)
             {

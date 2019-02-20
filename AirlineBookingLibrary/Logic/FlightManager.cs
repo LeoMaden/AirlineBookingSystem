@@ -121,7 +121,7 @@ namespace AirlineBookingLibrary.Logic
         /// in time that should be searched from the given date.
         /// </param>
         /// <returns>An asynchronous task for retrieving a dictionary of dates and prices.</returns>
-        public async Task<IDictionary<DateTime, decimal>> FindCheapestPricesOnSimilarDatesAsync(SearchFilterParameters filterParameters, int searchPeriod)
+        public async Task<Dictionary<DateTime, decimal>> FindCheapestPricesOnSimilarDatesAsync(SearchFilterParameters filterParameters, int searchPeriod)
         {
             DateTime middleDate = filterParameters.OutDate;
             Dictionary<DateTime, decimal> output = new Dictionary<DateTime, decimal>();
@@ -150,7 +150,7 @@ namespace AirlineBookingLibrary.Logic
         /// </summary>
         /// <param name="filterParameters">The parameters to filter the flight by.</param>
         /// <returns>An asynchronous task for finding the flights.</returns>
-        public virtual async Task<ICollection<Flight>> FindInboundFlightsAsync(SearchFilterParameters filterParameters)
+        public virtual async Task<List<Flight>> FindInboundFlightsAsync(SearchFilterParameters filterParameters)
         {
             if (filterParameters.Return == false)
             {
@@ -163,7 +163,7 @@ namespace AirlineBookingLibrary.Logic
             DateTime date = filterParameters.InDate;
 
             // Get flights from database going from destination -> origin on date.
-            ICollection<Flight> flights = await _dataAccess.FindFlightsAsync(destination, origin, date);
+            List<Flight> flights = await _dataAccess.FindFlightsAsync(destination, origin, date);
 
             return flights;
         }
@@ -173,14 +173,14 @@ namespace AirlineBookingLibrary.Logic
         /// </summary>
         /// <param name="filterParameters">The parameters to filter the flight by.</param>
         /// <returns>An asynchronous task for finding the flights.</returns>
-        public virtual async Task<ICollection<Flight>> FindOutboundFlightsAsync(SearchFilterParameters filterParameters)
+        public virtual async Task<List<Flight>> FindOutboundFlightsAsync(SearchFilterParameters filterParameters)
         {
             Airport origin = filterParameters.OriginAirport;
             Airport destination = filterParameters.DestinationAirport;
             DateTime date = filterParameters.OutDate;
 
             // Get flights from database going from origin -> destination on date.
-            ICollection<Flight> flights = await _dataAccess.FindFlightsAsync(origin, destination, date);
+            List<Flight> flights = await _dataAccess.FindFlightsAsync(origin, destination, date);
 
             return flights;
         }
