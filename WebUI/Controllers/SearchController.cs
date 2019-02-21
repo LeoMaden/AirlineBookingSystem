@@ -28,55 +28,57 @@ namespace WebUI.Controllers
         [HttpGet]
         public async Task<ActionResult> Index()
         {
-            var searchFilterModel = new SearchFilterModel();
+            var flightSearchDataModel = new FlightSearchDataModel();
 
-            searchFilterModel.Airports = await GetAirportSelectListAsync();
+            // Set airports list in search filter model.
+            flightSearchDataModel.Airports = await GetAirportSelectListAsync();
 
-            return View(searchFilterModel);
+
+            // GET request so no airports have been selected.
+            // Set outbound and inbound flights to null.
+            flightSearchDataModel.OutboundFlights = null;
+            flightSearchDataModel.InboundFlights = null;
+
+            return View(flightSearchDataModel);
         }
 
         // POST: Search
         [HttpPost]
-        public async Task<ActionResult> Index(SearchFilterModel searchFilterModel)
+        public async Task<ActionResult> Index(FlightSearchDataModel flightSearchDataModel)
         {
-            // Check model is valid.
+            // Repopulate drowdown list box.
+            flightSearchDataModel.Airports = await GetAirportSelectListAsync();
+
+            // Check if model is invalid.
             if (!ModelState.IsValid)
             {
-                // Repopulate drowdown list box.
-                searchFilterModel.Airports = await GetAirportSelectListAsync();
-
-                return View(searchFilterModel);
+                return View(flightSearchDataModel);
             }
 
-            // Get Airport objects from database using their Ids.
-            Airport originAirport = await _dataAccess.FindAirportByIdAsync(searchFilterModel.SelectedOriginAirportId);
-            Airport destinationAirport = await _dataAccess.FindAirportByIdAsync(searchFilterModel.SelectedDestinationAirportId);
+            // Model is valid.
 
+            var searchFilterParameters = await flightSearchDataModel.ToSearchFilterParameters(_dataAccess);
 
-            // Set inbound date to the value in the model if return flight,
-            // otherwise the inbound date is a default DateTime().
-            DateTime inboundDate = new DateTime();
+            // Set cheapest prices on similar dates.
+            flightSearchDataModel.CheapestPricesOnSimilarDates = await _flightManager.FindCheapestPricesOnSimilarDatesAsync(searchFilterParameters, 2);
 
-            if (searchFilterModel.ReturnFlight == true)
+            // Set outbound flight list.
+            flightSearchDataModel.OutboundFlights = await _flightManager.FindOutboundFlightsAsync(searchFilterParameters);
+
+            // Set inbound flight list.
+            if (flightSearchDataModel.ReturnFlight == true)
             {
-                inboundDate = searchFilterModel.InboundDate.Value;
+                // Flight is return flight.
+                flightSearchDataModel.InboundFlights = await _flightManager.FindInboundFlightsAsync(searchFilterParameters);
+            }
+            else
+            {
+                // Not a return flight.
+                flightSearchDataModel.InboundFlights = null;
             }
 
 
-            // Map SearchFilterModel to SearchFilterParameters.
-            SearchFilterParameters searchFilterParameters = new SearchFilterParameters
-            {
-                OriginAirport = originAirport,
-                DestinationAirport = destinationAirport,
-                OutDate = searchFilterModel.OutboundDate,
-                InDate = inboundDate
-            };
-
-            var cheapestPricesOnSimilarDays = await _flightManager.FindCheapestPricesOnSimilarDatesAsync(searchFilterParameters, 2);
-
-
-
-            return View(searchFilterModel);
+            return View(flightSearchDataModel);
         }
 
         private SelectList ToSelectList(List<Airport> airports)
@@ -92,5 +94,7 @@ namespace WebUI.Controllers
 
             return ToSelectList(airports);
         }
+
+        
     }
 }

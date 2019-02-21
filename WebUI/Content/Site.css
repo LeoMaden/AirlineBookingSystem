@@ -28,3 +28,23 @@ textarea {
 .page-header {
     margin-bottom: 0;
 }
+
+.bottom-10 {
+    margin-bottom: 10px;
+}
+
+/* Centre bootstrap row */
+.row-centered {
+    text-align: center;
+}
+
+/* Centreing bootstrap columns */
+.col-centered {
+    display: inline-block;
+    float: none;
+    /* reset the text-align */
+    text-align: left;
+    /* inline-block space fix */
+    margin-right: -4px;
+    text-align: center;
+}

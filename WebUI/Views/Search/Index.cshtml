@@ -1,20 +1,93 @@
-﻿@model WebUI.Models.SearchFilterModel
+﻿@model WebUI.Models.FlightSearchDataModel
 
 @{
         ViewBag.Title = "Search Filghts";
 }
 
-<h2>Search Flights</h2>
 
 
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-3">
+    <div class="container">
 
-            @Html.Partial("SearchFilterPartial", Model)
+        <h2 class="bottom-10 text-center">Search Flights</h2>
 
+        <div class="row bottom-10">
+            @* Cheapest prices on similar dates. *@
+            <div class="col-sm-12 text-center">
+                @if (Model.CheapestPricesOnSimilarDates != null)
+                {
+                    using (Html.BeginForm("Index", "Search", FormMethod.Post, new { @class = "form-group" }))
+                    {
+                        <div id="cheapestFlightsOnSimilarDates" class="btn-group">
+                            @foreach (var item in Model.CheapestPricesOnSimilarDates)
+                            {
+                                @Html.Partial("CheapestFlightsOnSimilarDatesPartial", item);
+                            }
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+        <div class="row">
+            @* Search filter box. *@
+            <div class="col-sm-3">
+
+                @Html.Partial("SearchFilterPartial", Model)
+
+            </div>
+
+            @* Search results. *@
+            <div class="col-sm-9">
+
+                @* Render outbound flights if there are any. *@
+                @if (Model.OutboundFlights != null)
+                {
+                    <h3>Outbound Flights</h3>
+                    <hr />
+
+                    if (Model.OutboundFlights.Count == 0)
+                    {
+                        <p>No flights found.</p>
+                    }
+                    else
+                    {
+                        <div id="outboundFlightsGroup" class="btn-group-vertical btn-group-lg btn-block" role="group">
+                            @foreach (var flight in Model.OutboundFlights)
+                            {
+                                @Html.Partial("FlightDetailsPartial", flight, new ViewDataDictionary(this.ViewData) { { "type", "outbound" } })
+                            }
+                        </div>
+                    }
+                }
+
+                @* Render inbound flights if there are any. *@
+                @if (Model.InboundFlights != null)
+                {
+                    <h3>Inbound Flights</h3>
+                    <hr />
+
+                    if (Model.InboundFlights.Count == 0)
+                    {
+                        <p>No flights found.</p>
+                    }
+                    else
+                    {
+                        <div id="inboundFlightsGroup" class="btn-group-vertical btn-group-lg btn-block" role="group">
+                            @foreach (var flight in Model.InboundFlights)
+                            {
+                                @Html.Partial("FlightDetailsPartial", flight, new ViewDataDictionary(this.ViewData) { { "type", "inbound" } })
+                            }
+                        </div>
+                    }
+                }
+
+                @if ((Model.InboundFlights is null) && (Model.OutboundFlights is null))
+                {
+                    <p class="text-center">
+                        Please select an origin and destination.
+                    </p>
+                }
+            </div>
         </div>
     </div>
-</div>
 

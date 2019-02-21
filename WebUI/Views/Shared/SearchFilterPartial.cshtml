@@ -1,4 +1,4 @@
-﻿@model WebUI.Models.SearchFilterModel
+﻿@model WebUI.Models.FlightSearchDataModel
 
 <script src="~/Scripts/jquery-3.3.1.js"></script>
 
@@ -9,7 +9,7 @@
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
     <div class="form-group">
-        @Html.DropDownListFor(m => m.SelectedOriginAirportId, Model.Airports, "- Select an origin -", new { @class = "form-control" })
+        @Html.DropDownListFor(m => m.SelectedOriginAirportId, Model.Airports, "- Select an origin -", new { @class = "form-control selectpicker" })
         @Html.ValidationMessageFor(m => m.SelectedOriginAirportId, "", new { @class = "text-danger" })
     </div>
 
@@ -18,7 +18,7 @@
     </div>
 
     <div class="form-group">
-        @Html.DropDownListFor(m => m.SelectedDestinationAirportId, Model.Airports, "- Select an destination -", new { @class = "form-control" })
+        @Html.DropDownListFor(m => m.SelectedDestinationAirportId, Model.Airports, "- Select an destination -", new { @class = "form-control selectpicker" })
         @Html.ValidationMessageFor(m => m.SelectedDestinationAirportId, "", new { @class = "text-danger" })
     </div>
 
