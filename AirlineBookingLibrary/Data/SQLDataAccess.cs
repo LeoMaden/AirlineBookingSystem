@@ -319,6 +319,17 @@ namespace AirlineBookingLibrary.Data
 
                 List<Flight> flights = (await connection.QueryAsync<Flight>("dbo.spGetFlights", p, commandType: CommandType.StoredProcedure)).ToList();
 
+                foreach (var flight in flights)
+                {
+                    flight.OriginAirport = await FindAirportByIdAsync(flight.OriginAirportId);
+                    flight.DestinationAirport = await FindAirportByIdAsync(flight.DestinationAirportId);
+
+                    if (flight.FlightScheduleId.HasValue == true)
+                    {
+                        flight.Schedule = await FindScheduleByIdAsync(flight.FlightScheduleId.Value);
+                    }
+                }
+
                 return flights;
             }
         }
@@ -402,7 +413,16 @@ namespace AirlineBookingLibrary.Data
                 var p = new DynamicParameters();
                 p.Add("@Id", airportId);
 
-                Airport output = await connection.QueryFirstAsync<Airport>("dbo.spGetAirportById", p, commandType: CommandType.StoredProcedure);
+                Airport output = null;
+
+                try
+                {
+                    output = await connection.QueryFirstAsync<Airport>("dbo.spGetAirportById", p, commandType: CommandType.StoredProcedure);
+                }
+                catch (InvalidOperationException)
+                {
+                    // Not found.
+                }
 
                 return output;
             }

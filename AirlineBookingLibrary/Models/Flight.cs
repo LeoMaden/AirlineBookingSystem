@@ -22,6 +22,13 @@ namespace AirlineBookingLibrary.Models
         public DateTime ArrivalDateTime { get; set; }
 
 
+        internal int? FlightScheduleId { get; set; }
+
+        internal int OriginAirportId { get; set; }
+
+        internal int DestinationAirportId { get; set; }
+
+
 
 
         public override bool Equals(object obj)
