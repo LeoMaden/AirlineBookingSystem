@@ -129,10 +129,14 @@ namespace AirlineBookingLibrary.Logic
             for (int i = -searchPeriod; i <= searchPeriod; i++)
             {
                 DateTime date = middleDate.AddDays(i);
+
+                filterParameters.OutDate = date;
+
                 Flight cheapestFlight = await FindCheapestOutboundFlightAsync(filterParameters);
 
-                if (cheapestFlight is null)
+                if ((cheapestFlight is null) || (cheapestFlight.DepartureDateTime < DateTime.Now))
                 {
+                    // No flight on given date or flight departure time is in the past.
                     output.Add(date, -1);
                     continue;
                 }
@@ -141,6 +145,9 @@ namespace AirlineBookingLibrary.Logic
 
                 output.Add(date, price);
             }
+
+            // Set out date back to original value.
+            filterParameters.OutDate = middleDate;
 
             return output;
         }

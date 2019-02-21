@@ -23,7 +23,7 @@ namespace AirlineBookingLibrary.Tests.LogicTests
                 // called, it returns the sample bookings.
                 mock.Mock<IDataAccess>()
                     .Setup(x =>  x.FindBookingsByUserIdAsync(1))
-                    .Returns(Task.Run(() => (ICollection<Booking>)GetSampleBookings()));
+                    .Returns(Task.Run(() => (List<Booking>)GetSampleBookings()));
 
                 var mockBookingManager = mock.Create<BookingManager>();
 
