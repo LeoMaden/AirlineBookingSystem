@@ -28,6 +28,8 @@ namespace WebUI.App_Start
             builder.RegisterType<HomeController>().InstancePerRequest();
             builder.RegisterType<AccountController>().InstancePerRequest();
             builder.RegisterType<ManageController>().InstancePerRequest();
+            builder.RegisterType<SearchController>().InstancePerRequest();
+            builder.RegisterType<BookingController>().InstancePerRequest();
 
             // Register WebUI types.
             builder.RegisterType<ApplicationUserStore>().As<IUserStore<ApplicationUser, int>>();

@@ -45,9 +45,15 @@ namespace WebUI.Models
 
         public Dictionary<DateTime, decimal> CheapestPricesOnSimilarDates { get; set; }
 
-        public List<Flight> OutboundFlights { get; set; }
+        public List<PricedFlight> OutboundFlights { get; set; } = new List<PricedFlight>();
 
-        public List<Flight> InboundFlights { get; set; }
+        public List<PricedFlight> InboundFlights { get; set; } = new List<PricedFlight>();
+
+        // -----------------------------------------------------------
+
+        //public int SelectedFlightId { get; set; }
+        //public int SelectedFlightId { get; set; }
+
 
 
 

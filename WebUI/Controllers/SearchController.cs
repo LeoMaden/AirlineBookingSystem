@@ -17,11 +17,13 @@ namespace WebUI.Controllers
     {
         private readonly IFlightManager _flightManager;
         private readonly IDataAccess _dataAccess;
+        private readonly IFlightPriceCalculator _priceCalculator;
 
-        public SearchController(IDataAccess dataAccess, IFlightManager flightManager)
+        public SearchController(IDataAccess dataAccess, IFlightManager flightManager, IFlightPriceCalculator priceCalculator)
         {
             _dataAccess = dataAccess;
             _flightManager = flightManager;
+            _priceCalculator = priceCalculator;
         }
 
         // GET: Search
@@ -46,6 +48,7 @@ namespace WebUI.Controllers
         [HttpPost]
         public async Task<ActionResult> Index(FlightSearchDataModel flightSearchDataModel)
         {
+
             // Repopulate drowdown list box.
             flightSearchDataModel.Airports = await GetAirportSelectListAsync();
 
@@ -57,28 +60,44 @@ namespace WebUI.Controllers
 
             // Model is valid.
 
-            var searchFilterParameters = await flightSearchDataModel.ToSearchFilterParameters(_dataAccess);
+            // Add search data to session so it can be used later.
+            Session.Add("searchData", flightSearchDataModel);
 
-            // Set cheapest prices on similar dates.
-            flightSearchDataModel.CheapestPricesOnSimilarDates = await _flightManager.FindCheapestPricesOnSimilarDatesAsync(searchFilterParameters, 2);
-
-            // Set outbound flight list.
-            flightSearchDataModel.OutboundFlights = await _flightManager.FindOutboundFlightsAsync(searchFilterParameters);
-
-            // Set inbound flight list.
-            if (flightSearchDataModel.ReturnFlight == true)
-            {
-                // Flight is return flight.
-                flightSearchDataModel.InboundFlights = await _flightManager.FindInboundFlightsAsync(searchFilterParameters);
-            }
-            else
-            {
-                // Not a return flight.
-                flightSearchDataModel.InboundFlights = null;
-            }
-
+            await FillModel(flightSearchDataModel);
 
             return View(flightSearchDataModel);
+        }
+
+        public async Task<ActionResult> ChangeDate(string ticks)
+        {
+            // Parse ticks string into new datetime object.
+            DateTime newOutDate = new DateTime(long.Parse(ticks));
+            FlightSearchDataModel searchData;
+
+            try
+            {
+                // Try to get FlightSearchDataModel from session data.
+                searchData = (FlightSearchDataModel)Session["searchData"];
+            }
+            catch (IndexOutOfRangeException)
+            {
+                return RedirectToAction("Index");
+            }
+
+            // Calculate difference between dates.
+            TimeSpan dateDifference = newOutDate - searchData.OutboundDate;
+
+            // Add difference to inbound and outbound dates.
+            searchData.OutboundDate += dateDifference;
+
+            if (searchData.ReturnFlight == true)
+            {
+                searchData.InboundDate += dateDifference;
+            }
+
+            await FillModel(searchData);
+
+            return RedirectToAction("Index", searchData);
         }
 
         private SelectList ToSelectList(List<Airport> airports)
@@ -95,6 +114,39 @@ namespace WebUI.Controllers
             return ToSelectList(airports);
         }
 
-        
+        private async Task FillModel(FlightSearchDataModel flightSearchDataModel)
+        {
+            var searchFilterParameters = await flightSearchDataModel.ToSearchFilterParameters(_dataAccess);
+
+            // Set cheapest prices on similar dates.
+            flightSearchDataModel.CheapestPricesOnSimilarDates = await _flightManager.FindCheapestPricesOnSimilarDatesAsync(searchFilterParameters, 2);
+
+            // Set outbound flight list.
+            List<Flight> outboundFlights = await _flightManager.FindOutboundFlightsAsync(searchFilterParameters);
+
+            foreach (var flight in outboundFlights)
+            {
+                // Loop through and price each flight then add it to model list.
+                flightSearchDataModel.OutboundFlights.Add(await flight.PriceFlightAsync(flightSearchDataModel, _priceCalculator));
+            }
+
+            // Set inbound flight list.
+            if (flightSearchDataModel.ReturnFlight == true)
+            {
+                // Flight is return flight.
+                List<Flight> inboundFlights = await _flightManager.FindInboundFlightsAsync(searchFilterParameters);
+
+                foreach (var flight in inboundFlights)
+                {
+                    // Loop through and price each flight then add it to model list.
+                    flightSearchDataModel.InboundFlights.Add(await flight.PriceFlightAsync(flightSearchDataModel, _priceCalculator));
+                }
+            }
+            else
+            {
+                // Not a return flight.
+                flightSearchDataModel.InboundFlights = null;
+            }
+        }
     }
 }

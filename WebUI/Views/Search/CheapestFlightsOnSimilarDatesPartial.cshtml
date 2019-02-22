@@ -3,21 +3,22 @@
 @using WebUI.Models
 
 @if (Model.Value < 0)
-    {
-        // No flight on this date.
-        <button type="button" class="btn btn-lg" disabled>
-            <h4>-</h4>
-            <p>@Model.Key.ToShortDateString()</p>
-        </button>
-    }
-    else
-    {
-        // Display values of cheapest flight.
-        <button type="submit" class="btn btn-lg">
-            <h4>@Model.Value.ToString("C")</h4>
-            <p>@Model.Key.ToShortDateString()</p>
-        </button>
-    }
+{
+    // No flight on this date.
+    <button type="button" class="btn btn-lg" disabled>
+        <h4>-</h4>
+        <p>@Model.Key.ToShortDateString()</p>
+    </button>
+}
+else
+{
+    // Display values of cheapest flight.
+    <a href="@Url.Action("ChangeDate", "Search", new { ticks = Model.Key.Ticks.ToString() })" type="button" class="btn btn-lg">
+        <h4>@Model.Value.ToString("C")</h4>
+        <p>@Model.Key.ToShortDateString()</p>
+        
+    </a>
+}
 
 
 

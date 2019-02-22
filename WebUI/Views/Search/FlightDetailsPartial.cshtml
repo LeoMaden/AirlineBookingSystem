@@ -1,29 +1,29 @@
-﻿@model AirlineBookingLibrary.Models.Flight
+﻿@model WebUI.Models.PricedFlight
 
     @{ 
         string type = ViewData["type"].ToString();
-        string radioName = $"{ type }radioGroup";
+        string radioName = $"{ type }RadioGroup";
     }
 
     <div class="btn btn-lg btn-default" data-toggle="buttons">
-        <input type="radio" name="@radioName" hidden>
+        <input value="@Model.Flight.Id" type="radio" name="@radioName" hidden>
 
         <div class="row text-left">
             <div class="col-sm-2">
-                <h4>@Model.OriginAirport.AirportCode</h4>
-                <h5>@Model.DepartureDateTime.ToString("HH:mm")</h5>
-                <h6>@Model.DepartureDateTime.ToString("(ddd dd MMM yy)")</h6>
+                <h4>@Model.Flight.OriginAirport.AirportCode</h4>
+                <h5>@Model.Flight.DepartureDateTime.ToString("HH:mm")</h5>
+                <h6>@Model.Flight.DepartureDateTime.ToString("(ddd dd MMM yy)")</h6>
             </div>
             <div class="col-sm-1">
                 <h4 class="glyphicon glyphicon-arrow-right"></h4>
             </div>
             <div class="col-sm-2">
-                <h4>@Model.DestinationAirport.AirportCode</h4>
-                <h5>@Model.ArrivalDateTime.ToString("HH:mm")</h5>
-                <h6>@Model.ArrivalDateTime.ToString("(ddd dd MMM yy)")</h6>
+                <h4>@Model.Flight.DestinationAirport.AirportCode</h4>
+                <h5>@Model.Flight.ArrivalDateTime.ToString("HH:mm")</h5>
+                <h6>@Model.Flight.ArrivalDateTime.ToString("(ddd dd MMM yy)")</h6>
             </div>
-            <div class="col-sm-7">
-
+            <div class="col-sm-offset-4 col-sm-3 text-right">
+                <h2>@Model.TotalPrice.ToString("C")</h2>
             </div>
         </div>
     </div>
