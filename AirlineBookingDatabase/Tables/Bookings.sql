@@ -4,7 +4,7 @@
     [BookingReference] NCHAR(10) NOT NULL, 
     [UserId] INT NOT NULL, 
     [OutFlight] INT NOT NULL, 
-    [InFlight] INT NOT NULL, 
+    [InFlight] INT NULL, 
     [NumberAdults] INT NOT NULL, 
     [NumberChildren] INT NOT NULL, 
     [TravelClass] NVARCHAR(50) NOT NULL, 

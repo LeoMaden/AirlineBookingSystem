@@ -1,0 +1,36 @@
+﻿@model WebUI.Models.PricedFlight
+
+@{ 
+    var type = (string)ViewData["type"];
+}
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <div class="panel-title">
+            @type
+        </div>
+    </div>
+    <div class="panel-body">
+        <div class="row text-center">
+            <div class="col-sm-5">
+                <h3>@Model.Flight.OriginAirport.AirportCode</h3>
+                <h4>@Model.Flight.DepartureDateTime.ToString("HH:mm")</h4>
+                <h5>@Model.Flight.DepartureDateTime.ToString("(ddd dd MMM yy)")</h5>
+            </div>
+            <div class="col-sm-2">
+                <h4 class="glyphicon glyphicon-arrow-right"></h4>
+            </div>
+            <div class="col-sm-5">
+                <h3>@Model.Flight.DestinationAirport.AirportCode</h3>
+                <h4>@Model.Flight.ArrivalDateTime.ToString("HH:mm")</h4>
+                <h5>@Model.Flight.ArrivalDateTime.ToString("(ddd dd MMM yy)")</h5>
+            </div>
+            @*<div class="col-sm-offset-4 col-sm-3 text-right">
+                <h2>@Model.TotalPrice.ToString("C")</h2>
+            </div>*@
+        </div>
+    </div>
+    <div class="panel-footer text-center">
+        <h4>@Model.TotalPrice.ToString("C")</h4>
+    </div>
+</div>

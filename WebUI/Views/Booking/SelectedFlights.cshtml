@@ -1,10 +1,75 @@
-﻿@model AirlineBookingLibrary.Models.SelectedFlights
+﻿@model WebUI.Models.SelectedFlightsModel
 
 @{
     ViewBag.Title = "Selected Flights";
 }
 
-<h2>Selected Flights</h2>
 
-@Html.EditorForModel()
+<div class="container">
+    <div class="row">
+        @* Title. *@
+        <div class="col-sm-12 text-center">
+            <h2>Selected Flights</h2>
+            <hr />
+        </div>
+    </div>
+    <div class="row bottom-10">
+        @* Flight details. *@
+        @if (Model.IsReturn == false)
+        {
+            // Oubound flight only.
+            <div class="col-sm-6 col-sm-offset-3">
+                @Html.Partial("FlightDetailsPartial", Model.Outbound, new ViewDataDictionary(this.ViewData) { { "type", "Outbound" } })
+            </div>
+        }
+        else
+        {
+            // Oubound and return flights.
+            <div class="col-sm-6">
+                @Html.Partial("FlightDetailsPartial", Model.Outbound, new ViewDataDictionary(this.ViewData) { { "type", "Outbound" } })
+            </div>
+            <div class="col-sm-6">
+                @Html.Partial("FlightDetailsPartial", Model.Inbound, new ViewDataDictionary(this.ViewData) { { "type", "Inbound" } })
+            </div>
+        }
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <dl class="dl-horizontal">
+                <dt>
+                    Adults
+                </dt>
+                <dd>
+                    @Model.NumberAdults
+                </dd>
+                <dt>
+                    Children
+                </dt>
+                <dd>
+                    @Model.NumberChildren
+                </dd>
+                <dt>
+                    Class
+                </dt>
+                <dd>
+                    @Model.TravelClass
+                </dd>
+            </dl>
+        </div>
+        <div class="col-sm-6 text-right">
+            <h2>@Model.TotalPrice.ToString("C")</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 text-right">
+            @using (Html.BeginForm("Payment", "Booking", FormMethod.Get))
+            {
+                <button type="submit" class="btn btn-lg btn-default">Continue to Payment</button>
+            }
+        </div>
+    </div>
+</div>
+
+
+
 

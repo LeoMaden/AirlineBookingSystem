@@ -72,16 +72,12 @@ namespace WebUI.Controllers
         {
             // Parse ticks string into new datetime object.
             DateTime newOutDate = new DateTime(long.Parse(ticks));
-            FlightSearchDataModel searchData;
 
-            try
+            FlightSearchDataModel searchData = (FlightSearchDataModel)Session["searchData"];
+
+            if (searchData is null)
             {
-                // Try to get FlightSearchDataModel from session data.
-                searchData = (FlightSearchDataModel)Session["searchData"];
-            }
-            catch (IndexOutOfRangeException)
-            {
-                return RedirectToAction("Index");
+                return View("Index");
             }
 
             // Calculate difference between dates.
@@ -97,7 +93,7 @@ namespace WebUI.Controllers
 
             await FillModel(searchData);
 
-            return RedirectToAction("Index", searchData);
+            return View("Index", searchData);
         }
 
         private SelectList ToSelectList(List<Airport> airports)
@@ -116,6 +112,11 @@ namespace WebUI.Controllers
 
         private async Task FillModel(FlightSearchDataModel flightSearchDataModel)
         {
+            // Clear out existing items in lists.
+            flightSearchDataModel.CheapestPricesOnSimilarDates = new Dictionary<DateTime, decimal>();
+            flightSearchDataModel.OutboundFlights = new List<PricedFlight>();
+            flightSearchDataModel.InboundFlights = new List<PricedFlight>();
+
             var searchFilterParameters = await flightSearchDataModel.ToSearchFilterParameters(_dataAccess);
 
             // Set cheapest prices on similar dates.

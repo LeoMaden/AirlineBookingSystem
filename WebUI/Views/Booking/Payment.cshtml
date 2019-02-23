@@ -1,0 +1,87 @@
+﻿@model WebUI.Models.PaymentDataModel
+
+@{
+    ViewBag.Title = "Payment";
+}
+
+<h2>Payment</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-horizontal">
+                <h4>PaymentDataModel</h4>
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.NameOnCard, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.NameOnCard, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.NameOnCard, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.CardNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.CardNumber, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.CardNumber, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ExpiryMonth, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.ExpiryMonth, new { htmlAttributes = new { @class = "form-control", @style = "max-width: 70px;" } })
+                        @Html.ValidationMessageFor(model => model.ExpiryMonth, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ExipryYear, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.ExipryYear, new { htmlAttributes = new { @class = "form-control", @style = "max-width: 80px;" } })
+                        @Html.ValidationMessageFor(model => model.ExipryYear, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.CVV, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.CVV, new { htmlAttributes = new { @class = "form-control", @style = "max-width: 70px;" } })
+                        @Html.ValidationMessageFor(model => model.CVV, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            @* Flight details. *@
+            @if (Model.SelectedFlights.IsReturn == false)
+            {
+                // Oubound flight only.
+                <div class="col-lg-12">
+                    @Html.Partial("FlightDetailsPartial", Model.SelectedFlights.Outbound, new ViewDataDictionary(this.ViewData) { { "type", "Outbound" } })
+                </div>
+            }
+            else
+            {
+                // Oubound and return flights.
+                <div class="col-lg-6">
+                    @Html.Partial("FlightDetailsPartial", Model.SelectedFlights.Outbound, new ViewDataDictionary(this.ViewData) { { "type", "Outbound" } })
+                </div>
+                <div class="col-lg-6">
+                    @Html.Partial("FlightDetailsPartial", Model.SelectedFlights.Inbound, new ViewDataDictionary(this.ViewData) { { "type", "Inbound" } })
+                </div>
+            }
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 text-right">
+            <button type="submit" class="btn btn-default btn-lg">Make payment</button>
+        </div>
+    </div>
+}
+

@@ -10,7 +10,7 @@ namespace AirlineBookingLibrary.Helpers
     {
         public static string GetBookingConfirmationEmailSubject(Booking booking)
         {
-            return $"Your British Airways Booking to { booking.FlightsDetails.Outbound.OriginAirport.FriendlyName } - Ref: { booking.BookingReference }.";
+            return $"Your British Airways Booking to { booking.FlightsDetails.Outbound.DestinationAirport.FriendlyName } - Ref: { booking.BookingReference }.";
         }
 
         public static string GetBookingConfirmationEmailBody(Booking booking, User user)

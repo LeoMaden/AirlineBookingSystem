@@ -1,0 +1,33 @@
+﻿@model WebUI.Models.PaymentDataModel
+
+@{
+    ViewBag.Title = "Confirmation";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <h2>Thank you for your order!</h2>
+            <h3>Your flights</h3>
+            @* Flight details. *@
+            @if (Model.SelectedFlights.IsReturn == false)
+            {
+                // Oubound flight only.
+                <div class="col-sm-12">
+                    @Html.Partial("FlightDetailsPartial", Model.SelectedFlights.Outbound, new ViewDataDictionary(this.ViewData) { { "type", "Outbound" } })
+                </div>
+            }
+            else
+            {
+                // Oubound and return flights.
+                <div class="col-sm-6">
+                    @Html.Partial("FlightDetailsPartial", Model.SelectedFlights.Outbound, new ViewDataDictionary(this.ViewData) { { "type", "Outbound" } })
+                </div>
+                <div class="col-sm-6">
+                    @Html.Partial("FlightDetailsPartial", Model.SelectedFlights.Inbound, new ViewDataDictionary(this.ViewData) { { "type", "Inbound" } })
+                </div>
+            }
+        </div>
+    </div>
+</div>
+

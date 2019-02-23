@@ -221,7 +221,10 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\FlightExtensions.cs" />
-    <Compile Include="Helpers\SearchFilterModelExtensions.cs" />
+    <Compile Include="Helpers\FlightSearchDataModelExtensions.cs" />
+    <Compile Include="Helpers\PaymentDataModelExtensions.cs" />
+    <Compile Include="Helpers\SelectedFlightsExtensions.cs" />
+    <Compile Include="Helpers\SelectedFlightsModelExtensions.cs" />
     <Compile Include="Helpers\UserExtensions.cs" />
     <Compile Include="Models\FlightSearchDataModel.cs" />
     <Compile Include="Models\IdentityModels\ApplicationSignInManager.cs" />
@@ -229,8 +232,10 @@
     <Compile Include="Models\IdentityModels\ApplicationUserManager.cs" />
     <Compile Include="Models\IdentityModels\ApplicationUserStore.cs" />
     <Compile Include="Models\LogInModel.cs" />
+    <Compile Include="Models\PaymentDataModel.cs" />
     <Compile Include="Models\PricedFlight.cs" />
     <Compile Include="Models\RegisterModel.cs" />
+    <Compile Include="Models\SelectedFlightsModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -289,6 +294,9 @@
     <Content Include="Views\Search\CheapestFlightsOnSimilarDatesPartial.cshtml" />
     <Content Include="Views\Search\FlightDetailsPartial.cshtml" />
     <Content Include="Views\Booking\SelectedFlights.cshtml" />
+    <Content Include="Views\Booking\FlightDetailsPartial.cshtml" />
+    <Content Include="Views\Booking\Payment.cshtml" />
+    <Content Include="Views\Booking\Confirmation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

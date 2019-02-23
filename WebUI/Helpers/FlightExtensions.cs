@@ -12,8 +12,7 @@ namespace WebUI.Helpers
             // Create PricedFlight object.
             var output = new PricedFlight
             {
-                Flight = flight,
-                SearchData = searchData
+                Flight = flight
             };
 
             // Put contents of flight and search data into SelectedFlights object

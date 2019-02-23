@@ -74,8 +74,7 @@ namespace AirlineBookingLibrary.Data
                 var p = new DynamicParameters();
                 p.Add("@BookingReference", booking.BookingReference);
                 p.Add("@UserId", user.Id);
-                p.Add("@OutFlight", booking.FlightsDetails.Outbound);
-                p.Add("@InFlight", booking.FlightsDetails.Inbound);
+                p.Add("@OutFlight", booking.FlightsDetails.Outbound.Id);
                 p.Add("@NumberAdults", booking.FlightsDetails.NumberAdults);
                 p.Add("@NumberChildren", booking.FlightsDetails.NumberChildren);
                 p.Add("@TravelClass", booking.FlightsDetails.TravelClass);
@@ -83,6 +82,17 @@ namespace AirlineBookingLibrary.Data
                 p.Add("@CardType", booking.CardType);
                 p.Add("@Price", booking.FlightsDetails.Price);
                 p.Add("@DateTimeCreated", booking.DateTimeCreated);
+                p.Add("@Id", booking.Id, direction: ParameterDirection.Output);
+
+                if (booking.FlightsDetails.IsReturn)
+                {
+                    // Add inbound flight if flight is return.
+                    p.Add("@InFlight", booking.FlightsDetails.Inbound.Id);
+                }
+                else
+                {
+                    p.Add("@InFlight", null);
+                }
 
                 await connection.ExecuteAsync("dbo.spInsertBooking", p, commandType: CommandType.StoredProcedure);
 

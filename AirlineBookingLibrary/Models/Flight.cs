@@ -61,7 +61,7 @@ namespace AirlineBookingLibrary.Models
 
         public override string ToString()
         {
-            return $"{ DestinationAirport.AirportCode }-{ OriginAirport.AirportCode }";
+            return $"{ OriginAirport.AirportCode }-{ DestinationAirport.AirportCode }";
         }
 
         public static bool operator ==(Flight flight1, Flight flight2)

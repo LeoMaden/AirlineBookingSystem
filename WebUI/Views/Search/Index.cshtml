@@ -91,7 +91,7 @@
                 }
 
                 <hr />
-                <button type="submit" class="btn btn-lg btn-default" @*onclick="continueToBooking()"*@>
+                <button id="continue-button" type="submit" class="btn btn-lg btn-default" disabled>
                     Continue
                 </button>
                 }
@@ -102,4 +102,16 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript">
+        function flightSelected() {
+            outboundSelected = $("input[name='outboundRadioGroup']:checked").val()
+
+            if (outboundSelected == null) {
+                return false;
+            } else {
+                document.getElementById("continue-button").disabled = false;
+            }
+        }
+    </script>
 }

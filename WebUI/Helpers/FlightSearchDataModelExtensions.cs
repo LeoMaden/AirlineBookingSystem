@@ -9,7 +9,7 @@ using WebUI.Models;
 
 namespace WebUI.Helpers
 {
-    public static class SearchFilterModelExtensions
+    public static class FlightSearchDataModelExtensions
     {
         public static async Task<SearchFilterParameters> ToSearchFilterParameters(this FlightSearchDataModel flightSearchDataModel, IDataAccess dataAccess)
         {
