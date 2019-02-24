@@ -13,7 +13,7 @@
             @if (Model.SelectedFlights.IsReturn == false)
             {
                 // Oubound flight only.
-                <div class="col-sm-12">
+                <div class="col-sm-6 col-sm-offset-3">
                     @Html.Partial("FlightDetailsPartial", Model.SelectedFlights.Outbound, new ViewDataDictionary(this.ViewData) { { "type", "Outbound" } })
                 </div>
             }
