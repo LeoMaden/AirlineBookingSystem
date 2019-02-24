@@ -52,7 +52,7 @@
                     }
                     else
                     {
-                        <div id="outboundFlightsGroup" class="btn-group-vertical btn-group-lg btn-block" role="group">
+                        <div id="outboundFlightsGroup" class="btn-group btn-group-vertical btn-group-lg btn-block" role="group" data-toggle="buttons">
                             @foreach (var flight in Model.OutboundFlights)
                             {
                                 @Html.Partial("FlightDetailsPartial", flight, new ViewDataDictionary(this.ViewData) { { "type", "outbound" } })
@@ -73,7 +73,7 @@
                     }
                     else
                     {
-                        <div id="inboundFlightsGroup" class="btn-group-vertical btn-group-lg btn-block" role="group">
+                        <div id="inboundFlightsGroup" class="btn-group-vertical btn-group-lg btn-block" role="group" data-toggle="buttons">
                             @foreach (var flight in Model.InboundFlights)
                             {
                                 @Html.Partial("FlightDetailsPartial", flight, new ViewDataDictionary(this.ViewData) { { "type", "inbound" } })

@@ -5,8 +5,8 @@
         string radioName = $"{ type }RadioGroup";
     }
 
-    <div class="btn btn-lg btn-default" data-toggle="buttons">
-        <input value="@Model.Flight.Id" type="radio" name="@radioName" hidden onchange="flightSelected()">
+    <div class="btn btn-lg btn-default">
+        <input value="@Model.Flight.Id" type="radio" name="@radioName" onchange="flightSelected()">
 
         <div class="row text-left">
             <div class="col-sm-2">

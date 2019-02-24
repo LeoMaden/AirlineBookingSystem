@@ -44,16 +44,28 @@
         </div>
     </div>
 
-    <div class="input-group form-group">
-        <span class="input-group-addon">Adults</span>
-        @Html.EditorFor(m => m.NumberAdults, new { htmlAttributes = new { @class = "form-control" } })
+    <div class="form-group">
+        <div class="input-group">
+            <span class="input-group-addon">Adults</span>
+            @Html.DropDownListFor(m => m.NumberAdults, new SelectList(Enumerable.Range(1, 8)), new { @class = "form-control", @style = "max-width:70px;" })
+        </div>
         @Html.ValidationMessageFor(m => m.NumberAdults, "", new { @class = "text-danger" })
     </div>
 
-    <div class="input-group form-group">
-        <span class="input-group-addon">Children</span>
-        @Html.EditorFor(m => m.NumberChildren, new { htmlAttributes = new { @class = "form-control" } })
+    <div class="form-group">
+        <div class="input-group">
+            <span class="input-group-addon">Children</span>
+            @Html.DropDownListFor(m => m.NumberChildren, new SelectList(Enumerable.Range(0, 9)), new { @class = "form-control", @style = "max-width:70px;" })
+        </div>
         @Html.ValidationMessageFor(m => m.NumberChildren, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        <div class="input-group">
+            <span class="input-group-addon">Class</span>
+            @Html.EnumDropDownListFor(m => m.TravelClass, new { @class = "form-control", @style = "max-width:120px;" })
+        </div>
+        @Html.ValidationMessageFor(m => m.TravelClass, "", new { @class = "text-danger" })
     </div>
 
 
