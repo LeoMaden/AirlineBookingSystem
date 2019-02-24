@@ -63,6 +63,7 @@
     <Folder Include="Stored Procedures\Bookings" />
     <Folder Include="Stored Procedures\Flights" />
     <Folder Include="Stored Procedures\Airports" />
+    <Folder Include="Data" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Users.sql" />
@@ -99,5 +100,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="LocalDb.publish.xml" />
+    <None Include="Data\TestData.sql" />
   </ItemGroup>
 </Project>
