@@ -32,6 +32,7 @@ namespace AirlineBookingLibrary.Services
             SmtpServer.EnableSsl = true;
 
             await SmtpServer.SendMailAsync(mail);
+            
         }
     }
 }

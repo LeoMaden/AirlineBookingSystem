@@ -198,7 +198,11 @@ namespace AirlineBookingLibrary.Data
 
                     // Populate in and out flights in FlightDetails by querying the Id to get the flight object.
                     booking.FlightsDetails.Outbound = await FindFlightByIdAsync(flightId.OutFlight);
-                    booking.FlightsDetails.Inbound = await FindFlightByIdAsync(flightId.InFlight);
+
+                    if (booking.FlightsDetails.IsReturn)
+                    {
+                        booking.FlightsDetails.Inbound = await FindFlightByIdAsync(flightId.InFlight); 
+                    }
                 }
 
                 return bookings;

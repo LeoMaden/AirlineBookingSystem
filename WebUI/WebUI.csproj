@@ -226,6 +226,7 @@
     <Compile Include="Helpers\SelectedFlightsExtensions.cs" />
     <Compile Include="Helpers\SelectedFlightsModelExtensions.cs" />
     <Compile Include="Helpers\UserExtensions.cs" />
+    <Compile Include="Models\AccountDetailsModel.cs" />
     <Compile Include="Models\FlightSearchDataModel.cs" />
     <Compile Include="Models\IdentityModels\ApplicationSignInManager.cs" />
     <Compile Include="Models\IdentityModels\ApplicationUser.cs" />
@@ -297,6 +298,8 @@
     <Content Include="Views\Booking\FlightDetailsPartial.cshtml" />
     <Content Include="Views\Booking\Payment.cshtml" />
     <Content Include="Views\Booking\Confirmation.cshtml" />
+    <Content Include="Views\Manage\ViewAccountPartial.cshtml" />
+    <Content Include="Views\Manage\ViewBookingsPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

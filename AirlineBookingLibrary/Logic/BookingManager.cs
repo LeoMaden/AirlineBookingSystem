@@ -131,7 +131,14 @@ namespace AirlineBookingLibrary.Logic
             await _dataAccess.CreateBookingAsync(newBooking, user);
 
             // Send confirmation email.
-            await SendBookingConfirmationAsync(user, newBooking);
+            try
+            {
+                await SendBookingConfirmationAsync(user, newBooking);
+            }
+            catch (System.Net.Mail.SmtpException ex)
+            {
+                return MethodResult.Failed(ex.Message);
+            }
 
             return MethodResult.Success;
         }

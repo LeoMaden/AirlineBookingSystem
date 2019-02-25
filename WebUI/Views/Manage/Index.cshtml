@@ -1,123 +1,31 @@
-﻿@model WebUI.Models.IdentityModels.ApplicationUser
+﻿@model WebUI.Models.AccountDetailsModel
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Manage account";
 }
 
-<h2>Index</h2>
+<h2>Manage</h2>
 
-<div>
-    <h4>ApplicationUser</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        @*Display all the user's information in a list.*@
-        <dt>
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-3">
+            <ul class="nav nav-pills nav-stacked">
+                <li>@Html.ActionLink("Account", "Index", "Manage", new { partialViewName = "ViewAccountPartial" }, null)</li>
+                <li>@Html.ActionLink("Bookings", "Index", "Manage", new { partialViewName = "ViewBookingsPartial" }, null)</li>
+            </ul>
+        </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.FirstName)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.FirstName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.LastName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LastName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.UserName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.UserName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DateOfBirth)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DateOfBirth)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PhoneNumber)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PhoneNumber)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Address.StreetAddress)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Address.StreetAddress)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Address.Locality)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Address.Locality)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Address.City)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Address.City)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Address.Postcode)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Address.Postcode)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DateCreated)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DateCreated)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PasswordHash)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PasswordHash)
-        </dd>
-
-    </dl>
+        <div class="col-lg-9">
+            @if (Model.PartialViewName == "ViewAccountPartial")
+            {
+                Html.RenderPartial("ViewAccountPartial", Model.AccountDetails);
+            }
+            else if (Model.PartialViewName == "ViewBookingsPartial")
+            {
+                Html.RenderPartial("ViewBookingsPartial", Model.Bookings);
+            }
+            </div>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>

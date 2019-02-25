@@ -7,40 +7,40 @@
 
 
 
-    <div class="container">
+<div class="container">
 
-        <h2 class="bottom-10 text-center">Search Flights</h2>
+    <h2 class="bottom-10 text-center">Search Flights</h2>
 
-        <div class="row bottom-10">
-            @* Cheapest prices on similar dates. *@
-            <div class="col-sm-12 text-center">
-                @if (Model.CheapestPricesOnSimilarDates != null)
-                {
-                    //using (Html.BeginForm("Index", "Search", FormMethod.Post, new { @class = "form-group" }))
-                    //{
-                        <div id="cheapestFlightsOnSimilarDates" class="btn-group">
-                            @foreach (var item in Model.CheapestPricesOnSimilarDates)
-                            {
-                                @Html.Partial("CheapestFlightsOnSimilarDatesPartial", item);
-                            }
-                        </div>
-                    //}
-                }
-            </div>
+    <div class="row bottom-10">
+        @* Cheapest prices on similar dates. *@
+        <div class="col-sm-12 text-center">
+            @if (Model.CheapestPricesOnSimilarDates != null)
+            {
+                //using (Html.BeginForm("Index", "Search", FormMethod.Post, new { @class = "form-group" }))
+                //{
+                <div id="cheapestFlightsOnSimilarDates" class="btn-group">
+                    @foreach (var item in Model.CheapestPricesOnSimilarDates)
+                    {
+                        @Html.Partial("CheapestFlightsOnSimilarDatesPartial", item);
+                    }
+                </div>
+                //}
+            }
         </div>
-        <div class="row">
-            @* Search filter box. *@
-            <div class="col-sm-3">
+    </div>
+    <div class="row">
+        @* Search filter box. *@
+        <div class="col-sm-3">
 
-                @Html.Partial("SearchFilterPartial", Model)
+            @Html.Partial("SearchFilterPartial", Model)
 
-            </div>
+        </div>
 
-            @* Search results and continue to booking. *@
-            <div class="col-sm-9">
-                @using (Html.BeginForm("SelectedFlights", "Booking"))
-                {
-                // Render outbound flights if there are any. 
+        @* Search results and continue to booking. *@
+        <div class="col-sm-9">
+            @using (Html.BeginForm("SelectedFlights", "Booking"))
+            {
+                // Render outbound flights if there are any.
                 if (Model.OutboundFlights != null)
                 {
                     <h3>Outbound Flights</h3>
@@ -61,7 +61,7 @@
                     }
                 }
 
-                // Render inbound flights if there are any. 
+                // Render inbound flights if there are any.
                 if (Model.InboundFlights != null)
                 {
                     <h3>Inbound Flights</h3>
@@ -82,22 +82,26 @@
                     }
                 }
 
-                // No origin/destination has been selected. 
+                // No origin/destination has been selected.
                 if ((Model.InboundFlights is null) && (Model.OutboundFlights is null))
                 {
                     <p class="text-center">
-                        Please select an origin and destination.
+                        No flights found.
                     </p>
                 }
 
-                <hr />
-                <button id="continue-button" type="submit" class="btn btn-lg btn-default" disabled>
-                    Continue
-                </button>
+                if ((Model.InboundFlights != null) || (Model.OutboundFlights != null))
+                {
+                    <hr />
+                    <button id="continue-button" type="submit" class="btn btn-lg btn-default pull-right" disabled>
+                        Continue
+                    </button>
                 }
-            </div>
+
+            }
         </div>
     </div>
+</div>
 
 
 @section Scripts {
