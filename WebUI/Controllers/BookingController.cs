@@ -4,6 +4,7 @@ using AirlineBookingLibrary.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mail;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -174,6 +175,23 @@ namespace WebUI.Controllers
             };
 
             return true;
+        }
+
+        protected override void OnException(ExceptionContext filterContext)
+        {
+            filterContext.ExceptionHandled = true;
+
+            Exception exception = filterContext.Exception;
+
+            if (exception is SmtpException mailException)
+            {
+                filterContext.Result = new ViewResult { ViewName = "~/Views/Shared/Error.cshtml" };
+                ViewBag.ErrorMessage = mailException.Message;
+            }
+            else
+            {
+                throw exception;
+            }
         }
     }
 }

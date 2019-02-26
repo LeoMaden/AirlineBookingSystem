@@ -158,6 +158,11 @@ namespace WebUI.Controllers
             if (exception is SqlException sqlException)
             {
                 filterContext.Result = new ViewResult { ViewName = "~/Views/Shared/Error.cshtml" };
+                ViewBag.ErrorMessage = sqlException.Message;
+            }
+            else
+            {
+                throw exception;
             }
         }
     }
