@@ -27,6 +27,7 @@
                     @Html.Partial("FlightDetailsPartial", Model.SelectedFlights.Inbound, new ViewDataDictionary(this.ViewData) { { "type", "Inbound" } })
                 </div>
             }
+            @Html.ActionLink("View booking", "Index", "Manage", new { partialViewName = "ViewBookingsPartial" }, null)
         </div>
     </div>
 </div>

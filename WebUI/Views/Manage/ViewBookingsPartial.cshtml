@@ -5,9 +5,61 @@
     {
         <p>No bookings to display</p>
     }
-    @foreach (var booking in Model)
+    @foreach (var booking in Model.OrderByDescending(x => x.DateTimeCreated))
     {
-        <p>@booking.BookingReference</p>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="panel-title">
+                    <strong>@booking.DateTimeCreated.ToShortDateString() - ref. @booking.BookingReference</strong>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="row text-center">
+                    <div class="col-sm-5">
+                        <h3>@booking.FlightsDetails.Outbound.OriginAirport.AirportCode</h3>
+                        <h4>@booking.FlightsDetails.Outbound.DepartureDateTime.ToString("HH:mm")</h4>
+                        <h5>@booking.FlightsDetails.Outbound.DepartureDateTime.ToString("(ddd dd MMM yy)")</h5>
+                    </div>
+                    <div class="col-sm-2">
+                        <h4 class="glyphicon glyphicon-arrow-right"></h4>
+                    </div>
+                    <div class="col-sm-5">
+                        <h3>@booking.FlightsDetails.Outbound.DestinationAirport.AirportCode</h3>
+                        <h4>@booking.FlightsDetails.Outbound.ArrivalDateTime.ToString("HH:mm")</h4>
+                        <h5>@booking.FlightsDetails.Outbound.ArrivalDateTime.ToString("(ddd dd MMM yy)")</h5>
+                    </div>
+                </div>
+                @if (booking.FlightsDetails.IsReturn)
+                {
+                    <hr />
+                    <div class="row text-center">
+                        <div class="col-sm-5">
+                            <h3>@booking.FlightsDetails.Inbound.OriginAirport.AirportCode</h3>
+                            <h4>@booking.FlightsDetails.Inbound.DepartureDateTime.ToString("HH:mm")</h4>
+                            <h5>@booking.FlightsDetails.Inbound.DepartureDateTime.ToString("(ddd dd MMM yy)")</h5>
+                        </div>
+                        <div class="col-sm-2">
+                            <h4 class="glyphicon glyphicon-arrow-right"></h4>
+                        </div>
+                        <div class="col-sm-5">
+                            <h3>@booking.FlightsDetails.Inbound.DestinationAirport.AirportCode</h3>
+                            <h4>@booking.FlightsDetails.Inbound.ArrivalDateTime.ToString("HH:mm")</h4>
+                            <h5>@booking.FlightsDetails.Inbound.ArrivalDateTime.ToString("(ddd dd MMM yy)")</h5>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="panel-footer">
+                <div class="row">
+                    <div class="col-sm-6">
+                        Adults: @booking.FlightsDetails.NumberAdults | Children: @booking.FlightsDetails.NumberChildren | Class: @booking.FlightsDetails.TravelClass
+                    </div>
+                    <div class="col-sm-6 text-right">
+                        <h3>@booking.FlightsDetails.Price.ToString("C")</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
     }
 </div>
 

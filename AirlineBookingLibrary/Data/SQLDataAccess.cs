@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using AirlineBookingLibrary.Models;
@@ -199,7 +200,7 @@ namespace AirlineBookingLibrary.Data
                     // Populate in and out flights in FlightDetails by querying the Id to get the flight object.
                     booking.FlightsDetails.Outbound = await FindFlightByIdAsync(flightId.OutFlight);
 
-                    if (booking.FlightsDetails.IsReturn)
+                    if (flightId.InFlight != null)
                     {
                         booking.FlightsDetails.Inbound = await FindFlightByIdAsync(flightId.InFlight); 
                     }
@@ -216,7 +217,17 @@ namespace AirlineBookingLibrary.Data
                 var p = new DynamicParameters();
                 p.Add("@Id", flightId);
 
-                var results = await connection.QueryMultipleAsync("dbo.spGetFlightById", p, commandType: CommandType.StoredProcedure);
+                SqlMapper.GridReader results;
+
+                try
+                {
+                    results = await connection.QueryMultipleAsync("dbo.spGetFlightById", p, commandType: CommandType.StoredProcedure);
+                }
+                catch (SqlException)
+                {
+                    // No flight found.
+                    return null;
+                }
 
                 // Read results and map results to Flight and origin and destination Airport models.
                 Flight output = results.Read<Flight, Airport, Airport, Flight>(
