@@ -48,3 +48,8 @@ textarea {
     margin-right: -4px;
     text-align: center;
 }
+/* Remove decoration from link text on a tags */
+a.deco-none {
+    color: inherit;
+    text-decoration: none;
+}

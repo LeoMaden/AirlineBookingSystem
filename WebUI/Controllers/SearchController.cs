@@ -48,7 +48,6 @@ namespace WebUI.Controllers
         [HttpPost]
         public async Task<ActionResult> Index(FlightSearchDataModel flightSearchDataModel)
         {
-
             // Repopulate drowdown list box.
             flightSearchDataModel.Airports = await GetAirportSelectListAsync();
 
@@ -96,6 +95,53 @@ namespace WebUI.Controllers
             return View("Index", searchData);
         }
 
+        public async Task<ActionResult> FeaturedDestinations(string featuredDestination)
+        {
+            var flightSearchDataModel = new FlightSearchDataModel();
+
+            // Set airports list in search filter model.
+            flightSearchDataModel.Airports = await GetAirportSelectListAsync();
+
+            // Get List<Airport>
+            var airports = await _dataAccess.GetAirportsAsync();
+
+            // Get the origin airport (LHR).
+            Airport origin = airports.Where(x => x.AirportCode == "LHR").First();
+            Airport destination = null;
+
+            switch (featuredDestination)
+            {
+                case "paris":
+                    destination = airports.Where(x => x.AirportCode == "CDG").First();
+                    break;
+                case "new york":
+                    destination = airports.Where(x => x.AirportCode == "JFK").First();
+                    break;
+                case "amsterdam":
+                    destination = airports.Where(x => x.AirportCode == "AMS").First();
+                    break;
+                default:
+                    return View("Index");
+            }
+
+            // Set origin and destination ids.
+            flightSearchDataModel.SelectedOriginAirportId = origin.Id;
+            flightSearchDataModel.SelectedDestinationAirportId = destination.Id;
+            flightSearchDataModel.ReturnFlight = true;
+
+            // Depart a week from now and return the week after that by default.
+            flightSearchDataModel.OutboundDate = DateTime.Today.AddDays(7);
+            flightSearchDataModel.InboundDate = DateTime.Today.AddDays(14);
+
+            // Fill model with flights.
+            await FillModel(flightSearchDataModel);
+
+            // Add search data to session so it can be used later.
+            Session.Add("searchData", flightSearchDataModel);
+
+            return View("Index", flightSearchDataModel);
+        }
+
         private SelectList ToSelectList(List<Airport> airports)
         {
             SelectList output = new SelectList(airports, nameof(Airport.Id), nameof(Airport.FriendlyName));
@@ -105,7 +151,7 @@ namespace WebUI.Controllers
 
         private async Task<SelectList> GetAirportSelectListAsync()
         {
-            List<Airport> airports = (await _dataAccess.GetAirportsAsync()).ToList();
+            List<Airport> airports = await _dataAccess.GetAirportsAsync();
 
             return ToSelectList(airports);
         }
