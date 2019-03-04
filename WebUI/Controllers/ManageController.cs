@@ -13,13 +13,8 @@ namespace WebUI.Controllers
     [Authorize]
     public class ManageController : Controller
     {
-        /// <summary>
-        /// Private field to store the database context. 
-        /// </summary>
         private IDataAccess _dataAccess;
-
         public IBookingManager _bookingManager;
-
 
         /// <summary>
         /// Create a new instance of the ManageController that
@@ -45,6 +40,7 @@ namespace WebUI.Controllers
             // Find authorised user details in database.
             var user = await _dataAccess.FindByNameAsync(userName);
 
+            // Find bookings for authorised user.
             var bookings = await _bookingManager.FindBookingsByUserAsync(user);
 
             AccountDetailsModel model = new AccountDetailsModel

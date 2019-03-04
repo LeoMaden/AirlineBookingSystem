@@ -2,11 +2,8 @@
 using AirlineBookingLibrary.Logic;
 using AirlineBookingLibrary.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Mail;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
 using WebUI.Helpers;
 using WebUI.Models;
@@ -27,7 +24,8 @@ namespace WebUI.Controllers
             _bookingManager = bookingManager;
         }
 
-        // POST: Booking/SelectedFlights
+        //
+        // POST /Booking/SelectedFlights
         [HttpPost]
         [AllowAnonymous]
         public async Task<ActionResult> SelectedFlights(string outboundRadioGroup, string inboundRadioGroup)
@@ -61,11 +59,13 @@ namespace WebUI.Controllers
             return View(selectedFlightsModel);
         }
 
-        // GET: Booking/Payment
+        //
+        // GET /Booking/Payment
         [HttpGet]
         [Authorize]
-        public async Task<ActionResult> Payment()
+        public ActionResult Payment()
         {
+            // Get SelectedFlightsModel stored in session data.
             var selectedFlights = (SelectedFlightsModel)Session["selectedFlightsModel"];
 
             if (selectedFlights is null)
@@ -78,7 +78,8 @@ namespace WebUI.Controllers
             return View(model);
         }
 
-        // POST: Booking/Payment
+        //
+        // POST /Booking/Payment
         [HttpPost]
         [Authorize]
         public async Task<ActionResult> Payment(PaymentDataModel paymentData)
@@ -118,6 +119,8 @@ namespace WebUI.Controllers
             return RedirectToAction("Confirmation");
         }
 
+        //
+        // GET /Booking/Confirmation
         [HttpGet]
         public ActionResult Confirmation()
         {
@@ -132,7 +135,12 @@ namespace WebUI.Controllers
             return View(bookingInfo);
         }
 
-
+        /// <summary>
+        /// Calculate and set the price property of the SelectedFlights object
+        /// using the IFlightPriceCalculator.
+        /// </summary>
+        /// <param name="selectedFlights">The SelectedFlights object to calculate the price of.</param>
+        /// <returns>An asynchronous task for calculating the flights' price.</returns>
         private async Task CalculatePriceAsync(SelectedFlights selectedFlights)
         {
             decimal price = await _calculator.CalculateTotalPriceAsync(selectedFlights);
@@ -140,12 +148,21 @@ namespace WebUI.Controllers
             selectedFlights.Price = price;
         }
 
+        /// <summary>
+        /// Try to parse inbound and outbound flights Ids given as strings
+        /// populating a SelectedFlights object with those flights if successful.
+        /// </summary>
+        /// <param name="outboundId">The outbound flight Id.</param>
+        /// <param name="inboundId">The inbound flight Id.</param>
+        /// <param name="selectedFlights">A selected flights object containing the flights with the Ids given.</param>
+        /// <returns>True if the Ids were parsed correctly, false otherwise.</returns>
         private bool TryParseFlightIds(string outboundId, string inboundId, out SelectedFlights selectedFlights)
         {
             selectedFlights = null;
 
             if (outboundId is null)
             {
+                // No oubound flight Id.
                 return false;
             }
 
@@ -158,16 +175,19 @@ namespace WebUI.Controllers
                 selectedInboundId = int.Parse(inboundId);
             }
 
+            // Find flight with given outbound Id.
             Task<Flight> outboundTask = Task.Run(async () => await _dataAccess.FindFlightByIdAsync(selectedOutboundId));
             Flight outbound = outboundTask.Result;
             Flight inbound = null;
 
             if (selectedInboundId.HasValue)
             {
+                // Find flight with inbound Id if flight is a return flight.
                 Task<Flight> inboundTask = Task.Run(async () => await _dataAccess.FindFlightByIdAsync(selectedInboundId.Value));
                 inbound = inboundTask.Result;
             }
 
+            // Populate selected flights object.
             selectedFlights = new SelectedFlights
             {
                 Outbound = outbound,

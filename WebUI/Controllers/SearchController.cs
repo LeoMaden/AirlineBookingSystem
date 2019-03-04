@@ -26,7 +26,8 @@ namespace WebUI.Controllers
             _priceCalculator = priceCalculator;
         }
 
-        // GET: Search
+        //
+        // GET /Search
         [HttpGet]
         public async Task<ActionResult> Index()
         {
@@ -44,7 +45,7 @@ namespace WebUI.Controllers
             return View(flightSearchDataModel);
         }
 
-        // POST: Search
+        // POST /Search
         [HttpPost]
         public async Task<ActionResult> Index(FlightSearchDataModel flightSearchDataModel)
         {
@@ -67,6 +68,9 @@ namespace WebUI.Controllers
             return View(flightSearchDataModel);
         }
 
+        //
+        // GET /Search/ChangeDate?ticks=1234
+        [HttpGet]
         public async Task<ActionResult> ChangeDate(string ticks)
         {
             // Parse ticks string into new datetime object.
@@ -95,6 +99,9 @@ namespace WebUI.Controllers
             return View("Index", searchData);
         }
 
+        // 
+        // GET /Search/FeaturedDestinations?featuredDestination=paris
+        [HttpGet]
         public async Task<ActionResult> FeaturedDestinations(string featuredDestination)
         {
             var flightSearchDataModel = new FlightSearchDataModel();
@@ -156,6 +163,10 @@ namespace WebUI.Controllers
             return ToSelectList(airports);
         }
 
+        /// <summary>
+        /// Populate a FlightSearchDataModel with airports, etc. from the database.
+        /// </summary>
+        /// <param name="flightSearchDataModel">The object to populate.</param>
         private async Task FillModel(FlightSearchDataModel flightSearchDataModel)
         {
             // Clear out existing items in lists.

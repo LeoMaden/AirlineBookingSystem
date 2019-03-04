@@ -18,6 +18,9 @@ namespace WebUI.Controllers
             _dataAccess = dataAccess;
         }
 
+        //
+        // GET /Home
+        [HttpGet]
         public async Task<ActionResult> Index()
         {
             var flightSearchDataModel = new FlightSearchDataModel();
@@ -34,6 +37,9 @@ namespace WebUI.Controllers
             return View(flightSearchDataModel);
         }
 
+        /// <summary>
+        /// Get a SelectList object containing the Airports.
+        /// </summary>
         private async Task<SelectList> GetAirportSelectListAsync()
         {
             List<Airport> airports = (await _dataAccess.GetAirportsAsync()).ToList();
@@ -41,6 +47,11 @@ namespace WebUI.Controllers
             return ToSelectList(airports);
         }
 
+        /// <summary>
+        /// Convert a List<Airport> to a SelectList object containing the airports.
+        /// </summary>
+        /// <param name="airports">The airports to populate the select list with.</param>
+        /// <returns>A SelectList containing the airports.</returns>
         private SelectList ToSelectList(List<Airport> airports)
         {
             SelectList output = new SelectList(airports, nameof(Airport.Id), nameof(Airport.FriendlyName));
