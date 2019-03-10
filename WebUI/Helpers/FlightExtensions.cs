@@ -5,8 +5,18 @@ using WebUI.Models;
 
 namespace WebUI.Helpers
 {
+    /// <summary>
+    /// Provides extension methods for manipulating Flight objcts.
+    /// </summary>
     public static class FlightExtensions
     {
+        /// <summary>
+        /// Convert a Flight object to a PricedFlight object.
+        /// </summary>
+        /// <param name="flight">The flight to convert and price.</param>
+        /// <param name="searchData">The FlightSearchDataModel to be used to help calculate the price of the flight.</param>
+        /// <param name="calculator">The IFlightPriceCalculator to be used to help calculate the price of the flight.</param>
+        /// <returns>An asynchronous task for pricing the flight.</returns>
         public static async Task<PricedFlight> PriceFlightAsync(this Flight flight, FlightSearchDataModel searchData, IFlightPriceCalculator calculator)
         {
             // Create PricedFlight object.

@@ -1,15 +1,17 @@
 ﻿using AirlineBookingLibrary.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web;
 using WebUI.Models;
 
 namespace WebUI.Helpers
 {
+    /// <summary>
+    /// Provides extension methods for manipulating SelectedFlightsModel objects.
+    /// </summary>
     public static class SelectedFlightsModelExtensions
     {
+        /// <summary>
+        /// Convert this SelectedFlightsModel to a SelectedFlights object.
+        /// </summary>
+        /// <param name="model">The SelectedFlightsModel to convert.</param>
         public static SelectedFlights ToSelectedFlights(this SelectedFlightsModel model)
         {
             var output = new SelectedFlights

@@ -1,16 +1,22 @@
 ﻿using AirlineBookingLibrary.Data;
 using AirlineBookingLibrary.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 using WebUI.Models;
 
 namespace WebUI.Helpers
 {
+    /// <summary>
+    /// Provides extension methods for manipulating FlightSearchDataModel objects.
+    /// </summary>
     public static class FlightSearchDataModelExtensions
     {
+        /// <summary>
+        /// Convert a FlightSearchDataModel to a SearchFilterParameters object.
+        /// </summary>
+        /// <param name="flightSearchDataModel">The FlightSearchDataModel to convert.</param>
+        /// <param name="dataAccess">The IDataAccess to use to obtain Airports from Ids.</param>
+        /// <returns>An asynchronous task for finding converting the FlightSearchDataModel.</returns>
         public static async Task<SearchFilterParameters> ToSearchFilterParameters(this FlightSearchDataModel flightSearchDataModel, IDataAccess dataAccess)
         {
             // Get Airport objects from database using their Ids.

@@ -1,18 +1,23 @@
 ﻿using AirlineBookingLibrary.Logic;
 using AirlineBookingLibrary.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 using WebUI.Models;
 
 namespace WebUI.Helpers
 {
+    /// <summary>
+    /// Provides extension methods for manipulating SelectedFlights objects.
+    /// </summary>
     public static class SelectedFlightsExtensions
     {
+        /// <summary>
+        /// Convert this SelectedFlights object to a SelectedFlightsModel.
+        /// </summary>
+        /// <param name="selectedFlights">The SelectedFlights to convert.</param>
+        /// <param name="calculator">The IFlightPriceCalculator to use to calculate flight prices.</param>
         public static async Task<SelectedFlightsModel> ToSelectedFlightsModel(this SelectedFlights selectedFlights, IFlightPriceCalculator calculator)
         {
+            // Populate model with number of passengers and travel class.
             FlightSearchDataModel searchData = new FlightSearchDataModel
             {
                 NumberAdults = selectedFlights.NumberAdults,
