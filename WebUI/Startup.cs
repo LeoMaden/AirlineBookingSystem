@@ -1,7 +1,6 @@
 ﻿using AirlineBookingLibrary;
 using Microsoft.Owin;
 using Owin;
-using WebUI.App_Start;
 
 [assembly: OwinStartupAttribute(typeof(WebUI.Startup))]
 namespace WebUI

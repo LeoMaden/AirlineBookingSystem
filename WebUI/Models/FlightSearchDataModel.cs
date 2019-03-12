@@ -1,10 +1,7 @@
 ﻿using AirlineBookingLibrary.Enums;
-using AirlineBookingLibrary.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace WebUI.Models
@@ -48,14 +45,5 @@ namespace WebUI.Models
         public List<PricedFlight> OutboundFlights { get; set; } = new List<PricedFlight>();
 
         public List<PricedFlight> InboundFlights { get; set; } = new List<PricedFlight>();
-
-        // -----------------------------------------------------------
-
-        //public int SelectedFlightId { get; set; }
-        //public int SelectedFlightId { get; set; }
-
-
-
-
     }
 }

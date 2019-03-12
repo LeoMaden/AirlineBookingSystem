@@ -1,8 +1,5 @@
 ﻿using AirlineBookingLibrary.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using WebUI.Models.IdentityModels;
 
 namespace WebUI.Models
